@@ -1,0 +1,19 @@
+
+@{
+    ViewData["Title"] = "ArgumentDiagram";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" type="text/css" href="~/css/style.css" />
+
+<div class="container arg-container">
+    <div class="col-md-6">
+        <form method="post">
+            <div class="form-group">
+                <label for="arg-text">Argument:</label>
+                <textarea class="form-control" name="arg-text" id="arg-text"></textarea>
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+    </div>
+</div>

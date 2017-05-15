@@ -53,7 +53,7 @@ namespace ArgumentDiagram
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=ArgumentDiagram}/{action=Index}/{id?}");
             });
         }
     }
