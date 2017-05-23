@@ -12,5 +12,11 @@ namespace ArgumentDiagram.Controllers
         {
             return View();
         }
+
+        public IActionResult AddNode(String argText, int parentID)
+        {
+            ViewData["InputtedText"] = argText;
+            return View();
+        }
     }
 }

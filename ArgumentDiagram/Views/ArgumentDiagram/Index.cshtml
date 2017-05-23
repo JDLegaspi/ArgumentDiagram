@@ -1,4 +1,3 @@
-
 @{
     ViewData["Title"] = "ArgumentDiagram";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,13 +6,81 @@
 <link rel="stylesheet" type="text/css" href="~/css/style.css" />
 
 <div class="container arg-container">
-    <div class="col-md-6">
-        <form method="post">
+    <div class="col-md-5">
+        <form>
             <div class="form-group">
-                <label for="arg-text">Argument:</label>
-                <textarea class="form-control" name="arg-text" id="arg-text"></textarea>
+                <label for="parentID">Parent Node ID:</label>
+                <input type="number" step="1" class="form-control" name="parentID" id="parentID" />
             </div>
-            <button type="submit" class="btn btn-default">Submit</button>
+            <div class="form-group">
+                <label for="argText">Argument:</label>
+                <textarea class="form-control" name="argText" id="argText"></textarea>
+            </div>
+            <button class="btn btn-default" id="btnSend">Submit</button>
         </form>
     </div>
+    <div class="col-md-7">
+        <div class="chart" id="basic-example"></div>
+    </div>
 </div>
+
+<script src="~/lib/treant-js/vendor/raphael.js"></script>
+<script src="~/lib/treant-js/Treant.js"></script>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script src="~/diagrams/arg1.js"></script>
+
+<script type="text/javascript">
+
+    function findObjectById(root, id) {
+        if (root.children) {
+            for (var k in root.children) {
+                if (root.children[k].id == id) {
+                    return root.children[k];
+                }
+                else if (root.children.length) {
+                    return findObjectById(root.children[k], id);
+                }
+            }
+        }
+    }
+
+    $(function () {
+        $('#btnSend').click(function () {
+            var id = $('#parentID').val();
+            var text = $('#parentID').val();
+            var parent = findObjectById(chart_config, id);
+            parent.children.push({
+                id: jsonArray.length + 1,
+                text: {
+                    name: text
+                },
+                stackChildren: true,
+                children: []
+
+            })
+        })
+    })
+
+</script>
+
+<!--<script type="text/javascript">
+    $(function () {
+        $('btnSend').click(function () {
+
+            var jsonResult = chart_config;
+            $.ajax({
+                type: 'POST',
+                data: jsonResult,
+                url: 'AddNode'
+
+            })
+
+        })
+    })
+</script>-->
+
+<script>
+    new Treant(chart_config);
+</script>
