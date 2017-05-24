@@ -10,7 +10,6 @@ var chart_config = {
         }
     },
     nodeStructure: {
-        id: 1,
         text: {
             name: "Therefore, we should boycott Canadian seafood"
         },

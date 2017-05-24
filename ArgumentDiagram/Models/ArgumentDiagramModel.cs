@@ -7,9 +7,20 @@ namespace ArgumentDiagram.Models
 {
     public class ArgumentDiagramModel
     {
-        public int id { get; set; }
-        public string test { get; set; }
-        public Boolean stackChildren { get; set; }
+        public TextModel text { get; set; }
+        public Boolean stackChildren = true;
         public List<ArgumentDiagramModel> children { get; set; }
+
+
+        public void addChild(ArgumentDiagramModel child)
+        {
+            children.Add(child);
+        }
+
+    }
+
+    public class TextModel
+    {
+        public string name { get; set; }
     }
 }

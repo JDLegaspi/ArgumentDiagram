@@ -7,16 +7,12 @@
 
 <div class="container arg-container">
     <div class="col-md-5">
-        <form>
-            <div class="form-group">
-                <label for="parentID">Parent Node ID:</label>
-                <input type="number" step="1" class="form-control" name="parentID" id="parentID" />
-            </div>
+        <form id="argumentForm">
             <div class="form-group">
                 <label for="argText">Argument:</label>
                 <textarea class="form-control" name="argText" id="argText"></textarea>
             </div>
-            <button class="btn btn-default" id="btnSend">Submit</button>
+            <button type="submit" class="btn btn-default" id="btnSend">Submit</button>
         </form>
     </div>
     <div class="col-md-7">
@@ -31,7 +27,27 @@
 
 <script src="~/diagrams/arg1.js"></script>
 
-<script type="text/javascript">
+<script>
+    $('#argumentForm').submit(function () {
+
+        var data = {
+            "argText": $('#argText').text(),
+            "argumentDiagram": chart_config
+        }
+
+        var form = $('#argumentForm')
+        $.ajax({
+            type: "POST",
+            url: "AddNode",
+            data: data,
+            success: function () {
+                chart_config = argumentDiagram;
+            }
+
+        })
+    })
+</script>
+<!--<script type="text/javascript">
 
     function findObjectById(root, id) {
         if (root.children) {
@@ -63,22 +79,6 @@
         })
     })
 
-</script>
-
-<!--<script type="text/javascript">
-    $(function () {
-        $('btnSend').click(function () {
-
-            var jsonResult = chart_config;
-            $.ajax({
-                type: 'POST',
-                data: jsonResult,
-                url: 'AddNode'
-
-            })
-
-        })
-    })
 </script>-->
 
 <script>
