@@ -8,9 +8,14 @@ namespace ArgumentDiagram.Models
     public class ArgumentDiagramModel
     {
         public TextModel text { get; set; }
-        public Boolean stackChildren = true;
+        public Boolean stackChildren;
         public List<ArgumentDiagramModel> children { get; set; }
 
+        public ArgumentDiagramModel()
+        {
+            stackChildren = true;
+            children = new List<ArgumentDiagramModel>();
+        }
 
         public void addChild(ArgumentDiagramModel child)
         {

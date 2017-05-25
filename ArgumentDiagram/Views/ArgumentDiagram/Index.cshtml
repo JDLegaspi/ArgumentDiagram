@@ -12,8 +12,9 @@
                 <label for="argText">Argument:</label>
                 <textarea class="form-control" name="argText" id="argText"></textarea>
             </div>
-            <button type="submit" class="btn btn-default" id="btnSend">Submit</button>
         </form>
+        <button class="btn btn-default" id="btnSend">Submit</button>
+        <p>@ViewData["ConvertedWords"]</p>
     </div>
     <div class="col-md-7">
         <div class="chart" id="basic-example"></div>
@@ -28,20 +29,29 @@
 <script src="~/diagrams/arg1.js"></script>
 
 <script>
-    $('#argumentForm').submit(function () {
+    $('#btnSend').click(function () {
 
         var data = {
-            "argText": $('#argText').text(),
-            "argumentDiagram": chart_config
-        }
+            argText: $('#argText').text(),
+            nodeStructure: chart_config.nodeStructure
+        };
 
-        var form = $('#argumentForm')
+        console.log(chart_config.nodeStructure);
+
         $.ajax({
             type: "POST",
-            url: "AddNode",
+            url: '@Url.Action("AddNode")',
+            contentType: 'application/json',
             data: data,
-            success: function () {
-                chart_config = argumentDiagram;
+            success: function (responseData) {
+                console.log("Success!");
+                console.log(responseData);
+                chart_config = responseData;
+                new Treant(chart_config);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log("Failure! " + xhr.responseText);
+                console.log(thrownError);
             }
 
         })

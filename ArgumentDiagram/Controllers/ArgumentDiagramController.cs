@@ -16,7 +16,7 @@ namespace ArgumentDiagram.Controllers
         }
 
         [HttpPost]
-        public JsonResult AddNode(String argText, int parentID, ArgumentDiagramModel argumentDiagram)
+        public JsonResult AddNode(String argText, ArgumentDiagramModel nodeStructure)
         {
             TextModel argumentText = new TextModel();
             argumentText.name = argText;
@@ -24,9 +24,15 @@ namespace ArgumentDiagram.Controllers
             ArgumentDiagramModel childObject = new ArgumentDiagramModel();
             childObject.text = argumentText;
 
-            argumentDiagram.addChild(childObject);
+            nodeStructure.addChild(childObject);
 
-            return Json(argumentDiagram);
+            return Json(nodeStructure);
+        }
+
+        [HttpPost]
+        public void TestFunction()
+        {
+
         }
     }
 }
