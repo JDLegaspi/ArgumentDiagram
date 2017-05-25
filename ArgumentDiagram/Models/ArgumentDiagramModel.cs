@@ -7,12 +7,16 @@ namespace ArgumentDiagram.Models
 {
     public class ArgumentDiagramModel
     {
+        public int id { get; set; }
         public TextModel text { get; set; }
         public List<ArgumentDiagramModel> children { get; set; }
 
-        public ArgumentDiagramModel()
+        public ArgumentDiagramModel(String description, int newId)
         {
+            id = newId;
             children = new List<ArgumentDiagramModel>();
+            TextModel textModel = new TextModel(description);
+            text = textModel;
         }
 
         public void addChild(ArgumentDiagramModel child)

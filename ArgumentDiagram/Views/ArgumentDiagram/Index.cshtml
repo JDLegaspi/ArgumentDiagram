@@ -9,6 +9,14 @@
     <div class="col-md-5">
         <form id="argumentForm">
             <div class="form-group">
+                <label for="parentId">Parent ID:</label>
+                <input type="number" step="1" class="form-control" name="parentId" id="parentId" />
+            </div>            
+            <!--<div class="form-group">
+                <label for="newId">New ID:</label>
+                <input type="number" step="1" class="form-control" name="newId" id="newId" />
+            </div>-->
+            <div class="form-group">
                 <label for="argText">Argument:</label>
                 <textarea class="form-control" name="argText" id="argText"></textarea>
             </div>
@@ -28,26 +36,48 @@
 <script>
     var chart = new Treant(chart_config);
 </script>
-
+<script>
+    function getObjects(obj, key, val) {
+        var objects = [];
+        for (var i in obj) {
+            if (!obj.hasOwnProperty(i)) continue;
+            if (typeof obj[i] == 'object') {
+                objects = objects.concat(getObjects(obj[i], key, val));
+            } else if (i == key && obj[key] == val) {
+                objects.push(obj);
+            }
+        }
+        return objects;
+    }
+</script>
 <script>
     $('#btnSend').click(function () {
 
-        $.ajax({
-            type: "POST",
-            url: '@Url.Action("AddNode")',
-            dataType: "json",
-            data: { argText: $('#argText').val() },
-            success: function (responseData) {
+        var parentId = $('#parentId').val();
 
-                chart_config.nodeStructure.children.push(responseData);
-                chart = new Treant(chart_config);
+        if (!$('#argText').val() || !$('#parentId').val()) {
+            window.alert("Something is missing, yo");
+        } else {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("AddNode")',
+                dataType: "json",
+                data: { argText: $('#argText').val() },
+                success: function (responseData) {
 
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                console.log("Failure! " + xhr.responseText);
-                console.log(thrownError);
-            }
+                    var object = getObjects(chart_config.nodeStructure, 'id', parentId);
+                    object[0].children.push(responseData);
 
-        })
+                    //chart_config.nodeStructure.children.push(responseData);
+                    chart = new Treant(chart_config);
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log("Failure! " + xhr.responseText);
+                    console.log(thrownError);
+                }
+
+            });
+        }
     })
 </script>
