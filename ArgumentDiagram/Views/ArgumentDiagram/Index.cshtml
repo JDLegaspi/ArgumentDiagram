@@ -21,33 +21,27 @@
     </div>
 </div>
 
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/treant-js/vendor/raphael.js"></script>
 <script src="~/lib/treant-js/Treant.js"></script>
-
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-
 <script src="~/diagrams/arg1.js"></script>
+<script>
+    var chart = new Treant(chart_config);
+</script>
 
 <script>
     $('#btnSend').click(function () {
 
-        var data = {
-            argText: $('#argText').text(),
-            nodeStructure: chart_config.nodeStructure
-        };
-
-        console.log(chart_config.nodeStructure);
-
         $.ajax({
             type: "POST",
             url: '@Url.Action("AddNode")',
-            contentType: 'application/json',
-            data: data,
+            dataType: "json",
+            data: { argText: $('#argText').val() },
             success: function (responseData) {
-                console.log("Success!");
-                console.log(responseData);
-                chart_config = responseData;
-                new Treant(chart_config);
+
+                chart_config.nodeStructure.children.push(responseData);
+                chart = new Treant(chart_config);
+
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log("Failure! " + xhr.responseText);
@@ -56,41 +50,4 @@
 
         })
     })
-</script>
-<!--<script type="text/javascript">
-
-    function findObjectById(root, id) {
-        if (root.children) {
-            for (var k in root.children) {
-                if (root.children[k].id == id) {
-                    return root.children[k];
-                }
-                else if (root.children.length) {
-                    return findObjectById(root.children[k], id);
-                }
-            }
-        }
-    }
-
-    $(function () {
-        $('#btnSend').click(function () {
-            var id = $('#parentID').val();
-            var text = $('#parentID').val();
-            var parent = findObjectById(chart_config, id);
-            parent.children.push({
-                id: jsonArray.length + 1,
-                text: {
-                    name: text
-                },
-                stackChildren: true,
-                children: []
-
-            })
-        })
-    })
-
-</script>-->
-
-<script>
-    new Treant(chart_config);
 </script>

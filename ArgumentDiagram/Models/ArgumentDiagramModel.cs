@@ -8,12 +8,10 @@ namespace ArgumentDiagram.Models
     public class ArgumentDiagramModel
     {
         public TextModel text { get; set; }
-        public Boolean stackChildren;
         public List<ArgumentDiagramModel> children { get; set; }
 
         public ArgumentDiagramModel()
         {
-            stackChildren = true;
             children = new List<ArgumentDiagramModel>();
         }
 
@@ -26,6 +24,10 @@ namespace ArgumentDiagram.Models
 
     public class TextModel
     {
-        public string name { get; set; }
+        public String name { get; set; }
+        public TextModel(String argText)
+        {
+            name = argText;
+        }
     }
 }
