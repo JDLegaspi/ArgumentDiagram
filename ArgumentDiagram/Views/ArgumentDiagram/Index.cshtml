@@ -94,7 +94,8 @@
             var reader = new FileReader();
             reader.readAsText(file);
             reader.onload = function (e) {
-                alert(e.target.result);   
+                chart_config = JSON.parse(e.target.result);
+                chart = new Treant(chart_config);  
             };
         }
     })
