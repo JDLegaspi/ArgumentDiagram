@@ -10,10 +10,11 @@ var chart_config = {
         }
     },
     nodeStructure: {
-        id: 1,
         text: {
             name: "Therefore, we should boycott Canadian seafood"
         },
+        id: 1,
+        HTMLid: "1",
         children: [
             {
                 id: 2,

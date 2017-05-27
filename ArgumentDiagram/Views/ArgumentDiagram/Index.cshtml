@@ -22,6 +22,7 @@
             </div>
         </form>
         <button class="btn btn-default" id="btnSend">Submit</button>
+        <button class="btn btn-default" id="btnTest">Test</button>
         <button class="btn btn-default" id="btnSave">Save</button>
         <button class="btn btn-default" id="btnLoad">Load</button>
         <input type="file" id="fileinput" />
@@ -37,6 +38,7 @@
 <script src="~/lib/treant-js/Treant.js"></script>
 <script src="~/diagrams/arg1.js"></script>
 <script>
+    console.log(chart_config);
     var chart = new Treant(chart_config);
 </script>
 <script>
@@ -98,6 +100,10 @@
                 chart = new Treant(chart_config);  
             };
         }
+    })
+
+    $('#btnTest').click(function () {
+        console.log(chart_config);
     })
 
     function saveText(text, filename) {
