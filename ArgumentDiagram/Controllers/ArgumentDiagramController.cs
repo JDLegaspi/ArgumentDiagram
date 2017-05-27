@@ -15,9 +15,9 @@ namespace ArgumentDiagram.Controllers
         }
 
         [HttpPost]
-        public JsonResult AddNode(String argText)
+        public JsonResult AddNode(String argText, int id)
         {
-            ArgumentDiagramModel childObject = new ArgumentDiagramModel(argText, 1);
+            ArgumentDiagramModel childObject = new ArgumentDiagramModel(argText, id);
 
             return Json(childObject);
         }

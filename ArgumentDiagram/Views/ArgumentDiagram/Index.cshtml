@@ -28,7 +28,7 @@
         <input type="file" id="fileinput" />
         <p>@ViewData["ConvertedWords"]</p>
     </div>
-    <div class="col-md-7">
+    <div class="col-md-7" id="diagramDiv">
         <div class="chart" id="basic-example"></div>
     </div>
 </div>
@@ -67,7 +67,7 @@
                 type: "POST",
                 url: '@Url.Action("AddNode")',
                 dataType: "json",
-                data: { argText: $('#argText').val() },
+                data: { argText: $('#argText').val(), id: 1 },
                 success: function (responseData) {
 
                     var object = getObjects(chart_config.nodeStructure, 'id', parentId);
@@ -105,6 +105,11 @@
     $('#btnTest').click(function () {
         console.log(chart_config);
     })
+
+    $("#diagramDiv").on("click", "#basic-example > div", function () { 
+        $("#parentId").val(this.id);
+        console.log("Test: " + $("#parentId").val());
+    });
 
     function saveText(text, filename) {
         var a = document.createElement('a');
