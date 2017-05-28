@@ -45,7 +45,19 @@ function deleteNode(obj, nodeId) {
             }            
         }
     } else {
-        console.log("Ummmmm, something is wrong...");
+        window.alert("Ummmmm, something is wrong...");
+    }
+}
+
+function editNode(obj, nodeId, editText) {
+    if (obj.id == nodeId) {
+        obj.text.name = editText;
+    } else if (obj.hasOwnProperty('children')) {
+        for (var i = 0; i < obj.children.length; i++) {
+            editNode(obj.children[i], nodeId, editText);
+        }
+    } else {
+        window.alert("Ummmmm, something is wrong...");
     }
 }
 

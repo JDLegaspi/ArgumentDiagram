@@ -23,6 +23,7 @@
         </form>
         <button class="btn btn-default" id="btnSend">Submit</button>
         <button class="btn btn-default" id="btnDelete">Delete Node</button>
+        <button class="btn btn-default" id="btnEdit">Edit Node</button>
         <button class="btn btn-default" id="btnTest">Test</button>
         <button class="btn btn-default" id="btnSave">Save</button>
         <button class="btn btn-default" id="btnLoad">Load</button>
@@ -109,6 +110,21 @@
             chart = new Treant(chart_config);
         } else {
             window.alert("Please select a node");
+        }
+    })
+
+    $('#btnEdit').click(function () {
+        if ($("#parentId").val()) {
+            if ($("#" + $("#parentId").val()).hasClass("reason")) {
+                window.alert("Can't edit reasoning node");
+            } else {
+                var editText = window.prompt("Edit text", $("#" + $("#parentId").val() + " > .node-name").html());
+                editNode(chart_config.nodeStructure, $("#parentId").val(), editText);
+                console.log("Edit Complete");
+                chart = new Treant(chart_config);
+            }
+        } else {
+          window.alert("Please select a node");
         }
     })
 
