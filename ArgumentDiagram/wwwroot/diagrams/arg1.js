@@ -3,7 +3,7 @@ var chart_config = {
         container: "#basic-example",
 
         connectors: {
-            type: 'step'
+            type: 'curve'
         },
         node: {
             HTMLclass: 'nodeExample1'
@@ -12,40 +12,67 @@ var chart_config = {
     nodeStructure: {
         id: 1,
         HTMLid: "1",
+        type: "fact",
         text: {
             name: "Therefore, we should boycott Canadian seafood"
         },
         children: [
             {
-                id: 2,
-                HTMLid: "2",
+                id: 6,
+                HTMLid: "6",
+                type: "reason",
+                HTMLclass: "reason",
                 text: {
-                    name: "We can help to stop the seal hunt by boycotting Canadian Seafood"
-                },
-                children: []
-            },
-            {
-                id: 3,
-                HTMLid: "3",
-                text: {
-                    name: "Therefore, the seal hunt should be stopped"
+                    name: "R"
                 },
                 children: [
                     {
-                        id: 4,
-                        HTMLid: "4",
+                        id: 2,
+                        HTMLid: "2",
+                        type: "fact",
                         text: {
-                            name: "The seal hunt is inhumane"
+                            name: "We can help to stop the seal hunt by boycotting Canadian Seafood"
                         },
                         children: []
                     },
                     {
-                        id: 5,
-                        HTMLid: "5",
+                        id: 3,
+                        HTMLid: "3",
+                        type: "fact",
                         text: {
-                            name: "Generally, inhumane treatment of animals should be stopped"
+                            name: "Therefore, the seal hunt should be stopped"
                         },
-                        children: []
+                        children: [
+                            {
+                                id: 7,
+                                HTMLid: "7",
+                                type: "reason",
+                                HTMLclass: "reason",
+                                text: {
+                                    name: "R"
+                                },
+                                children: [
+                                    {
+                                        id: 4,
+                                        HTMLid: "4",
+                                        type: "fact",
+                                        text: {
+                                            name: "The seal hunt is inhumane"
+                                        },
+                                        children: []
+                                    },
+                                    {
+                                        id: 5,
+                                        HTMLid: "5",
+                                        type: "fact",
+                                        text: {
+                                            name: "Generally, inhumane treatment of animals should be stopped"
+                                        },
+                                        children: []
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 ]
             }

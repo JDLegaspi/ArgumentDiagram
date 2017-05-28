@@ -38,27 +38,14 @@
 <script src="~/lib/treant-js/Treant.js"></script>
 <script src="~/diagrams/arg1.js"></script>
 <script>
-    console.log(chart_config);
     var chart = new Treant(chart_config);
-</script>
-<script>
-    function getObjects(obj, key, val) {
-        var objects = [];
-        for (var i in obj) {
-            if (!obj.hasOwnProperty(i)) continue;
-            if (typeof obj[i] == 'object') {
-                objects = objects.concat(getObjects(obj[i], key, val));
-            } else if (i == key && obj[key] == val) {
-                objects.push(obj);
-            }
-        }
-        return objects;
-    }
+    var count = 1;
 </script>
 <script>
     $('#btnSend').click(function () {
 
         var parentId = $('#parentId').val();
+        count += 1;
 
         if (!$('#argText').val() || !$('#parentId').val()) {
             window.alert("Something is missing, yo");
@@ -67,11 +54,15 @@
                 type: "POST",
                 url: '@Url.Action("AddNode")',
                 dataType: "json",
-                data: { argText: $('#argText').val(), id: 1 },
+                data: { argText: $('#argText').val(), id: count },
                 success: function (responseData) {
 
                     var object = getObjects(chart_config.nodeStructure, 'id', parentId);
-                    object[0].children.push(responseData);
+                    if (object[0].type == "fact") {
+                        object[0].children.push(reasonNode(responseData));
+                    } else {
+                        object[0].children.push(responseData);
+                    }
 
                     //chart_config.nodeStructure.children.push(responseData);
                     chart = new Treant(chart_config);                    
@@ -104,11 +95,13 @@
 
     $('#btnTest').click(function () {
         console.log(chart_config);
+        count = 1;
+        countNodes(chart_config.nodeStructure);
+        console.log(count);
     })
 
     $("#diagramDiv").on("click", "#basic-example > div", function () { 
-        $("#parentId").val(this.id);
-        console.log("Test: " + $("#parentId").val());
+        $("#parentId").val($(this)[0].id);
     });
 
     function saveText(text, filename) {

@@ -72,3 +72,17 @@ body {
     font-family: Tahoma;
     font-size: 12px;
 }
+
+.reason {
+    text-align: center;
+    padding: 2px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 12px;
+    background-color: #ffffff;
+    border: 1px solid #000;
+    width: 24px;
+    height: 24px;
+    font-family: Tahoma;
+    font-size: 12px;
+}
