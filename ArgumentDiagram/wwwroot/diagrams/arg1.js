@@ -3,7 +3,7 @@ var chart_config = {
         container: "#basic-example",
 
         connectors: {
-            type: 'step'
+            type: 'curve'
         },
         node: {
             HTMLclass: 'nodeExample1'
