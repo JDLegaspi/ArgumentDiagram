@@ -6,7 +6,7 @@
 <link rel="stylesheet" type="text/css" href="~/css/style.css" />
 
 <div class="container arg-container">
-    <div class="col-md-5">
+    <div class="col-md-4">
         <form id="argumentForm">
             <div class="form-group">
                 <label for="parentId">Parent ID:</label>
@@ -21,14 +21,16 @@
                 <textarea class="form-control" name="argText" id="argText"></textarea>
             </div>
         </form>
-        <button class="btn btn-default" id="btnSend">Submit</button>
-        <button class="btn btn-default" id="btnTest">Test</button>
-        <button class="btn btn-default" id="btnSave">Save</button>
-        <button class="btn btn-default" id="btnLoad">Load</button>
-        <input type="file" id="fileinput" />
+        <button class="btn btn-default" id="btnSend">Submit Node</button>
+        <button class="btn btn-default" id="btnDelete">Delete Node</button>
+        <button class="btn btn-default" id="btnEdit">Edit Node</button><br/>
+        <button class="btn btn-default" id="btnNew">New Chart</button>
+        <button class="btn btn-default" id="btnSave">Save Chart</button>
+        <button class="btn btn-default" id="btnLoad">Load Chart</button>
+        <input type="file" id="fileinput"/>
         <p>@ViewData["ConvertedWords"]</p>
     </div>
-    <div class="col-md-7" id="diagramDiv">
+    <div class="col-md-8" id="diagramDiv">
         <div class="chart" id="basic-example"></div>
     </div>
 </div>
@@ -90,15 +92,42 @@
                 chart_config = JSON.parse(e.target.result);
                 chart = new Treant(chart_config);  
             };
+        } else {
+            window.alert("No file chosen");
         }
     })
 
-    $('#btnTest').click(function () {
-        console.log(chart_config);
+    $('#btnNew').click(function () {
+        var conclusionText = window.prompt("Please enter a conclusion");
+        chart_config = newChart(conclusionText);
         count = 1;
-        countNodes(chart_config.nodeStructure);
-        console.log(count);
+        chart = new Treant(chart_config);  
     })
+
+    $('#btnDelete').click(function () {
+        if ($("#parentId").val()) {
+            console.log($("#parentId").val());
+            deleteNode(chart_config.nodeStructure, $("#parentId").val());
+            chart = new Treant(chart_config);
+        } else {
+            window.alert("Please select a node");
+        }
+    })
+
+    $('#btnEdit').click(function () {
+        if ($("#parentId").val()) {
+            if ($("#" + $("#parentId").val()).hasClass("reason")) {
+                window.alert("Can't edit reasoning node");
+            } else {
+                var editText = window.prompt("Edit text", $("#" + $("#parentId").val() + " > .node-name").html());
+                editNode(chart_config.nodeStructure, $("#parentId").val(), editText);
+                console.log("Edit Complete");
+                chart = new Treant(chart_config);
+            }
+        } else {
+          window.alert("Please select a node");
+        }
+    })   
 
     $("#diagramDiv").on("click", "#basic-example > div", function () { 
         $("#parentId").val($(this)[0].id);

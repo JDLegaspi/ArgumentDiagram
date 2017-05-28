@@ -48,7 +48,9 @@ body {
     width: 900px;
 }
 
-.Treant > .node {
+.Treant > .node:hover {
+    background-color: #DDDDDD;
+    cursor: pointer;
 }
 
 .Treant > p {
