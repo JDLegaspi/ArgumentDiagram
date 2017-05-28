@@ -21,14 +21,13 @@
                 <textarea class="form-control" name="argText" id="argText"></textarea>
             </div>
         </form>
-        <button class="btn btn-default" id="btnSend">Submit</button>
+        <button class="btn btn-default" id="btnSend">Submit Node</button>
         <button class="btn btn-default" id="btnDelete">Delete Node</button>
-        <button class="btn btn-default" id="btnEdit">Edit Node</button>
-        <button class="btn btn-default" id="btnTest">Test</button>
-        <button class="btn btn-default" id="btnSave">Save</button>
-        <button class="btn btn-default" id="btnLoad">Load</button>
-        <button class="btn btn-default" id="btnNew">New</button>
-        <input type="file" id="fileinput" />
+        <button class="btn btn-default" id="btnEdit">Edit Node</button><br/>
+        <button class="btn btn-default" id="btnNew">New Chart</button>
+        <button class="btn btn-default" id="btnSave">Save Chart</button>
+        <button class="btn btn-default" id="btnLoad">Load Chart</button>
+        <input type="file" id="fileinput"/>
         <p>@ViewData["ConvertedWords"]</p>
     </div>
     <div class="col-md-8" id="diagramDiv">
@@ -93,6 +92,8 @@
                 chart_config = JSON.parse(e.target.result);
                 chart = new Treant(chart_config);  
             };
+        } else {
+            window.alert("No file chosen");
         }
     })
 
@@ -126,14 +127,7 @@
         } else {
           window.alert("Please select a node");
         }
-    })
-
-    $('#btnTest').click(function () {
-        console.log(chart_config);
-        count = 1;
-        countNodes(chart_config.nodeStructure);
-        console.log(count);
-    })
+    })   
 
     $("#diagramDiv").on("click", "#basic-example > div", function () { 
         $("#parentId").val($(this)[0].id);
