@@ -22,9 +22,13 @@
             </div>
         </form>
         <button class="btn btn-default" id="btnSend">Submit</button>
+        <button class="btn btn-default" id="btnTest">Test</button>
+        <button class="btn btn-default" id="btnSave">Save</button>
+        <button class="btn btn-default" id="btnLoad">Load</button>
+        <input type="file" id="fileinput" />
         <p>@ViewData["ConvertedWords"]</p>
     </div>
-    <div class="col-md-7">
+    <div class="col-md-7" id="diagramDiv">
         <div class="chart" id="basic-example"></div>
     </div>
 </div>
@@ -35,25 +39,13 @@
 <script src="~/diagrams/arg1.js"></script>
 <script>
     var chart = new Treant(chart_config);
-</script>
-<script>
-    function getObjects(obj, key, val) {
-        var objects = [];
-        for (var i in obj) {
-            if (!obj.hasOwnProperty(i)) continue;
-            if (typeof obj[i] == 'object') {
-                objects = objects.concat(getObjects(obj[i], key, val));
-            } else if (i == key && obj[key] == val) {
-                objects.push(obj);
-            }
-        }
-        return objects;
-    }
+    var count = 1;
 </script>
 <script>
     $('#btnSend').click(function () {
 
         var parentId = $('#parentId').val();
+        count += 1;
 
         if (!$('#argText').val() || !$('#parentId').val()) {
             window.alert("Something is missing, yo");
@@ -62,14 +54,18 @@
                 type: "POST",
                 url: '@Url.Action("AddNode")',
                 dataType: "json",
-                data: { argText: $('#argText').val() },
+                data: { argText: $('#argText').val(), id: count },
                 success: function (responseData) {
 
                     var object = getObjects(chart_config.nodeStructure, 'id', parentId);
-                    object[0].children.push(responseData);
+                    if (object[0].type == "fact") {
+                        object[0].children.push(reasonNode(responseData));
+                    } else {
+                        object[0].children.push(responseData);
+                    }
 
                     //chart_config.nodeStructure.children.push(responseData);
-                    chart = new Treant(chart_config);
+                    chart = new Treant(chart_config);                    
 
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -80,4 +76,38 @@
             });
         }
     })
+
+    $('#btnSave').click(function () {
+        saveText(JSON.stringify(chart_config), "diagram.txt");
+    })
+
+    $('#btnLoad').click(function () {
+        var file = document.getElementById('fileinput').files[0];
+        if (file) {
+            var reader = new FileReader();
+            reader.readAsText(file);
+            reader.onload = function (e) {
+                chart_config = JSON.parse(e.target.result);
+                chart = new Treant(chart_config);  
+            };
+        }
+    })
+
+    $('#btnTest').click(function () {
+        console.log(chart_config);
+        count = 1;
+        countNodes(chart_config.nodeStructure);
+        console.log(count);
+    })
+
+    $("#diagramDiv").on("click", "#basic-example > div", function () { 
+        $("#parentId").val($(this)[0].id);
+    });
+
+    function saveText(text, filename) {
+        var a = document.createElement('a');
+        a.setAttribute('href', 'data:text/plain;charset=utf-u,' + encodeURIComponent(text));
+        a.setAttribute('download', filename);
+        a.click();
+    }
 </script>
