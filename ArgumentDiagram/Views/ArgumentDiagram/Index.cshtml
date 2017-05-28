@@ -22,9 +22,11 @@
             </div>
         </form>
         <button class="btn btn-default" id="btnSend">Submit</button>
+        <button class="btn btn-default" id="btnDelete">Delete Node</button>
         <button class="btn btn-default" id="btnTest">Test</button>
         <button class="btn btn-default" id="btnSave">Save</button>
         <button class="btn btn-default" id="btnLoad">Load</button>
+        <button class="btn btn-default" id="btnNew">New</button>
         <input type="file" id="fileinput" />
         <p>@ViewData["ConvertedWords"]</p>
     </div>
@@ -90,6 +92,23 @@
                 chart_config = JSON.parse(e.target.result);
                 chart = new Treant(chart_config);  
             };
+        }
+    })
+
+    $('#btnNew').click(function () {
+        var conclusionText = window.prompt("Please enter a conclusion");
+        chart_config = newChart(conclusionText);
+        count = 1;
+        chart = new Treant(chart_config);  
+    })
+
+    $('#btnDelete').click(function () {
+        if ($("#parentId").val()) {
+            console.log($("#parentId").val());
+            deleteNode(chart_config.nodeStructure, $("#parentId").val());
+            chart = new Treant(chart_config);
+        } else {
+            window.alert("Please select a node");
         }
     })
 
