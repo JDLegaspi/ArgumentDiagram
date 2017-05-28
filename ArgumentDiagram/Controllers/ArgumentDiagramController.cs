@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using System.Web.Script.Serialization;
 using ArgumentDiagram.Models;
 
 namespace ArgumentDiagram.Controllers
@@ -16,9 +15,9 @@ namespace ArgumentDiagram.Controllers
         }
 
         [HttpPost]
-        public JsonResult AddNode(String argText)
+        public JsonResult AddNode(String argText, int id)
         {
-            ArgumentDiagramModel childObject = new ArgumentDiagramModel(argText);
+            ArgumentDiagramModel childObject = new ArgumentDiagramModel(argText, id);
 
             return Json(childObject);
         }
