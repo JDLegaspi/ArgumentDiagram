@@ -11,11 +11,13 @@ namespace ArgumentDiagram.Models
         public TextModel text { get; set; }
         public List<ArgumentDiagramModel> children { get; set; }
         public string HTMLid;
+        public string type;
 
         public ArgumentDiagramModel(String description, int newId)
         {
             id = newId;
             HTMLid = newId.ToString();
+            type = "fact";
             children = new List<ArgumentDiagramModel>();
             TextModel textModel = new TextModel(description);
             text = textModel;

@@ -57,8 +57,12 @@
                 data: { argText: $('#argText').val(), id: count },
                 success: function (responseData) {
 
-                    var object = getObjects(chart_config.nodeStructure, 'id', parentId);                    
-                    object[0].children.push(responseData);
+                    var object = getObjects(chart_config.nodeStructure, 'id', parentId);
+                    if (object[0].type == "fact") {
+                        object[0].children.push(reasonNode(responseData));
+                    } else {
+                        object[0].children.push(responseData);
+                    }
 
                     //chart_config.nodeStructure.children.push(responseData);
                     chart = new Treant(chart_config);                    
@@ -98,7 +102,6 @@
 
     $("#diagramDiv").on("click", "#basic-example > div", function () { 
         $("#parentId").val($(this)[0].id);
-        console.log("Test: " + $("#parentId").val());
     });
 
     function saveText(text, filename) {
