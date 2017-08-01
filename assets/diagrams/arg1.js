@@ -1,5 +1,9 @@
 var chart_config = {
     chart: {
+        doc: {
+            title: 'Test',
+            text: 'This is the test document'
+        },
         container: "#basic-example",
         hideRootNode: true,
         connectors: {

@@ -31,8 +31,9 @@ function newNode(id, type, name, relia, accur, relev, unique) {
         },
         children: []
     };
-    node.innerHTML = nodeConstructor(node);
     console.log(node);
+    node.innerHTML = nodeConstructor(node);
+
     return node;
 }
 

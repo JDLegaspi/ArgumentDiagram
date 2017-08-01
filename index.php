@@ -14,7 +14,7 @@
                 <textarea class="form-control" name="argText" id="argText"></textarea>
             </div>
         </form>
-        <button class="btn btn-default" id="btwNewNode">New Node</button>
+        <button class="btn btn-default" id="btnNewNode">New Node</button>
         <button class="btn btn-default" id="btnConnect">Connect Nodes</button>
         <button class="btn btn-default" id="btnDelete">Delete Node</button>
         <button class="btn btn-default" id="btnEdit">Edit Node</button><br/>
@@ -46,58 +46,13 @@
     console.log(chart_config.nodeStructure);
 </script>
 <script>
-    $('#btwNewNode').click(function () {
-        count += 1;
-        var id = count;
-        var type = window.prompt("Type");
-        var name = window.prompt("Name");
-        var relia = parseFloat(window.prompt("Reliability"));
-        var accur = parseFloat(window.prompt("Accuracy"));
-        var relev = parseFloat(window.prompt("Relevancy"));
-        var unique = parseFloat(window.prompt("Uniqueness"));
-        chart_config.nodeStructure.children.push(newNode(id, type, name, relia, accur, relev, unique));
-        var chart = new Treant(chart_config);
+    $('#btnNewNode').click(function () {
+        $('#btnNewNode').modal('show')
     })
 
     $('#btnConnect').click(function () {
         selectParent = true;
         console.log("connect");
-    })
-
-    $('#btnSend').click(function () {
-
-        var parentId = $('#parentId').val();
-        count += 1;
-
-        if (!$('#argText').val() || !$('#parentId').val()) {
-            window.alert("Something is missing, yo");
-        } else {
-
-	        var childObject = {
-	                        id: count,
-	                        HTMLid: count.toString(),
-	                        type: "fact",
-	                        text: {
-	                            name: $('#argText').val()
-	                        },
-	                        children: []
-	                    }
-
-
-			var object = getObjects(chart_config.nodeStructure, 'id', parentId);
-
-			console.log(object);
-
-			if (object[0].type == "fact") {
-			    object[0].children.push(reasonNode(childObject));
-			} else {
-			    object[0].children.push(childObject);
-			}
-
-			console.log(object);
-
-			chart = new Treant(chart_config);
-		}
     })
 
     $('#btnSave').click(function () {
