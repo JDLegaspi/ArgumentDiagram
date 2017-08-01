@@ -1,9 +1,6 @@
-@{
-    ViewData["Title"] = "ArgumentDiagram";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+<?php include 'header.php'; ?>
 
-<link rel="stylesheet" type="text/css" href="~/css/style.css" />
+<link rel="stylesheet" type="text/css" href="assets/css/style.css" />
 
 <div class="container arg-container">
     <div class="col-md-4">
@@ -12,10 +9,6 @@
                 <label for="parentId">Parent ID:</label>
                 <input type="number" step="1" class="form-control" name="parentId" id="parentId" />
             </div>            
-            <!--<div class="form-group">
-                <label for="newId">New ID:</label>
-                <input type="number" step="1" class="form-control" name="newId" id="newId" />
-            </div>-->
             <div class="form-group">
                 <label for="argText">Argument:</label>
                 <textarea class="form-control" name="argText" id="argText"></textarea>
@@ -28,17 +21,16 @@
         <button class="btn btn-default" id="btnSave">Save Chart</button>
         <button class="btn btn-default" id="btnLoad">Load Chart</button>
         <input type="file" id="fileinput"/>
-        <p>@ViewData["ConvertedWords"]</p>
     </div>
     <div class="col-md-8" id="diagramDiv">
         <div class="chart" id="basic-example"></div>
     </div>
 </div>
 
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/treant-js/vendor/raphael.js"></script>
-<script src="~/lib/treant-js/Treant.js"></script>
-<script src="~/diagrams/arg1.js"></script>
+<script src="assets/lib/jquery/dist/jquery.min.js"></script>
+<script src="assets/lib/treant-js/vendor/raphael.js"></script>
+<script src="assets/lib/treant-js/Treant.js"></script>
+<script src="assets/diagrams/arg1.js"></script>
 <script>
     var chart = new Treant(chart_config);
     var count = 1;
@@ -50,6 +42,36 @@
         count += 1;
 
         if (!$('#argText').val() || !$('#parentId').val()) {
+            window.alert("Something is missing, yo");
+        } else {
+
+	        var childObject = {
+	                        id: count,
+	                        HTMLid: count.toString(),
+	                        type: "fact",
+	                        text: {
+	                            name: $('#argText').val()
+	                        },
+	                        children: []
+	                    }
+
+			
+			var object = getObjects(chart_config.nodeStructure, 'id', parentId);
+
+			console.log(object);
+
+			if (object[0].type == "fact") {
+			    object[0].children.push(reasonNode(childObject));
+			} else {
+			    object[0].children.push(childObject);
+			}
+
+			console.log(object);
+
+			chart = new Treant(chart_config);
+		}
+
+        /*if (!$('#argText').val() || !$('#parentId').val()) {
             window.alert("Something is missing, yo");
         } else {
             $.ajax({
@@ -76,7 +98,7 @@
                 }
 
             });
-        }
+        }*/
     })
 
     $('#btnSave').click(function () {
@@ -140,3 +162,5 @@
         a.click();
     }
 </script>
+
+<?php include 'footer.php'; ?>
