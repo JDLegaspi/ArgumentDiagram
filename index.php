@@ -8,13 +8,14 @@
             <div class="form-group">
                 <label for="parentId">Parent ID:</label>
                 <input type="number" step="1" class="form-control" name="parentId" id="parentId" />
-            </div>            
+            </div>
             <div class="form-group">
                 <label for="argText">Argument:</label>
                 <textarea class="form-control" name="argText" id="argText"></textarea>
             </div>
         </form>
-        <button class="btn btn-default" id="btnSend">Submit Node</button>
+        <button class="btn btn-default" id="btwNewNode">New Node</button>
+        <button class="btn btn-default" id="btnConnect">Connect Nodes</button>
         <button class="btn btn-default" id="btnDelete">Delete Node</button>
         <button class="btn btn-default" id="btnEdit">Edit Node</button><br/>
         <button class="btn btn-default" id="btnNew">New Chart</button>
@@ -31,11 +32,38 @@
 <script src="assets/lib/treant-js/vendor/raphael.js"></script>
 <script src="assets/lib/treant-js/Treant.js"></script>
 <script src="assets/diagrams/arg1.js"></script>
+<script src="assets/js/site.js"></script>
 <script>
+    console.log(chart_config.nodeStructure.name);
+    chart_config.nodeStructure.children[0].innerHTML = nodeConstructor(chart_config.nodeStructure.children[0]);
+    chart_config.nodeStructure.children[1].innerHTML = nodeConstructor(chart_config.nodeStructure.children[1]);
     var chart = new Treant(chart_config);
     var count = 1;
+    var selectParent = false;
+    var selectChild = false;
+    var parent;
+    var child;
+    console.log(chart_config.nodeStructure);
 </script>
 <script>
+    $('#btwNewNode').click(function () {
+        count += 1;
+        var id = count;
+        var type = window.prompt("Type");
+        var name = window.prompt("Name");
+        var relia = parseFloat(window.prompt("Reliability"));
+        var accur = parseFloat(window.prompt("Accuracy"));
+        var relev = parseFloat(window.prompt("Relevancy"));
+        var unique = parseFloat(window.prompt("Uniqueness"));
+        chart_config.nodeStructure.children.push(newNode(id, type, name, relia, accur, relev, unique));
+        var chart = new Treant(chart_config);
+    })
+
+    $('#btnConnect').click(function () {
+        selectParent = true;
+        console.log("connect");
+    })
+
     $('#btnSend').click(function () {
 
         var parentId = $('#parentId').val();
@@ -55,7 +83,7 @@
 	                        children: []
 	                    }
 
-			
+
 			var object = getObjects(chart_config.nodeStructure, 'id', parentId);
 
 			console.log(object);
@@ -70,35 +98,6 @@
 
 			chart = new Treant(chart_config);
 		}
-
-        /*if (!$('#argText').val() || !$('#parentId').val()) {
-            window.alert("Something is missing, yo");
-        } else {
-            $.ajax({
-                type: "POST",
-                url: '@Url.Action("AddNode")',
-                dataType: "json",
-                data: { argText: $('#argText').val(), id: count },
-                success: function (responseData) {
-
-                    var object = getObjects(chart_config.nodeStructure, 'id', parentId);
-                    if (object[0].type == "fact") {
-                        object[0].children.push(reasonNode(responseData));
-                    } else {
-                        object[0].children.push(responseData);
-                    }
-
-                    //chart_config.nodeStructure.children.push(responseData);
-                    chart = new Treant(chart_config);                    
-
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    console.log("Failure! " + xhr.responseText);
-                    console.log(thrownError);
-                }
-
-            });
-        }*/
     })
 
     $('#btnSave').click(function () {
@@ -112,7 +111,7 @@
             reader.readAsText(file);
             reader.onload = function (e) {
                 chart_config = JSON.parse(e.target.result);
-                chart = new Treant(chart_config);  
+                chart = new Treant(chart_config);
             };
         } else {
             window.alert("No file chosen");
@@ -123,7 +122,7 @@
         var conclusionText = window.prompt("Please enter a conclusion");
         chart_config = newChart(conclusionText);
         count = 1;
-        chart = new Treant(chart_config);  
+        chart = new Treant(chart_config);
     })
 
     $('#btnDelete').click(function () {
@@ -149,10 +148,23 @@
         } else {
           window.alert("Please select a node");
         }
-    })   
+    })
 
-    $("#diagramDiv").on("click", "#basic-example > div", function () { 
+    $("#diagramDiv").on("click", "#basic-example > div", function () {
         $("#parentId").val($(this)[0].id);
+        console.log(findNode($(this)[0].id, chart_config.nodeStructure));
+        if (selectParent) {
+            selectParent = false;
+            selectChild = true;
+            parent = findNode($(this)[0].id, chart_config.nodeStructure);
+        } else if (selectChild) {
+            selectChild = false;
+            child = findNode($(this)[0].id, chart_config.nodeStructure);
+            deleteNode(chart_config.nodeStructure, child.id);
+            var object = getObjects(chart_config.nodeStructure, 'id', parent.id);
+            object[0].children.push(child);
+            chart = new Treant(chart_config);
+        }
     });
 
     function saveText(text, filename) {
