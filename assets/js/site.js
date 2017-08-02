@@ -1,6 +1,24 @@
-﻿countNodes(chart_config.nodeStructure);
 var globablVars = {};
 
+// App initialisation
+function initialise() {
+    // Code for testing purposes with dummy data
+    chart_config.nodeStructure.children[0].innerHTML = nodeConstructor(chart_config.nodeStructure.children[0]);
+    chart_config.nodeStructure.children[1].innerHTML = nodeConstructor(chart_config.nodeStructure.children[1]);
+
+    // Getting a count to be used for Node IDs
+    globablVars.count = 1;
+    countNodes(chart_config.nodeStructure);
+
+    // Global variables used for connecting nodes
+    globablVars.selectParent = false;
+    globablVars.selectChild = false;
+
+    // Draw chart
+    var chart = new Treant(chart_config);
+}
+
+// Generate and return HTML for nodes
 function nodeConstructor(node) {
     var text = "<p>";
     text += node.name + "</p>";
@@ -13,6 +31,7 @@ function nodeConstructor(node) {
     return text;
 }
 
+// Create and return new nodes
 function newNode(id, type, name, relia, accur, relev, unique) {
     var node = {
         id: id,
@@ -31,12 +50,11 @@ function newNode(id, type, name, relia, accur, relev, unique) {
         },
         children: []
     };
-    console.log(node);
     node.innerHTML = nodeConstructor(node);
-
     return node;
 }
 
+// Finds and returns nodes from an ID
 function findNode(id, obj) {
     if (obj.id == id) {
         return obj;
@@ -48,7 +66,7 @@ function findNode(id, obj) {
             }
         }
     } else {
-        window.alert("OBJ NOT FOUND");
+        window.alert("ERROR: NODE NOT FOUND");
     }
     return object;
 }
@@ -60,30 +78,33 @@ function getObjects(obj, key, val) {
         if (typeof obj[i] == 'object') {
             objects = objects.concat(getObjects(obj[i], key, val));
         } else if (i == key && obj[key] == val) {
-            if (obj['type'] == 'reason') {
-                objects.push(obj);
-            } else {
-                if (obj['children'][0] && obj['children'][0]['type'] == 'reason') {
-                    objects.push(obj['children'][0]);
-                    console.log(objects);
-                } else {
-                    objects.push(obj);
-                }
-            }
+            objects.push(obj);
+            // if (obj['type'] == 'reason') {
+            //     objects.push(obj);
+            // } else {
+            //     if (obj['children'][0] && obj['children'][0]['type'] == 'reason') {
+            //         objects.push(obj['children'][0]);
+            //         console.log(objects);
+            //     } else {
+            //         objects.push(obj);
+            //     }
+            // }
         }
     }
     return objects;
 }
 
+// Iterates through the chart to get a count of all nodes
 function countNodes(obj) {
     if (obj.hasOwnProperty('children')) {
-        count += obj.children.length;
+        globablVars.count += obj.children.length;
         for (var i = 0; i < obj.children.length; i++) {
             countNodes(obj.children[i]);
         }
     }
 }
 
+// Deletes nodes from the chart, including any of its children
 function deleteNode(obj, nodeId) {
     if (obj.hasOwnProperty('children')) {
         for (var i = 0; i < obj.children.length; i++) {
@@ -102,6 +123,7 @@ function deleteNode(obj, nodeId) {
     }
 }
 
+// Changes node values
 function editNode(obj, nodeId, editText) {
     if (obj.id == nodeId) {
         obj.text.name = editText;
@@ -114,12 +136,13 @@ function editNode(obj, nodeId, editText) {
     }
 }
 
+// Appends nodes to a reasoning node before adding them to the chart
 function reasonNode(child) {
-    count++;
+    globablVars.count++;
     var reason =
         {
-            id: count,
-            HTMLid: count.toString(),
+            id: globablVars.count,
+            HTMLid: globablVars.count.toString(),
             type: "reason",
             HTMLclass: "reason",
             text: {
@@ -128,29 +151,4 @@ function reasonNode(child) {
             children: [child]
         };
     return reason;
-}
-
-function newChart(conclusion) {
-    var chart_config = {
-        chart: {
-            container: "#basic-example",
-
-            connectors: {
-                type: 'curve'
-            },
-            node: {
-                HTMLclass: 'nodeExample1'
-            }
-        },
-        nodeStructure: {
-            id: 1,
-            HTMLid: "1",
-            type: "fact",
-            text: {
-                name: conclusion
-            },
-            children: []
-        }
-    };
-    return chart_config;
 }

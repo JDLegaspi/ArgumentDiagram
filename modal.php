@@ -25,8 +25,9 @@
 <script>
 $('#submit').click(function () {
     console.log("test");
-    count += 1;
-    var id = count;
+    globablVars.count += 1;
+    console.log(globablVars.count);
+    var id = globablVars.count;
     var type = "dc";
     var name = $('#nodename').val();
     var relia = parseFloat($('#reliability').val());
