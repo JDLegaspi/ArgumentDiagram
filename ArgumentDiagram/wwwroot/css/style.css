@@ -48,6 +48,10 @@ body {
     width: 900px;
 }
 
+.Treant > .node, .Treant > .pseudo {
+    position: absolute;
+}
+
 .Treant > .node:hover {
     background-color: #DDDDDD;
     cursor: pointer;
