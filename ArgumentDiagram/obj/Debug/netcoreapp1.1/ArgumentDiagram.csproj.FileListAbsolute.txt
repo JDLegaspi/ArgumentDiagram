@@ -1,0 +1,330 @@
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\ArgumentDiagram.deps.json
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\ArgumentDiagram.runtimeconfig.json
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\ArgumentDiagram.runtimeconfig.dev.json
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\ArgumentDiagram.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\obj\Debug\netcoreapp1.1\ArgumentDiagram.csprojResolveAssemblyReference.cache
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\obj\Debug\netcoreapp1.1\ArgumentDiagram.AssemblyInfo.cs
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\ArgumentDiagram.pdb
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\obj\Debug\netcoreapp1.1\ArgumentDiagram.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\obj\Debug\netcoreapp1.1\ArgumentDiagram.pdb
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\ArgumentDiagram.deps.json
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\ArgumentDiagram.runtimeconfig.json
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\ArgumentDiagram.runtimeconfig.dev.json
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\ArgumentDiagram.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\ArgumentDiagram.pdb
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\obj\Debug\netcoreapp1.1\ArgumentDiagram.csprojResolveAssemblyReference.cache
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\obj\Debug\netcoreapp1.1\ArgumentDiagram.AssemblyInfo.cs
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\obj\Debug\netcoreapp1.1\ArgumentDiagram.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\obj\Debug\netcoreapp1.1\ArgumentDiagram.pdb
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Web.Extensions.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.ServiceModel.Activation.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Runtime.Serialization.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Web.ApplicationServices.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Web.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Configuration.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.ServiceModel.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Xml.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Web.Services.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Core.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.Linq.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Drawing.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Windows.Forms.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.ServiceModel.Web.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.Services.Client.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.Services.Design.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.Entity.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Design.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Runtime.DurableInstancing.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Transactions.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Web.RegularExpressions.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.ServiceModel.Activities.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Activities.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Xaml.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Xml.Linq.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\Microsoft.Build.Framework.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Runtime.Caching.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\Microsoft.Build.Utilities.v4.0.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.DirectoryServices.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.DirectoryServices.Protocols.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.EnterpriseServices.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\Microsoft.Build.Tasks.v4.0.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.ServiceProcess.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Security.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.IdentityModel.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Messaging.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.IdentityModel.Selectors.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.SqlXml.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\Microsoft.VisualC.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Numerics.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\Accessibility.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Runtime.Serialization.Formatters.Soap.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Deployment.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Drawing.Design.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.OracleClient.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Activities.DurableInstancing.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Runtime.Remoting.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Configuration.Install.dll
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Web.Extensions.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.ServiceModel.Activation.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Runtime.Serialization.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Web.ApplicationServices.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Web.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Configuration.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.ServiceModel.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Xml.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Web.Services.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Core.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.Linq.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Drawing.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Windows.Forms.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.ServiceModel.Web.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.Services.Client.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.Services.Design.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.Entity.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Design.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Runtime.DurableInstancing.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Transactions.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Web.RegularExpressions.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.ServiceModel.Activities.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Activities.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Xaml.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Xml.Linq.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\Microsoft.Build.Framework.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Runtime.Caching.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\Microsoft.Build.Utilities.v4.0.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.DirectoryServices.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.DirectoryServices.Protocols.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.EnterpriseServices.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\Microsoft.Build.Tasks.v4.0.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.ServiceProcess.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Security.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.IdentityModel.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Messaging.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.IdentityModel.Selectors.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.SqlXml.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\Microsoft.VisualC.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Numerics.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\Accessibility.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Runtime.Serialization.Formatters.Soap.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Deployment.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Drawing.Design.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.OracleClient.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Activities.DurableInstancing.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Runtime.Remoting.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Configuration.Install.xml
+C:\Users\JD Legaspi\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.EnterpriseServices.Wrapper.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Web.Extensions.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.ServiceModel.Activation.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Runtime.Serialization.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Web.ApplicationServices.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Web.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Configuration.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.ServiceModel.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Xml.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Web.Services.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Core.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.Linq.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Drawing.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Windows.Forms.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.ServiceModel.Web.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.Services.Client.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.Services.Design.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.Entity.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Design.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Runtime.DurableInstancing.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Transactions.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Web.RegularExpressions.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.ServiceModel.Activities.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Activities.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Xaml.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Xml.Linq.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\Microsoft.Build.Framework.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Runtime.Caching.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\Microsoft.Build.Utilities.v4.0.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.DirectoryServices.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.DirectoryServices.Protocols.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.EnterpriseServices.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\Microsoft.Build.Tasks.v4.0.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.ServiceProcess.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Security.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.IdentityModel.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Messaging.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.IdentityModel.Selectors.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.SqlXml.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\Microsoft.VisualC.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Numerics.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\Accessibility.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Runtime.Serialization.Formatters.Soap.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Deployment.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Drawing.Design.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.OracleClient.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Activities.DurableInstancing.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Runtime.Remoting.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Configuration.Install.dll
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Web.Extensions.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.ServiceModel.Activation.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Runtime.Serialization.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Web.ApplicationServices.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Web.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Configuration.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.ServiceModel.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Xml.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Web.Services.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Core.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.Linq.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Drawing.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Windows.Forms.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.ServiceModel.Web.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.Services.Client.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.Services.Design.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.Entity.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Design.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Runtime.DurableInstancing.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Transactions.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Web.RegularExpressions.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.ServiceModel.Activities.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Activities.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Xaml.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Xml.Linq.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\Microsoft.Build.Framework.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Runtime.Caching.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\Microsoft.Build.Utilities.v4.0.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.DirectoryServices.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.DirectoryServices.Protocols.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.EnterpriseServices.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\Microsoft.Build.Tasks.v4.0.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.ServiceProcess.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Security.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.IdentityModel.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Messaging.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.IdentityModel.Selectors.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.SqlXml.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\Microsoft.VisualC.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Numerics.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\Accessibility.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Runtime.Serialization.Formatters.Soap.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Deployment.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Drawing.Design.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.OracleClient.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Activities.DurableInstancing.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Runtime.Remoting.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Configuration.Install.xml
+C:\Users\JD\Dropbox\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.EnterpriseServices.Wrapper.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\ArgumentDiagram.deps.json
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\ArgumentDiagram.runtimeconfig.json
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\ArgumentDiagram.runtimeconfig.dev.json
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\ArgumentDiagram.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\ArgumentDiagram.pdb
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Web.Extensions.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.ServiceModel.Activation.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Runtime.Serialization.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Web.ApplicationServices.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Web.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Configuration.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.ServiceModel.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Xml.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Web.Services.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Core.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.Linq.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Drawing.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Windows.Forms.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.ServiceModel.Web.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.Services.Client.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.Services.Design.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.Entity.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Design.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Runtime.DurableInstancing.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Transactions.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Web.RegularExpressions.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.ServiceModel.Activities.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Activities.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Xaml.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Xml.Linq.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\Microsoft.Build.Framework.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Runtime.Caching.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\Microsoft.Build.Utilities.v4.0.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.DirectoryServices.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.DirectoryServices.Protocols.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.EnterpriseServices.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\Microsoft.Build.Tasks.v4.0.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.ServiceProcess.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Security.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.IdentityModel.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Messaging.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.IdentityModel.Selectors.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.SqlXml.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\Microsoft.VisualC.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Numerics.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\Accessibility.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Runtime.Serialization.Formatters.Soap.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Deployment.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Drawing.Design.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.OracleClient.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Activities.DurableInstancing.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Runtime.Remoting.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Configuration.Install.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Web.Extensions.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.ServiceModel.Activation.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Runtime.Serialization.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Web.ApplicationServices.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Web.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Configuration.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.ServiceModel.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Xml.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Web.Services.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Core.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.Linq.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Drawing.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Windows.Forms.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.ServiceModel.Web.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.Services.Client.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.Services.Design.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.Entity.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Design.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Runtime.DurableInstancing.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Transactions.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Web.RegularExpressions.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.ServiceModel.Activities.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Activities.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Xaml.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Xml.Linq.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\Microsoft.Build.Framework.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Runtime.Caching.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\Microsoft.Build.Utilities.v4.0.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.DirectoryServices.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.DirectoryServices.Protocols.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.EnterpriseServices.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\Microsoft.Build.Tasks.v4.0.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.ServiceProcess.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Security.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.IdentityModel.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Messaging.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.IdentityModel.Selectors.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.SqlXml.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\Microsoft.VisualC.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Numerics.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\Accessibility.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Runtime.Serialization.Formatters.Soap.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Deployment.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Drawing.Design.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Data.OracleClient.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Activities.DurableInstancing.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Runtime.Remoting.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.Configuration.Install.xml
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\obj\Debug\netcoreapp1.1\ArgumentDiagram.csprojResolveAssemblyReference.cache
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\obj\Debug\netcoreapp1.1\ArgumentDiagram.AssemblyInfo.cs
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\obj\Debug\netcoreapp1.1\ArgumentDiagram.dll
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\obj\Debug\netcoreapp1.1\ArgumentDiagram.pdb
+C:\Users\JD Legaspi\Desktop\ArgumentDiagram\ArgumentDiagram\bin\Debug\netcoreapp1.1\System.EnterpriseServices.Wrapper.dll
