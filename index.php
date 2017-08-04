@@ -1,11 +1,6 @@
 <?php include 'header.php'; ?>
 
-<<<<<<< HEAD:ArgumentDiagram/Views/ArgumentDiagram/Index.cshtml
-<link rel="stylesheet" type="text/css" href="~/css/style.css" />
-<link rel="stylesheet" type="text/css" href="~/lib/treant-js/Treant.css" />
-=======
 <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
->>>>>>> cd32ff314576713bde23d51c16b0b59591a09a18:index.php
 
 <div class="container arg-container">
     <div class="col-md-4">
