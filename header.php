@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ArgumentDiagram</title>   
+    <title>ArgumentDiagram</title>
 
     <environment names="Development">
         <link rel="stylesheet" href="assets/lib/bootstrap/dist/css/bootstrap.css" />
@@ -18,7 +18,7 @@
     </environment>
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
-<body>
+<body onload="initialise();">
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">

@@ -1,7 +1,11 @@
 var chart_config = {
     chart: {
+        doc: {
+            title: 'Test',
+            text: 'This is the test document'
+        },
         container: "#basic-example",
-
+        hideRootNode: true,
         connectors: {
             type: 'curve'
         },
@@ -12,69 +16,40 @@ var chart_config = {
     nodeStructure: {
         id: 1,
         HTMLid: "1",
-        type: "fact",
-        text: {
-            name: "Therefore, we should boycott Canadian seafood"
-        },
         children: [
             {
-                id: 6,
-                HTMLid: "6",
-                type: "reason",
-                HTMLclass: "reason",
-                text: {
-                    name: "R"
+                id: 2,
+                HTMLid: "2",
+                type: "dc",
+                name: "Node 1",
+                attributes: {
+                  reliability: 1,
+                  accuracy: 1,
+                  relevancy: 1,
+                  uniqueness: 1
                 },
-                children: [
-                    {
-                        id: 2,
-                        HTMLid: "2",
-                        type: "fact",
-                        text: {
-                            name: "We can help to stop the seal hunt by boycotting Canadian Seafood"
-                        },
-                        children: []
-                    },
-                    {
-                        id: 3,
-                        HTMLid: "3",
-                        type: "fact",
-                        text: {
-                            name: "Therefore, the seal hunt should be stopped"
-                        },
-                        children: [
-                            {
-                                id: 7,
-                                HTMLid: "7",
-                                type: "reason",
-                                HTMLclass: "reason",
-                                text: {
-                                    name: "R"
-                                },
-                                children: [
-                                    {
-                                        id: 4,
-                                        HTMLid: "4",
-                                        type: "fact",
-                                        text: {
-                                            name: "The seal hunt is inhumane"
-                                        },
-                                        children: []
-                                    },
-                                    {
-                                        id: 5,
-                                        HTMLid: "5",
-                                        type: "fact",
-                                        text: {
-                                            name: "Generally, inhumane treatment of animals should be stopped"
-                                        },
-                                        children: []
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                ]
+                linktext: {
+                  start: 0,
+                  end: 12
+                },
+                children: []
+            },
+            {
+                id: 3,
+                HTMLid: "3",
+                type: "dc",
+                name: "Node 2",
+                attributes: {
+                  reliability: 1,
+                  accuracy: 1,
+                  relevancy: 1,
+                  uniqueness: 1
+                },
+                linktext: {
+                  start: 0,
+                  end: 12
+                },
+                children: []
             }
         ]
     }

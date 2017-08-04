@@ -4,6 +4,8 @@
         </footer>
     </div>
 
+    <?php include 'modal.php'; ?>
+
     <environment names="Development">
         <script src="assets/lib/jquery/dist/jquery.js"></script>
         <script src="assets/lib/bootstrap/dist/js/bootstrap.js"></script>
