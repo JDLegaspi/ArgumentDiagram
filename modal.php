@@ -24,7 +24,7 @@
 
 <div id="nodeFunctionsWrapper">
   <div id="nodeFunctions">
-    <button class="btn btn-default" id="btnConnect">Connect Nodes</button>
+    <button class="btn btn-default" id="btnConnect">Connect Node</button>
     <button class="btn btn-default" id="btnEdit">Edit Node</button>
     <button class="btn btn-default" id="btnDelete">Delete Node</button>
   </div>

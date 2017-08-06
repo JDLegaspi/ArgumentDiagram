@@ -20,7 +20,9 @@ $(document).mousemove(function(e) {
 //show popup dialog on node click
 $('#diagramDiv').on('click', '#basic-example > div', function() {
 
-    $("#nodeFunctionsWrapper").fadeIn(200);
+    if (!globablVars.selectParent) {
+        $("#nodeFunctionsWrapper").fadeIn(200);
+    }
 
     var containerWidth = $("#nodeFunctionsWrapper").outerWidth();
     var containerHeight = $("#nodeFunctionsWrapper").outerHeight();
@@ -76,9 +78,9 @@ $('#diagramDiv').on('click', '#basic-example > div', function() {
     });
 
     $('#nodeFunctionsWrapper').on('click', '#btnConnect', function () {
+        globablVars.child = findNode($("#parentId").val(), chart_config.nodeStructure);
         globablVars.selectParent = true;
-        globablVars.selectChild = false;
-        console.log("connect");
+        console.log(globablVars.child);
         var x = document.getElementById("snackbar")
         x.className = "show";
         x.innerHTML = "Select Parent Node";
@@ -119,15 +121,14 @@ $('#btnNew').click(function () {
 $("#diagramDiv").on("click", "#basic-example > div", function () {
     $("#parentId").val($(this)[0].id);
     console.log(findNode($(this)[0].id, chart_config.nodeStructure));
+    
+    //this only activates if user has clicked "connect node"
     if (globablVars.selectParent) {
         globablVars.selectParent = false;
-        globablVars.selectChild = true;
+        // globablVars.selectChild = true;
         globablVars.parent = findNode($(this)[0].id, chart_config.nodeStructure);
         var x = document.getElementById("snackbar");
-        x.innerHTML = "Select Child Node(s)";
-    } else if (globablVars.selectChild) {
-        globablVars.selectChild = false;
-        globablVars.child = findNode($(this)[0].id, chart_config.nodeStructure);
+        //x.innerHTML = "Select Child Node(s)";
         deleteNode(chart_config.nodeStructure, globablVars.child.id);
         var object = getObjects(chart_config.nodeStructure, 'id', globablVars.parent.id);
         if (object[0].type == "reason") {

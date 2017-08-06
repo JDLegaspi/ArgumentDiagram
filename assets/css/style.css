@@ -46,7 +46,7 @@ body {
 .chart {
     /* height: 600px; */
     margin: 5px;
-    /* width: 900px; */
+    width: auto;
 }
 
 .Treant > .node, .Treant > .pseudo {
@@ -123,8 +123,5 @@ body {
 }
 
 #fileinput {
-    position: fixed;
-    top: -20px;
-    left: -20px;
-    display: hidden;
+    display: none;
 }
