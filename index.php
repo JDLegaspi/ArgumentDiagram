@@ -14,20 +14,17 @@
                 <textarea class="form-control" name="argText" id="argText"></textarea>
             </div>
         </form>
-        <button class="btn btn-default" id="btnNewNode">New Node</button>
-        <button class="btn btn-default" id="btnConnect">Connect Nodes</button>
-        <button class="btn btn-default" id="btnDelete">Delete Node</button>
-        <button class="btn btn-default" id="btnEdit">Edit Node</button><br/>
-        <button class="btn btn-default" id="btnNew">New Chart</button>
-        <button class="btn btn-default" id="btnSave">Save Chart</button>
-        <button class="btn btn-default" id="btnLoad">Load Chart</button>
         <input type="file" id="fileinput"/>
         <div id="snackbar"></div>
     </div>
     <div class="col-md-8" id="diagramDiv">
-        <div class="chart" id="basic-example"></div>
+        <div class="row btn-new-node-wrapper">
+            <button class="btn btn-default" id="btnNewNode">New Node</button>
+        </div>
+        <div class="row chart" id="basic-example"></div>
     </div>
 </div>
+
 
 <script src="assets/lib/jquery/dist/jquery.min.js"></script>
 <script src="assets/lib/treant-js/vendor/raphael.js"></script>
@@ -35,5 +32,7 @@
 <script src="assets/diagrams/arg1.js"></script>
 <script src="assets/js/site.js"></script>
 <script src="assets/js/events.js"></script>
+
+<?php include 'modal.php'; ?>
 
 <?php include 'footer.php'; ?>

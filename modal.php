@@ -22,6 +22,14 @@
   </div>
 </div>
 
+<div id="nodeFunctionsWrapper">
+  <div id="nodeFunctions">
+    <button class="btn btn-default" id="btnConnect">Connect Nodes</button>
+    <button class="btn btn-default" id="btnEdit">Edit Node</button>
+    <button class="btn btn-default" id="btnDelete">Delete Node</button>
+  </div>
+</div>
+
 <script>
 $('#submit').click(function () {
     console.log("test");
@@ -36,5 +44,5 @@ $('#submit').click(function () {
     var unique = parseFloat($('#uniqueness').val());
     chart_config.nodeStructure.children.push(newNode(id, type, name, relia, accur, relev, unique));
     var chart = new Treant(chart_config);
-})
+});
 </script>

@@ -16,10 +16,9 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="assets/css/site.min.css" asp-append-version="true" />
     </environment>
-    @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
 <body onload="initialise();">
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-inverse">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -31,8 +30,12 @@
                 <a asp-area="" asp-controller="ArgumentDiagram" asp-action="Index" class="navbar-brand">ArgumentDiagram</a>
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="ArgumentDiagram" asp-action="Index">Home</a></li>
+                <ul class="nav navbar-nav top-nav">
+                    <li><a class="btn" id="btnNew">New</a></li>
+                    <li><a class="btn" id="btnSave">Save</a></li>
+                    <li><a href="javascript:document.getElementById('fileinput').click();" class="btn" id="btnLoad">Load</a></li>
+                    <li><a class="btn">Export</a></li>
+                    <li><a class="btn">Help</a></li>
                 </ul>
             </div>
         </div>

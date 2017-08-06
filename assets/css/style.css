@@ -1,5 +1,6 @@
 ﻿.arg-container {
-    padding: 70px 0;
+    padding-top: 40px;
+    height: 80vh;
 }
 
 body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td {
@@ -43,9 +44,9 @@ body {
 }
 /* optional Container STYLES */
 .chart {
-    height: 600px;
+    /* height: 600px; */
     margin: 5px;
-    width: 900px;
+    /* width: 900px; */
 }
 
 .Treant > .node, .Treant > .pseudo {
@@ -91,4 +92,32 @@ body {
     height: 24px;
     font-family: Tahoma;
     font-size: 12px;
+}
+
+.btn-new-node-wrapper {
+    padding-bottom: 40px;
+    width: 100%;
+    text-align: center;
+}
+
+#nodeFunctionsWrapper {
+    padding: 30px;
+    width: 210px;
+    display: none;
+    position: absolute;
+}
+
+#nodeFunctions {
+    border: 1px solid #000;
+    background: #fff;
+    height: auto;
+    width: 100%;
+    text-align: center;
+}
+
+#nodeFunctions button {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    border: none;
 }
