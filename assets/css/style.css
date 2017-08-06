@@ -121,3 +121,10 @@ body {
     width: 100%;
     border: none;
 }
+
+#fileinput {
+    position: fixed;
+    top: -20px;
+    left: -20px;
+    display: hidden;
+}
