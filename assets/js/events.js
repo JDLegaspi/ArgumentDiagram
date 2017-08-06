@@ -128,14 +128,27 @@ $("#diagramDiv").on("click", "#basic-example > div", function () {
         // globablVars.selectChild = true;
         globablVars.parent = findNode($(this)[0].id, chart_config.nodeStructure);
         var x = document.getElementById("snackbar");
-        //x.innerHTML = "Select Child Node(s)";
         deleteNode(chart_config.nodeStructure, globablVars.child.id);
         var object = getObjects(chart_config.nodeStructure, 'id', globablVars.parent.id);
+        
         if (object[0].type == "reason") {
-            object[0].children.push(globablVars.child);
+            if (globablVars.child.type == "reason") {
+                for (var i = 0; i < globablVars.child.children.length; i++) {
+                    object[0].children.push(globablVars.child.children[i]);
+                }
+            } else {
+                object[0].children.push(globablVars.child);
+            }
         } else {
-            object[0].children.push(reasonNode(globablVars.child));
+            if (globablVars.child.type == "reason") {
+                for (var i = 0; i < globablVars.child.children.length; i++) {
+                    object[0].children.push(globablVars.child.children[i]);
+                }
+            } else {
+                object[0].children.push(reasonNode(globablVars.child));
+            }
         }
+
         chart = new Treant(chart_config);
         var x = document.getElementById("snackbar");
         x.innerHTML = "";
