@@ -156,9 +156,62 @@ $("#diagramDiv").on("click", "#basic-example > div", function () {
     }
 });
 
+$(".my-diagrams-container").on("click", ".my-diagrams ul li", function () {
+    if (!globablVars.selectParent) {
+        $("#myChartsWrapper").fadeIn(200);
+    }
+
+    var containerWidth = $("#myChartsWrapper").outerWidth();
+    var containerHeight = $("#myChartsWrapper").outerHeight();
+
+    var popupWidth = $("#myChartsFunctions").outerWidth();
+    var popupHeight = $("#myChartsFunctions").outerHeight();
+
+    var paddingTop = (containerHeight - popupHeight) / 2;
+    var paddingLeft = (containerWidth - popupWidth) / 2
+
+    if (mouseX + popupWidth > windowWidth) popupLeft = mouseX - popupWidth - paddingLeft;
+    else popupLeft = mouseX - paddingLeft;
+
+    if (mouseY + popupHeight > windowHeight) popupTop = mouseY - paddingTop;
+    else popupTop = mouseY - paddingTop;
+    
+    if (popupLeft < 0) popupLeft = 0;
+    if (popupTop < 0) popupTop = 0;
+
+    $("#myChartsWrapper").offset({ top: popupTop, left: popupLeft });
+
+    $('#myChartsWrapper').mouseleave(function(e) {
+        $('#myChartsWrapper').fadeOut(200);
+    });
+
+    $('#myChartsWrapper').on('click', function() {
+        $('#myChartsWrapper').fadeOut(200);
+    });
+
+    // Button Click Functions Go Here!!!
+});
+
 function saveText(text, filename) {
     var a = document.createElement('a');
     a.setAttribute('href', 'data:text/plain;charset=utf-u,' + encodeURIComponent(text));
     a.setAttribute('download', filename);
     a.click();
+}
+
+var isOpen = true;
+
+function toggleNav() {
+    if (isOpen) {
+        isOpen = false;
+        /* Set the width of the side navigation to 250px */
+        var newWidth = "300px"
+        document.getElementById("mySidenav").style.width = newWidth;
+        $(".navbar-main").css("margin-left", newWidth);
+    }
+    else {
+        isOpen = true;
+        document.getElementById("mySidenav").style.width = "0";
+        $(".navbar-main").css("margin-left", "0");
+    }
 }

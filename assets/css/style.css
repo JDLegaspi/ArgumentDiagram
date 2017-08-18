@@ -43,6 +43,23 @@ abbr, acronym {
 body {
     background: #fff;
 }
+
+.navbar-main {
+    border-radius: 0px;
+    border: none;
+}
+
+.cloud i {
+    font-size: 40px;
+    padding: 7px;
+    cursor: pointer;
+    color: #cacaca;
+}
+
+.cloud i:hover {
+    color: #fff;
+}
+
 /* optional Container STYLES */
 .chart {
     /* height: 600px; */
@@ -101,14 +118,14 @@ body {
     text-align: center;
 }
 
-#nodeFunctionsWrapper {
+#nodeFunctionsWrapper, #myChartsWrapper {
     padding: 30px;
     width: 210px;
     display: none;
     position: absolute;
 }
 
-#nodeFunctions {
+#nodeFunctions, #myChartsFunctions {
     border: 1px solid #000;
     background: #fff;
     height: auto;
@@ -116,7 +133,15 @@ body {
     text-align: center;
 }
 
-#nodeFunctions button {
+#myChartsFunctions {
+    text-align: left;
+}
+
+#myChartsFunctions button{
+    padding-left: 10px;
+}
+
+#nodeFunctions button, #myChartsFunctions button {
     display: block;
     margin: 0 auto;
     width: 100%;
@@ -125,4 +150,59 @@ body {
 
 #fileinput {
     display: none;
+}
+
+.sidenav {
+    height: 100%;
+    width: 0; 
+    position: fixed; 
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #222;
+    overflow-x: hidden;
+    padding-top: 60px;
+    transition: 0.5s;
+}
+
+/* The navigation menu links */
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 15px;
+    color: #cacaca;
+    display: block;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover, .offcanvas a:focus{
+    color: #f1f1f1;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+.navbar-main {
+    transition: margin-left .5s;
+}
+
+.my-diagrams-container {
+    position: absolute;
+    top: 0;
+}
+
+.my-diagrams h2{
+    background: #95BCF2;
+    padding: 17px 5px;
+    font-size: 18px;
+    margin: 10px 0;
 }
