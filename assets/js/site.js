@@ -19,6 +19,8 @@ function initialise() {
 
     // Draw chart
     var chart = new Treant(chart_config);
+    console.log(chart_config.chart.doc.text);
+    $('#text').val(chart_config.chart.doc.text);
 
 }
 

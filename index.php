@@ -4,10 +4,7 @@
 
 <div class="container arg-container">
     <div class="col-md-4 text-center" style="height:100%">
-        <button class="btn btn-default" id="btnImportText">Import Text</button>
-        <div>
-            <textarea id="text" autofocus readonly>Node 1 Node 2</textarea>
-        </div>
+        <textarea id="text" rows='2' cols='2' style="height:100%" autofocus readonly></textarea>
         <input type="file" id="fileinput"/>
         <input type="file" id="textInput"/>
         <div id="snackbar"></div>
@@ -20,18 +17,19 @@
     </div>
 </div>
 <div class="container">
-<form class="form-inline" id="argumentForm">
-    <p>DEBUG TOOLS</p>
-    <div class="form-group">
-        <label for="parentId">Parent ID:</label>
-        <input type="number" step="1" class="form-control" name="parentId" id="parentId" />
-    </div>
-    <div class="form-group">
-        <label for="argText">Argument:</label>
-        <textarea class="form-control" name="argText" id="argText"></textarea>
-    </div>
-</form>
-<button class="btn btn-default" id="btnConflict">Conflict Node</button>
+    <form class="form-inline" id="argumentForm">
+        <p>DEBUG TOOLS</p>
+        <div class="form-group">
+            <label for="parentId">Parent ID:</label>
+            <input type="number" step="1" class="form-control" name="parentId" id="parentId" />
+        </div>
+        <div class="form-group">
+            <label for="argText">Argument:</label>
+            <textarea class="form-control" name="argText" id="argText"></textarea>
+        </div>
+    </form>
+    <button class="btn btn-default" id="btnConflict">Conflict Node</button>
+    <button class="btn btn-default" id="btnImportText">Import Text</button>
 </div>
 
 

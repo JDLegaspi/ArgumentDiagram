@@ -152,12 +152,13 @@ $('#fileinput').change(function () {
 });
 
 $('#textInput').change(function () {
+    console.log("test");
     var file = document.getElementById('textInput').files[0];
     if (file) {
         var reader = new FileReader();
         reader.readAsText(file);
         reader.onload = function () {
-            document.getElementById('text').innerHTML = reader.result;
+            $('#text').val(reader.result);
         };
     } else {
         window.alert("No file chosen");
@@ -172,7 +173,7 @@ $('#btnNew').click(function () {
 });
 
 $('#btnImportText').click(function () {
-    document.getElementById('textInput').click();
+    $('#textInput').click();
 });
 
 $("#diagramDiv").on("click", "#basic-example > div", function () {

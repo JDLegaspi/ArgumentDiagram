@@ -2,7 +2,7 @@ var chart_config = {
     chart: {
         doc: {
             title: 'Test',
-            text: 'This is the test document'
+            text: 'Node 1 Node 2'
         },
         scrollbar: 'fancy',
         container: "#basic-example",
