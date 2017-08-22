@@ -18,7 +18,10 @@ $(document).mousemove(function(e) {
 });
 
 $("#text").mouseup(function() {
-    $("#highlightTextWrapper").fadeIn(200);
+    console.log($(this).prop('selectionStart') + ", " + $(this).prop('selectionEnd'));
+    if ($(this).prop('selectionStart') != $(this).prop('selectionEnd')) {
+        $("#highlightTextWrapper").fadeIn(200);
+    }
     var containerWidth = $("#highlightTextWrapper").outerWidth();
     var containerHeight = $("#highlightTextWrapper").outerHeight();
 
