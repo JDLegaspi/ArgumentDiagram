@@ -5,7 +5,9 @@
 <div class="container arg-container">
     <div class="col-md-4 text-center" style="height:100%">
         <button class="btn btn-default" id="btnImportText">Import Text</button>
-        <textarea id="text" cols="1" rows="1" style="width:100%; height:80%;"readonly>Test</textarea>
+        <div>
+            <textarea id="text" autofocus readonly>Node 1 Node 2</textarea>
+        </div>
         <input type="file" id="fileinput"/>
         <input type="file" id="textInput"/>
         <div id="snackbar"></div>
@@ -42,7 +44,7 @@
 <script>
 function getSelectionText() {
     var textArea = document.getElementById("text");
-    var text = textArea.value.slice(textArea.selectionStart, textArea.selectionEnd);
+    var text = textArea.selectionStart.toString() + ", " + textArea.selectionEnd.toString();
     return text;
 }
 

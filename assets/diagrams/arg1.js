@@ -4,10 +4,14 @@ var chart_config = {
             title: 'Test',
             text: 'This is the test document'
         },
+        scrollbar: 'fancy',
         container: "#basic-example",
         hideRootNode: true,
         connectors: {
-            type: 'curve'
+            type: 'curve',
+            style: {
+                'arrow-start': 'block-wide-long'
+            },
         },
         node: {
             HTMLclass: 'nodeExample1'
@@ -23,15 +27,16 @@ var chart_config = {
                 type: "dc",
                 name: "Node 1",
                 attributes: {
-                  reliability: 1,
-                  accuracy: 1,
-                  relevancy: 1,
-                  uniqueness: 1
+                  reliability: 0,
+                  accuracy: 0,
+                  relevancy: 0,
+                  uniqueness: 0
                 },
                 linktext: {
                   start: 0,
-                  end: 12
+                  end: 6
                 },
+                collapsable: true,
                 children: []
             },
             {
@@ -46,9 +51,10 @@ var chart_config = {
                   uniqueness: 1
                 },
                 linktext: {
-                  start: 0,
-                  end: 12
+                  start: 7,
+                  end: 13
                 },
+                collapsable: true,
                 children: []
             }
         ]

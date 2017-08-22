@@ -8,6 +8,8 @@
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+    width: 100%;
+    margin: 0px;
 }
 
 /* Set widths on the form inputs since otherwise they're 100% wide */

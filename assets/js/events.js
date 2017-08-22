@@ -17,34 +17,43 @@ $(document).mousemove(function(e) {
     windowHeight = $(window).height();
 });
 
-$( "#text" ).mouseup(function() {
-  var containerWidth = $("#nodeFunctionsWrapper").outerWidth();
-  var containerHeight = $("#nodeFunctionsWrapper").outerHeight();
+$("#text").mouseup(function() {
+    $("#highlightTextWrapper").fadeIn(200);
+    var containerWidth = $("#highlightTextWrapper").outerWidth();
+    var containerHeight = $("#highlightTextWrapper").outerHeight();
 
-  var popupWidth = $("#nodeFunctions").outerWidth();
-  var popupHeight = $("#nodeFunctions").outerHeight();
+    var popupWidth = $("#highlightText").outerWidth();
+    var popupHeight = $("#highlightText").outerHeight();
 
-  var paddingTop = (containerHeight - popupHeight) / 2;
-  var paddingLeft = (containerWidth - popupWidth) / 2
+    var paddingTop = (containerHeight - popupHeight) / 2;
+    var paddingLeft = (containerWidth - popupWidth) / 2
 
-  if (mouseX + popupWidth > windowWidth) popupLeft = mouseX - popupWidth - paddingLeft;
-  else popupLeft = mouseX - paddingLeft;
+    if (mouseX + popupWidth > windowWidth) popupLeft = mouseX - popupWidth - paddingLeft;
+    else popupLeft = mouseX - paddingLeft;
 
-  if (mouseY + popupHeight > windowHeight) popupTop = mouseY - paddingTop;
-  else popupTop = mouseY - paddingTop;
+    if (mouseY + popupHeight > windowHeight) popupTop = mouseY - paddingTop;
+    else popupTop = mouseY - paddingTop;
 
-  if (popupLeft < 0) popupLeft = 0;
-  if (popupTop < 0) popupTop = 0;
+    if (popupLeft < 0) popupLeft = 0;
+    if (popupTop < 0) popupTop = 0;
 
-  $("#nodeFunctionsWrapper").offset({ top: popupTop, left: popupLeft });
+    $("#highlightTextWrapper").offset({ top: popupTop, left: popupLeft });
 
-  $('#nodeFunctionsWrapper').mouseleave(function(e) {
-      $('#nodeFunctionsWrapper').fadeOut(200);
-  });
+    $('#highlightTextWrapper').on('click', function() {
+      $('#highlightTextWrapper').fadeOut(200);
+    });
 
-  $('#nodeFunctionsWrapper').on('click', function() {
-      $('#nodeFunctionsWrapper').fadeOut(200);
-  });
+    $(document).mousedown(function() {
+        $('#highlightTextWrapper').fadeOut(200);
+    });
+
+    $('#highlightTextWrapper').on('click', '#btnNewNode', function () {
+        var textArea = document.getElementById("text");
+        var text = textArea.value.slice(textArea.selectionStart, textArea.selectionEnd);
+        console.log(text);
+        $('#newNodeModal').modal('show');
+        $("#nodename").val(text);
+    });
 });
 
 //show popup dialog on node click
@@ -97,13 +106,16 @@ $('#diagramDiv').on('click', '#basic-example > div', function() {
             if ($("#" + $("#parentId").val()).hasClass("reason")) {
                 window.alert("Can't edit reasoning node");
             } else {
-                var editText = window.prompt("Edit text", $("#" + $("#parentId").val() + " > .node-name").html());
-                editNode(chart_config.nodeStructure, $("#parentId").val(), editText);
-                console.log("Edit Complete");
-                chart = new Treant(chart_config);
+                $('#editNodeModal').modal('show');
+                var node = findNode($("#parentId").val(), chart_config.nodeStructure);
+                $("#editName").val(node.name);
+                $("#editReli").val(node.attributes.reliability);
+                $("#editAccu").val(node.attributes.accuracy);
+                $("#editRele").val(node.attributes.relevancy);
+                $("#editUniq").val(node.attributes.uniqueness);
             }
         } else {
-        window.alert("Please select a node");
+            window.alert("Please select a node");
         }
     });
 
@@ -119,11 +131,7 @@ $('#diagramDiv').on('click', '#basic-example > div', function() {
 });
 
 $('#btnNewNode').click(function () {
-    var textArea = document.getElementById("text");
-    var text = textArea.value.slice(textArea.selectionStart, textArea.selectionEnd);
-    console.log(text);
-    $('#myModal').modal('show');
-    $("#nodename").val(text);
+    $('#newNodeModal').modal('show');
 });
 
 $('#btnSave').click(function () {
@@ -200,10 +208,32 @@ $("#diagramDiv").on("click", "#basic-example > div", function () {
             }
         }
 
+        calculateAttributes(object[0]);
+
         chart = new Treant(chart_config);
         var x = document.getElementById("snackbar");
         x.innerHTML = "";
         x.className = x.className.replace("show", "");
+    }
+});
+
+$("#diagramDiv").on("mouseover", "#basic-example > div", function () {
+    var node = findNode($(this)[0].id, chart_config.nodeStructure);
+    if (node.type != "reason") {
+        var textArea = document.getElementById("text")
+        textArea.focus();
+        textArea.selectionStart = node.linktext.start;
+        textArea.selectionEnd = node.linktext.end;
+    }
+});
+
+$("#diagramDiv").on("mouseleave", "#basic-example > div", function () {
+    var node = findNode($(this)[0].id, chart_config.nodeStructure);
+    if (node.type != "reason") {
+        var textArea = document.getElementById("text")
+        textArea.selectionStart = 0;
+        textArea.selectionEnd = 0;
+        textArea.blur();
     }
 });
 

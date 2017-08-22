@@ -1,6 +1,16 @@
 .arg-container {
     padding-top: 40px;
     height: 80vh;
+    width: 80%;
+}
+
+#text {
+    margin: 0;
+    width: 100%;
+    width: 100%;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
 }
 
 body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td {
@@ -105,7 +115,7 @@ body {
 .nodeAttributes > th, td {
     border: 1px solid black;
     border-collapse: collapse;
-    padding: 5px 10px;
+    padding: 2.5px 10px;
     margin: auto;
 }
 
@@ -114,10 +124,10 @@ body {
     padding: 2px;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
-    border-radius: 12px;
+    border-radius: 50%;
     background-color: #ffffff;
     border: 1px solid #000;
-    width: 24px;
+    width: 48px;
     height: 24px;
     font-family: Tahoma;
     font-size: 12px;
@@ -129,14 +139,14 @@ body {
     text-align: center;
 }
 
-#nodeFunctionsWrapper, #myChartsWrapper {
+#nodeFunctionsWrapper, #myChartsWrapper, #highlightTextWrapper{
     padding: 30px;
     width: 210px;
     display: none;
     position: absolute;
 }
 
-#nodeFunctions, #myChartsFunctions {
+#nodeFunctions, #myChartsFunctions, #highlightText {
     border: 1px solid #000;
     background: #fff;
     height: auto;
@@ -152,7 +162,7 @@ body {
     padding-left: 10px;
 }
 
-#nodeFunctions button, #myChartsFunctions button {
+#nodeFunctions button, #myChartsFunctions button, #highlightText button{
     display: block;
     margin: 0 auto;
     width: 100%;
