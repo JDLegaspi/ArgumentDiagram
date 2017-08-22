@@ -20,9 +20,9 @@ function initialise() {
 
 // Generate and return HTML for nodes
 function nodeConstructor(node) {
-    var text = "<p>";
+    var text = "<p class='nodeTitle'>";
     text += node.name + "</p>";
-    text += "<table>";
+    text += "<table class='nodeAttributes' style='margin: auto'>";
     text += "<tr><td>" + node.attributes.reliability.toFixed(2) + "</td>" + "<td>" + node.attributes.reliability.toFixed(2) + "</td></tr>";
     text += "<tr><td>" + node.attributes.accuracy.toFixed(2) + "</td>" + "<td>" + node.attributes.accuracy.toFixed(2) + "</td></tr>";
     text += "<tr><td>" + node.attributes.relevancy.toFixed(2) + "</td>" + "<td>" + node.attributes.relevancy.toFixed(2) + "</td></tr>";

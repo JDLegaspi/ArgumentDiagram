@@ -42,6 +42,7 @@
 </div>
 
 <script>
+
 $('#submit').click(function () {
     console.log("test");
     globablVars.count += 1;

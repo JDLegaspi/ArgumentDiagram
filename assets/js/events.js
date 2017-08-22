@@ -17,6 +17,36 @@ $(document).mousemove(function(e) {
     windowHeight = $(window).height();
 });
 
+$( "#text" ).mouseup(function() {
+  var containerWidth = $("#nodeFunctionsWrapper").outerWidth();
+  var containerHeight = $("#nodeFunctionsWrapper").outerHeight();
+
+  var popupWidth = $("#nodeFunctions").outerWidth();
+  var popupHeight = $("#nodeFunctions").outerHeight();
+
+  var paddingTop = (containerHeight - popupHeight) / 2;
+  var paddingLeft = (containerWidth - popupWidth) / 2
+
+  if (mouseX + popupWidth > windowWidth) popupLeft = mouseX - popupWidth - paddingLeft;
+  else popupLeft = mouseX - paddingLeft;
+
+  if (mouseY + popupHeight > windowHeight) popupTop = mouseY - paddingTop;
+  else popupTop = mouseY - paddingTop;
+
+  if (popupLeft < 0) popupLeft = 0;
+  if (popupTop < 0) popupTop = 0;
+
+  $("#nodeFunctionsWrapper").offset({ top: popupTop, left: popupLeft });
+
+  $('#nodeFunctionsWrapper').mouseleave(function(e) {
+      $('#nodeFunctionsWrapper').fadeOut(200);
+  });
+
+  $('#nodeFunctionsWrapper').on('click', function() {
+      $('#nodeFunctionsWrapper').fadeOut(200);
+  });
+});
+
 //show popup dialog on node click
 $('#diagramDiv').on('click', '#basic-example > div', function() {
 
@@ -38,7 +68,7 @@ $('#diagramDiv').on('click', '#basic-example > div', function() {
 
     if (mouseY + popupHeight > windowHeight) popupTop = mouseY - paddingTop;
     else popupTop = mouseY - paddingTop;
-    
+
     if (popupLeft < 0) popupLeft = 0;
     if (popupTop < 0) popupTop = 0;
 
@@ -89,7 +119,11 @@ $('#diagramDiv').on('click', '#basic-example > div', function() {
 });
 
 $('#btnNewNode').click(function () {
-    $('#myModal').modal('show')
+    var textArea = document.getElementById("text");
+    var text = textArea.value.slice(textArea.selectionStart, textArea.selectionEnd);
+    console.log(text);
+    $('#myModal').modal('show');
+    $("#nodename").val(text);
 });
 
 $('#btnSave').click(function () {
@@ -111,6 +145,19 @@ $('#fileinput').change(function () {
     }
 });
 
+$('#textInput').change(function () {
+    var file = document.getElementById('textInput').files[0];
+    if (file) {
+        var reader = new FileReader();
+        reader.readAsText(file);
+        reader.onload = function () {
+            document.getElementById('text').innerHTML = reader.result;
+        };
+    } else {
+        window.alert("No file chosen");
+    }
+});
+
 $('#btnNew').click(function () {
     var conclusionText = window.prompt("Please enter a conclusion");
     chart_config = newChart(conclusionText);
@@ -118,10 +165,14 @@ $('#btnNew').click(function () {
     chart = new Treant(chart_config);
 });
 
+$('#btnImportText').click(function () {
+    document.getElementById('textInput').click();
+});
+
 $("#diagramDiv").on("click", "#basic-example > div", function () {
     $("#parentId").val($(this)[0].id);
     console.log(findNode($(this)[0].id, chart_config.nodeStructure));
-    
+
     //this only activates if user has clicked "connect node"
     if (globablVars.selectParent) {
         globablVars.selectParent = false;
@@ -130,7 +181,7 @@ $("#diagramDiv").on("click", "#basic-example > div", function () {
         var x = document.getElementById("snackbar");
         deleteNode(chart_config.nodeStructure, globablVars.child.id);
         var object = getObjects(chart_config.nodeStructure, 'id', globablVars.parent.id);
-        
+
         if (object[0].type == "reason") {
             if (globablVars.child.type == "reason") {
                 for (var i = 0; i < globablVars.child.children.length; i++) {
@@ -175,7 +226,7 @@ $(".my-diagrams-container").on("click", ".my-diagrams ul li", function () {
 
     if (mouseY + popupHeight > windowHeight) popupTop = mouseY - paddingTop;
     else popupTop = mouseY - paddingTop;
-    
+
     if (popupLeft < 0) popupLeft = 0;
     if (popupTop < 0) popupTop = 0;
 
