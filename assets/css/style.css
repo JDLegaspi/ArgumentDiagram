@@ -88,14 +88,31 @@ body {
 
 .nodeExample1 {
     padding: 2px;
-    -webkit-border-radius: 3px;
+    /* -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
+    border: 1px solid #000; */
+    border: none;
     background-color: #ffffff;
-    border: 1px solid #000;
     width: 200px;
     font-family: Tahoma;
     font-size: 12px;
+}
+
+.nodeExample1:not(.reason) > p {
+    border: 1px solid #000;
+    border-radius: 3px;
+    padding: 5px;
+}
+
+.nodeExample1 > table {
+    margin: 0 auto;
+    width: 50%;
+    margin-top: 4px;
+}
+
+.nodeExample1 > table, .nodeExample1 th, .nodeExample1 td {
+    border: 1px solid black;
 }
 
 .reason {
