@@ -93,6 +93,7 @@ $('#submitNew').click(function () {
         startSel = null;
         endSel = null;
     }
+    chartHistory();
     chart_config.nodeStructure.children.push(newNode(id, type, name, relia, accur, relev, unique, startSel, endSel));
     var chart = new Treant(chart_config);
     $('#newNodeModal').find('form').trigger('reset');
@@ -110,8 +111,9 @@ $('#submitEdit').click(function () {
     var accu = parseFloat($('#editAccu').val());
     var rele = parseFloat($('#editRele').val());
     var uniq = parseFloat($('#editUniq').val());
+    chartHistory();
     editNode(chart_config.nodeStructure, $("#parentId").val(), name, reli, accu, rele, uniq);
-    chart = new Treant(chart_config);
+    var chart = new Treant(chart_config);
     $('#editNodeModal').find('form').trigger('reset');
 });
 

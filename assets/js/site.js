@@ -1,4 +1,5 @@
 var globablVars = {};
+var historyArray = [];
 
 // App initialisation
 function initialise() {
@@ -9,6 +10,8 @@ function initialise() {
     // Getting a count to be used for Node IDs
     globablVars.count = 1;
     countNodes(chart_config.nodeStructure);
+    globablVars.history = 0;
+    console.log(chart_config);
 
     // Global variables used for connecting nodes
     globablVars.selectParent = false;
@@ -164,6 +167,32 @@ function reasonNode(child) {
     return reason;
 }
 
+// Constructor for conflicting argument node
+function conflictNode(child1, child2) {
+    globablVars.count++;
+    var conflict =
+        {
+            id: globablVars.count,
+            HTMLid: globablVars.count.toString(),
+            type: "conflict",
+            HTMLclass: "conflict",
+            text: {
+                name: "CA"
+            },
+            connectors: {
+                type: 'curve',
+                style: {
+                    'arrow-start': 'block-wide-long',
+                    'arrow-end': 'block-wide-long'
+                },
+            },
+            children: []
+        };
+    conflict.children.push(child1);
+    conflict.children.push(child2);
+    return conflict;
+}
+
 // Calculating attribute values based on child nodes
 function calculateAttributes(node) {
     if (node.hasOwnProperty('children')) {
@@ -201,4 +230,9 @@ function calculateAttributes(node) {
     node.attributes.relevancy = relevancy;
     node.attributes.uniqueness = uniqueness;
     node.innerHTML = nodeConstructor(node);
+}
+
+function chartHistory() {
+    historyArray.push(JSON.parse(JSON.stringify(chart_config)));
+    globablVars.history++;
 }

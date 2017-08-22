@@ -75,10 +75,10 @@ body {
     position: absolute;
 }
 
-.Treant > .node:hover {
+/*.Treant > .node:hover {
     background-color: #DDDDDD;
     cursor: pointer;
-}
+}*/
 
 .Treant > p {
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
@@ -93,7 +93,6 @@ body {
 .nodeExample1 {
     font-family: Tahoma;
     font-size: 12px;
-    background-color: #ffffff;
 }
 
 .nodeTitle {
@@ -125,12 +124,17 @@ body {
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 50%;
-    background-color: #ffffff;
     border: 1px solid #000;
     width: 48px;
     height: 24px;
-    font-family: Tahoma;
-    font-size: 12px;
+}
+
+.conflict {
+    text-align: center;
+    padding: 2px;
+    border: 1px solid #000;
+    width: 36px;
+    height: 24px;
 }
 
 .btn-new-node-wrapper {

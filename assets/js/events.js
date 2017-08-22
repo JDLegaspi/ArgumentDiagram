@@ -50,7 +50,6 @@ $("#text").mouseup(function() {
     $('#highlightTextWrapper').on('click', '#btnNewNode', function () {
         var textArea = document.getElementById("text");
         var text = textArea.value.slice(textArea.selectionStart, textArea.selectionEnd);
-        console.log(text);
         $('#newNodeModal').modal('show');
         $("#nodename").val(text);
     });
@@ -58,8 +57,7 @@ $("#text").mouseup(function() {
 
 //show popup dialog on node click
 $('#diagramDiv').on('click', '#basic-example > div', function() {
-
-    if (!globablVars.selectParent) {
+    if (!globablVars.selectParent && !globablVars.selectConflict1 && !globablVars.selectConflict2 && !$(this).hasClass("conflict")) {
         $("#nodeFunctionsWrapper").fadeIn(200);
     }
 
@@ -93,7 +91,7 @@ $('#diagramDiv').on('click', '#basic-example > div', function() {
 
     $('#nodeFunctionsWrapper').on('click', '#btnDelete', function () {
         if ($("#parentId").val()) {
-            console.log($("#parentId").val());
+            chartHistory();
             deleteNode(chart_config.nodeStructure, $("#parentId").val());
             chart = new Treant(chart_config);
         } else {
@@ -183,41 +181,62 @@ $("#diagramDiv").on("click", "#basic-example > div", function () {
 
     //this only activates if user has clicked "connect node"
     if (globablVars.selectParent) {
-        globablVars.selectParent = false;
-        // globablVars.selectChild = true;
-        globablVars.parent = findNode($(this)[0].id, chart_config.nodeStructure);
-        var x = document.getElementById("snackbar");
-        deleteNode(chart_config.nodeStructure, globablVars.child.id);
-        var object = getObjects(chart_config.nodeStructure, 'id', globablVars.parent.id);
-
-        if (object[0].type == "reason") {
-            if (globablVars.child.type == "reason") {
-                for (var i = 0; i < globablVars.child.children.length; i++) {
-                    object[0].children.push(globablVars.child.children[i]);
-                }
-            } else {
-                object[0].children.push(globablVars.child);
-            }
+        if ((findNode($(this)[0].id, chart_config.nodeStructure)).type == "conflict") {
+            window.alert("Can't connect anymore arguments to the conflicting argument node");
         } else {
-            if (globablVars.child.type == "reason") {
-                for (var i = 0; i < globablVars.child.children.length; i++) {
-                    object[0].children.push(globablVars.child.children[i]);
+            chartHistory();
+            globablVars.selectParent = false;
+            // globablVars.selectChild = true;
+            globablVars.parent = findNode($(this)[0].id, chart_config.nodeStructure);
+            var x = document.getElementById("snackbar");
+            deleteNode(chart_config.nodeStructure, globablVars.child.id);
+            var object = getObjects(chart_config.nodeStructure, 'id', globablVars.parent.id);
+
+            if (object[0].type == "reason") {
+                if (globablVars.child.type == "reason") {
+                    for (var i = 0; i < globablVars.child.children.length; i++) {
+                        object[0].children.push(globablVars.child.children[i]);
+                    }
+                } else {
+                    object[0].children.push(globablVars.child);
                 }
             } else {
-                object[0].children.push(reasonNode(globablVars.child));
+                if (globablVars.child.type == "reason") {
+                    for (var i = 0; i < globablVars.child.children.length; i++) {
+                        object[0].children.push(globablVars.child.children[i]);
+                    }
+                } else {
+                    object[0].children.push(reasonNode(globablVars.child));
+                }
             }
+
+            calculateAttributes(object[0]);
+            chart = new Treant(chart_config);
+            var x = document.getElementById("snackbar");
+            x.innerHTML = "";
+            x.className = x.className.replace("show", "");
         }
+    }
 
-        calculateAttributes(object[0]);
-
-        chart = new Treant(chart_config);
-        var x = document.getElementById("snackbar");
-        x.innerHTML = "";
-        x.className = x.className.replace("show", "");
+    //this only activates if user has clicked "conflict node"
+    if (globablVars.selectConflict1) {
+        globablVars.selectConflict1 = false;
+        globablVars.selectConflict2 = true;
+        globablVars.conflict1 = findNode($(this)[0].id, chart_config.nodeStructure);
+    } else if (globablVars.selectConflict2) {
+        globablVars.selectConflict2 = false;
+        globablVars.conflict2 = findNode($(this)[0].id, chart_config.nodeStructure);
+        chartHistory();
+        chart_config.nodeStructure.children.push(conflictNode(globablVars.conflict1, globablVars.conflict2));
+        deleteNode(chart_config.nodeStructure, globablVars.conflict1.id);
+        deleteNode(chart_config.nodeStructure, globablVars.conflict2.id);
+        var chart = new Treant(chart_config);
     }
 });
 
 $("#diagramDiv").on("mouseover", "#basic-example > div", function () {
+    $(this).find("table").css('background-color', '#DDDDDD');
+    $(this).find("p").css('background-color', '#DDDDDD');
     var node = findNode($(this)[0].id, chart_config.nodeStructure);
     if (node.type != "reason") {
         var textArea = document.getElementById("text")
@@ -228,6 +247,8 @@ $("#diagramDiv").on("mouseover", "#basic-example > div", function () {
 });
 
 $("#diagramDiv").on("mouseleave", "#basic-example > div", function () {
+    $(this).find("table").css('background-color', '');
+    $(this).find("p").css('background-color', '');
     var node = findNode($(this)[0].id, chart_config.nodeStructure);
     if (node.type != "reason") {
         var textArea = document.getElementById("text")
@@ -273,12 +294,26 @@ $(".my-diagrams-container").on("click", ".my-diagrams ul li", function () {
     // Button Click Functions Go Here!!!
 });
 
+$('#btnUndo').click(function () {
+    console.log(historyArray);
+    if (globablVars.history != 0) {
+        globablVars.history--;
+        chart_config = historyArray[globablVars.history];
+        var chart = new Treant(chart_config);
+    }
+});
+
+$('#btnConflict').click(function () {
+    globablVars.selectConflict1 = true;
+});
+
 function saveText(text, filename) {
     var a = document.createElement('a');
     a.setAttribute('href', 'data:text/plain;charset=utf-u,' + encodeURIComponent(text));
     a.setAttribute('download', filename);
     a.click();
 }
+
 
 var isOpen = true;
 

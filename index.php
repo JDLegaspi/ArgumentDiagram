@@ -31,6 +31,7 @@
         <textarea class="form-control" name="argText" id="argText"></textarea>
     </div>
 </form>
+<button class="btn btn-default" id="btnConflict">Conflict Node</button>
 </div>
 
 

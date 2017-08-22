@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="assets/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="assets/css/site.css" />
     <link rel="stylesheet" href="assets/lib/treant-js/Treant.css" type="text/css" />
-    
+
     <!--Font Awesome-->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 </head>
@@ -54,6 +54,7 @@
                     <li><a class="btn" id="btnNew">New</a></li>
                     <li><a class="btn" id="btnSave">Save</a></li>
                     <li><a href="javascript:document.getElementById('fileinput').click();" class="btn" id="btnLoad">Load</a></li>
+                    <li><a class="btn" id="btnUndo">Undo</a></li>
                     <li><a class="btn">Export</a></li>
                     <li><a class="btn">Help</a></li>
                 </ul>
