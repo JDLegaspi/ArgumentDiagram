@@ -1,17 +1,21 @@
-﻿
 .arg-container {
     padding-top: 40px;
     height: 80vh;
+    width: 80%;
+}
+
+#text {
+    width: 100%;
+    height: 100%;
+    resize: none;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
 }
 
 body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td {
     margin: 0;
     padding: 0;
-}
-
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
 }
 
 fieldset, img {
@@ -71,10 +75,10 @@ body {
     position: absolute;
 }
 
-.Treant > .node:hover {
+/*.Treant > .node:hover {
     background-color: #DDDDDD;
     cursor: pointer;
-}
+}*/
 
 .Treant > p {
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
@@ -87,32 +91,31 @@ body {
 }
 
 .nodeExample1 {
-    padding: 2px;
-    /* -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    border: 1px solid #000; */
-    border: none;
-    background-color: #ffffff;
-    width: 200px;
     font-family: Tahoma;
     font-size: 12px;
 }
 
-.nodeExample1:not(.reason) > p {
-    border: 1px solid #000;
+.nodeTitle {
+    text-align: center;
+    padding: 2px;
+    margin-bottom: 2px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
     border-radius: 3px;
-    padding: 5px;
+    border: 1px solid #000;
+    width: 200px;
 }
 
-.nodeExample1 > table {
-    margin: 0 auto;
-    width: 50%;
-    margin-top: 4px;
+.nodeAttributes > table {
+    width: 100%;
+    margin: auto;
 }
 
-.nodeExample1 > table, .nodeExample1 th, .nodeExample1 td {
+.nodeAttributes > th, td {
     border: 1px solid black;
+    border-collapse: collapse;
+    padding: 2.5px 10px;
+    margin: auto;
 }
 
 .reason {
@@ -120,13 +123,18 @@ body {
     padding: 2px;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
-    border-radius: 12px;
-    background-color: #ffffff;
+    border-radius: 50%;
     border: 1px solid #000;
-    width: 24px;
+    width: 48px;
     height: 24px;
-    font-family: Tahoma;
-    font-size: 12px;
+}
+
+.conflict {
+    text-align: center;
+    padding: 2px;
+    border: 1px solid #000;
+    width: 36px;
+    height: 24px;
 }
 
 .btn-new-node-wrapper {
@@ -135,14 +143,14 @@ body {
     text-align: center;
 }
 
-#nodeFunctionsWrapper, #myChartsWrapper {
+#nodeFunctionsWrapper, #myChartsWrapper, #highlightTextWrapper{
     padding: 30px;
     width: 210px;
     display: none;
     position: absolute;
 }
 
-#nodeFunctions, #myChartsFunctions {
+#nodeFunctions, #myChartsFunctions, #highlightText {
     border: 1px solid #000;
     background: #fff;
     height: auto;
@@ -158,21 +166,21 @@ body {
     padding-left: 10px;
 }
 
-#nodeFunctions button, #myChartsFunctions button {
+#nodeFunctions button, #myChartsFunctions button, #highlightText button{
     display: block;
     margin: 0 auto;
     width: 100%;
     border: none;
 }
 
-#fileinput {
+#fileinput, #textInput {
     display: none;
 }
 
 .sidenav {
     height: 100%;
-    width: 0; 
-    position: fixed; 
+    width: 0;
+    position: fixed;
     z-index: 1;
     top: 0;
     left: 0;

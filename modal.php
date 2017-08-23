@@ -1,4 +1,4 @@
-<div class="modal fade" id="myModal">
+<div class="modal fade" id="newNodeModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -8,15 +8,43 @@
         </button>
       </div>
       <div class="modal-body">
-        Node Name:<input type="text" id="nodename"><br>
-        Reliability:<input type="number" id="reliability"><br>
-        Accuracy:<input type="number" id="accuracy"><br>
-        Relevancy:<input type="number" id="relevancy"><br>
-        Uniqueness:<input type="number" id="uniqueness"><br>
+        <form>
+            Node Name:<input type="text" id="nodename"><br>
+            Reliability:<input type="number" id="reliability" min="0" max="1" step="0.05"><br>
+            Accuracy:<input type="number" id="accuracy" min="0" max="1" step="0.05"><br>
+            Relevancy:<input type="number" id="relevancy" min="0" max="1" step="0.05"><br>
+            Uniqueness:<input type="number" id="uniqueness" min="0" max="1" step="0.05"><br>
+        </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="submit" data-dismiss="modal">New Node</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="submitNew">New Node</button>
+        <button type="button" class="btn btn-secondary" id="cancelNew">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="editNodeModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Node</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+            Node Name:<input type="text" id="editName"><br>
+            Reliability:<input type="number" id="editReli" min="0" max="1" step="0.05"><br>
+            Accuracy:<input type="number" id="editAccu" min="0" max="1" step="0.05"><br>
+            Relevancy:<input type="number" id="editRele" min="0" max="1" step="0.05"><br>
+            Uniqueness:<input type="number" id="editUniq" min="0" max="1" step="0.05"><br>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="submitEdit" data-dismiss="modal">Edit Node</button>
+        <button type="button" class="btn btn-secondary" id="cancelEdit" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
@@ -41,11 +69,17 @@
   </div>
 </div>
 
+<div id="highlightTextWrapper">
+  <div id="highlightText">
+    <button class="btn btn-default" id="btnNewNode">Add Node</button>
+  </div>
+</div>
+
 <script>
-$('#submit').click(function () {
-    console.log("test");
+
+$('#submitNew').click(function () {
+    $('#newNodeModal').modal('hide');
     globablVars.count += 1;
-    console.log(globablVars.count);
     var id = globablVars.count;
     var type = "dc";
     var name = $('#nodename').val();
@@ -53,7 +87,38 @@ $('#submit').click(function () {
     var accur = parseFloat($('#accuracy').val());
     var relev = parseFloat($('#relevancy').val());
     var unique = parseFloat($('#uniqueness').val());
-    chart_config.nodeStructure.children.push(newNode(id, type, name, relia, accur, relev, unique));
+    var startSel = document.getElementById("text").selectionStart;
+    var endSel = document.getElementById("text").selectionEnd;
+    if (startSel == endSel) {
+        startSel = null;
+        endSel = null;
+    }
+    chartHistory();
+    chart_config.nodeStructure.children.push(newNode(id, type, name, relia, accur, relev, unique, startSel, endSel));
     var chart = new Treant(chart_config);
+    $('#newNodeModal').find('form').trigger('reset');
+});
+
+$('#cancelNew').click(function () {
+    $('#newNodeModal').modal('hide');
+    $('#newNodeModal').find('form').trigger('reset');
+});
+
+$('#submitEdit').click(function () {
+    $('#editNodeModal').modal('hide');
+    var name = $('#editName').val();
+    var reli = parseFloat($('#editReli').val());
+    var accu = parseFloat($('#editAccu').val());
+    var rele = parseFloat($('#editRele').val());
+    var uniq = parseFloat($('#editUniq').val());
+    chartHistory();
+    editNode(chart_config.nodeStructure, $("#parentId").val(), name, reli, accu, rele, uniq);
+    var chart = new Treant(chart_config);
+    $('#editNodeModal').find('form').trigger('reset');
+});
+
+$('#cancelEdit').click(function () {
+    $('#editNodeModal').modal('hide');
+    $('#editNodeModal').find('form').trigger('reset');
 });
 </script>
