@@ -182,6 +182,7 @@ $('#btnImportText').click(function () {
 $("#diagramDiv").on("click", "#basic-example > div", function () {
     $("#parentId").val($(this)[0].id);
     console.log(findNode($(this)[0].id, chart_config.nodeStructure));
+    console.log(findParent($(this)[0].id, chart_config.nodeStructure));
 
     //this only activates if user has clicked "connect node"
     if (globablVars.selectParent) {
@@ -203,6 +204,8 @@ $("#diagramDiv").on("click", "#basic-example > div", function () {
                     }
                 } else {
                     object[0].children.push(globablVars.child);
+                    calculateAttributes(object[0]);
+                    parentAttributes(findParent(object[0].id, chart_config.nodeStructure));
                 }
             } else {
                 if (globablVars.child.type == "reason") {
@@ -211,10 +214,9 @@ $("#diagramDiv").on("click", "#basic-example > div", function () {
                     }
                 } else {
                     object[0].children.push(reasonNode(globablVars.child));
+                    parentAttributes(object[0]);
                 }
             }
-
-            calculateAttributes(object[0]);
             chart = new Treant(chart_config);
             var x = document.getElementById("snackbar");
             x.innerHTML = "";
