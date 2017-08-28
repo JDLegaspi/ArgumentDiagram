@@ -2,11 +2,15 @@
 
 <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
 
-<div class="container arg-container">
+<div class="jumbotron container text-center">
+    <button class="btn btn-primary btnNew">New Diagram</button>
+    <a href="javascript:document.getElementById('fileinput').click();" class="btn btn-primary" id="btnLoad">Load Diagram</a>
+</div>
+<div class="container arg-container" style="display:none">
     <div class="col-md-4 text-center" style="height:100%">
         <textarea id="text" rows='2' cols='2' style="height:100%" autofocus readonly></textarea>
         <input type="file" id="fileinput"/>
-        <input type="file" id="textInput"/>
+        <input type="file" accept=".txt" id="textInput"/>
         <div id="snackbar"></div>
     </div>
     <div class="col-md-8" id="diagramDiv">

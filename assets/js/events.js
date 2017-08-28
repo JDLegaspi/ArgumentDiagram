@@ -147,8 +147,15 @@ $('#fileinput').change(function () {
         reader.readAsText(file);
         reader.onload = function (e) {
             chart_config = JSON.parse(e.target.result);
-            chart = new Treant(chart_config);
+            var chart = new Treant(chart_config);
+            $('#text').val(chart_config.chart.doc.text);
+            globablVars.count = 1;
+            globablVars.reasonNodes = 0;
+            globablVars.history = 0;
+            countNodes(chart_config.nodeStructure);
         };
+        $('.container').show();
+        $('.jumbotron').hide();
     } else {
         window.alert("No file chosen");
     }
@@ -161,18 +168,24 @@ $('#textInput').change(function () {
         var reader = new FileReader();
         reader.readAsText(file);
         reader.onload = function () {
+            chart_config.chart.doc.text = reader.result;
             $('#text').val(reader.result);
         };
+        $('.container').show();
+        $('.jumbotron').hide();
     } else {
         window.alert("No file chosen");
     }
 });
 
-$('#btnNew').click(function () {
-    var conclusionText = window.prompt("Please enter a conclusion");
-    chart_config = newChart(conclusionText);
-    globablVars.count = 1;
-    chart = new Treant(chart_config);
+$('.btnNew').click(function () {
+    initialise();
+    $('#textInput').click();
+    var chart = new Treant(chart_config);
+});
+
+$('.btnLoad').click(function () {
+    $('#fileinput').click();
 });
 
 $('#btnImportText').click(function () {
@@ -205,7 +218,7 @@ $("#diagramDiv").on("click", "#basic-example > div", function () {
                 } else {
                     object[0].children.push(globablVars.child);
                     calculateAttributes(object[0]);
-                    parentAttributes(findParent(object[0].id, chart_config.nodeStructure));
+                    //parentAttributes(findParent(object[0].id, chart_config.nodeStructure));
                 }
             } else {
                 if (globablVars.child.type == "reason") {
@@ -214,9 +227,9 @@ $("#diagramDiv").on("click", "#basic-example > div", function () {
                     }
                 } else {
                     object[0].children.push(reasonNode(globablVars.child));
-                    parentAttributes(object[0]);
                 }
             }
+            calculateParentAttributes(chart_config.nodeStructure);
             chart = new Treant(chart_config);
             var x = document.getElementById("snackbar");
             x.innerHTML = "";

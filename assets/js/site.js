@@ -1,17 +1,18 @@
 var globablVars = {};
 var historyArray = [];
+var chart_config;
 
 // App initialisation
 function initialise() {
     // Code for testing purposes with dummy data
-    chart_config.nodeStructure.children[0].innerHTML = nodeConstructor(chart_config.nodeStructure.children[0]);
-    chart_config.nodeStructure.children[1].innerHTML = nodeConstructor(chart_config.nodeStructure.children[1]);
+    // chart_config.nodeStructure.children[0].innerHTML = nodeConstructor(chart_config.nodeStructure.children[0]);
+    // chart_config.nodeStructure.children[1].innerHTML = nodeConstructor(chart_config.nodeStructure.children[1]);
 
+    newChart();
     // Getting a count to be used for Node IDs
     globablVars.count = 1;
     countNodes(chart_config.nodeStructure);
     globablVars.history = 0;
-    console.log(chart_config);
     globablVars.reasonNodes = 0;
 
     // Global variables used for connecting nodes
@@ -20,12 +21,34 @@ function initialise() {
 
     globablVars.relevancyOpt = true;
     globablVars.uniquenessOpt = true;
+}
 
-    // Draw chart
-    var chart = new Treant(chart_config);
-    console.log(chart_config.chart.doc.text);
-    $('#text').val(chart_config.chart.doc.text);
-
+function newChart() {
+    chart_config = {
+        chart: {
+            doc: {
+                title: '',
+                text: ''
+            },
+            scrollbar: 'fancy',
+            container: "#basic-example",
+            hideRootNode: true,
+            connectors: {
+                type: 'curve',
+                style: {
+                    'arrow-start': 'block-wide-long'
+                },
+            },
+            node: {
+                HTMLclass: 'nodeExample1'
+            }
+        },
+        nodeStructure: {
+            id: 1,
+            HTMLid: "1",
+            children: []
+        }
+    };
 }
 
 // Generate and return HTML for nodes
@@ -117,6 +140,9 @@ function getObjects(obj, key, val) {
 function countNodes(obj) {
     if (obj.hasOwnProperty('children')) {
         globablVars.count += obj.children.length;
+        if (obj.type == "reason") {
+            globablVars.reasonNodes++;
+        }
         for (var i = 0; i < obj.children.length; i++) {
             countNodes(obj.children[i]);
         }
@@ -129,6 +155,7 @@ function deleteNode(obj, nodeId) {
         for (var i = 0; i < obj.children.length; i++) {
             if (obj.children[i].id == nodeId) {
                 obj.children.splice(i, 1);
+                calculateParentAttributes(chart_config.nodeStructure);
                 return;
             } else {
                 deleteNode(obj.children[i], nodeId);
@@ -138,8 +165,8 @@ function deleteNode(obj, nodeId) {
             }
         }
     } else {
-        window.alert("Ummmmm, something is wrong...");
-    }
+        window.alert("Ummmmm, something is wrong...");    }
+
 }
 
 // Changes node values
@@ -158,6 +185,7 @@ function editNode(obj, nodeId, text, reli, accu, rele, uniq) {
     } else {
         window.alert("Ummmmm, something is wrong...");
     }
+    calculateParentAttributes(chart_config.nodeStructure);
 }
 
 // Appends nodes to a reasoning node before adding them to the chart
@@ -244,14 +272,12 @@ function calculateAttributes(node) {
 }
 
 function parentAttributes(node) {
-    console.log(node);
     var children = node.children;
     var reliability = NaN;
     var accuracy = NaN;
     var relevancy = NaN;
     var uniqueness = NaN;
-    console.log(children.length);
-    if (children.length = 1) {
+    if (children.length == 1) {
         for (var i = 0; i < children.length; i++) {
             reliability = children[i].attributes.reliability;
             accuracy = children[i].attributes.accuracy;
@@ -260,15 +286,37 @@ function parentAttributes(node) {
         }
     } else {
         reliability = children[0].attributes.reliability + children[1].attributes.reliability - (children[0].attributes.reliability * children[1].attributes.reliability);
-        accuracy = Math.min(children[0].attributes.accuracy, children[1].attributes.accuracy);
-        relevancy = Math.min(children[0].attributes.relevancy, children[1].attributes.relevancy);
-        uniqueness = Math.min(children[0].attributes.uniqueness, children[1].attributes.uniqueness);
+        accuracy = Math.min(children[0].attributes.accuracy + children[1].attributes.accuracy, 1);
+        if (globablVars.relevancyOpt) {
+            relevancy = Math.min(children[0].attributes.relevancy + children[1].attributes.relevancy, 1);
+        } else {
+            relevancy = children[0].attributes.relevancy + children[1].attributes.relevancy - (children[0].attributes.relevancy * children[1].attributes.relevancy);
+        }
+        if (globablVars.uniquenessOpt) {
+            uniqueness = Math.min(children[0].attributes.uniqueness + children[1].attributes.uniqueness, 1);
+        } else {
+            uniqueness = children[0].attributes.uniqueness + children[1].attributes.uniqueness - (children[0].attributes.uniqueness * children[1].attributes.uniqueness);
+        }
     }
     node.attributes.reliability = reliability;
     node.attributes.accuracy = accuracy;
     node.attributes.relevancy = relevancy;
     node.attributes.uniqueness = uniqueness;
     node.innerHTML = nodeConstructor(node);
+}
+
+function calculateParentAttributes(obj) {
+    if (obj.children.length && obj.children[0].type == "reason") {
+        for (var i = 0; i < obj.children.length; i++) {
+            calculateParentAttributes(obj.children[i]);
+            calculateAttributes(obj.children[i]);
+        }
+        parentAttributes(obj);
+    } else if (obj.children.length) {
+        for (var i = 0; i < obj.children.length; i++) {
+            calculateParentAttributes(obj.children[i]);
+        }
+    }
 }
 
 function getMin(original, comparison, weight) {

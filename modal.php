@@ -81,7 +81,7 @@ $('#submitNew').click(function () {
     $('#newNodeModal').modal('hide');
     globablVars.count += 1;
     var id = globablVars.count;
-    var type = "dc";
+    var type = "fact";
     var name = $('#nodename').val();
     var relia = parseFloat($('#reliability').val());
     var accur = parseFloat($('#accuracy').val());

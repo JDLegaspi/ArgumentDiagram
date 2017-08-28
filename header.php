@@ -12,7 +12,7 @@
     <!--Font Awesome-->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 </head>
-<body onload="initialise();">
+<body>
 
     <div id="mySidenav" class="sidenav">
         <div class="my-diagrams-container">
@@ -51,9 +51,9 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav top-nav">
-                    <li><a class="btn" id="btnNew">New</a></li>
+                    <li><a class="btn btnNew">New</a></li>
                     <li><a class="btn" id="btnSave">Save</a></li>
-                    <li><a href="javascript:document.getElementById('fileinput').click();" class="btn" id="btnLoad">Load</a></li>
+                    <li><a class="btn btnLoad">Load</a></li>
                     <li><a class="btn" id="btnUndo">Undo</a></li>
                     <li><a class="btn">Export</a></li>
                     <li><a class="btn">Help</a></li>
