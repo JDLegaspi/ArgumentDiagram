@@ -346,6 +346,6 @@ function getMax(original, comparison, weight) {
 
 // Appending current chart to the history array
 function chartHistory() {
-    historyArray.push(JSON.parse(JSON.stringify(chart_config)));
+    historyArray[globablVars.history] = JSON.parse(JSON.stringify(chart_config));
     globablVars.history++;
 }

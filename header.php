@@ -35,7 +35,7 @@
         </div>
     </div>
 
-    <nav class="navbar navbar-inverse navbar-main">
+    <nav class="navbar navbar-inverse navbar-main navbar-fixed-top">
         <div class="col-xs-1 cloud">
             <i class="fa fa-cloud" aria-hidden="true" onclick="toggleNav()" id="open-nav"></i>
         </div>
@@ -61,4 +61,3 @@
             </div>
         </div>
     </nav>
-    <div class="container body-content">

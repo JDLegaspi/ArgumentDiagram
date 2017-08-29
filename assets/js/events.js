@@ -60,8 +60,20 @@ $("#text").mouseup(function() {
 
 //show popup dialog on node click
 $('#diagramDiv').on('click', '#basic-example > div', function() {
+    $("#parentId").val($(this)[0].id);
     if (!globablVars.selectParent && !globablVars.selectConflict1 && !globablVars.selectConflict2 && !$(this).hasClass("conflict")) {
         $("#nodeFunctionsWrapper").fadeIn(200);
+        var thisNode = findNode($("#parentId").val(), chart_config.nodeStructure);
+        if (thisNode.type == "reasonAttr") {
+            $('#btnConnect').prop('disabled', true);
+        } else {
+            $('#btnConnect').prop('disabled', false);
+        }
+        if (thisNode.type == "reason") {
+            $('#btnEdit').prop('disabled', true);
+        } else {
+            $('#btnEdit').prop('disabled', false);
+        }
     }
 
     var containerWidth = $("#nodeFunctionsWrapper").outerWidth();
@@ -107,13 +119,18 @@ $('#diagramDiv').on('click', '#basic-example > div', function() {
             if ($("#" + $("#parentId").val()).hasClass("reason")) {
                 window.alert("Can't edit reasoning node");
             } else {
+                var thisNode = findNode($("#parentId").val(), chart_config.nodeStructure);
                 $('#editNodeModal').modal('show');
-                var node = findNode($("#parentId").val(), chart_config.nodeStructure);
-                $("#editName").val(node.name);
-                $("#editReli").val(node.attributes.reliability);
-                $("#editAccu").val(node.attributes.accuracy);
-                $("#editRele").val(node.attributes.relevancy);
-                $("#editUniq").val(node.attributes.uniqueness);
+                $("#editName").val(thisNode.name);
+                $("#editReli").val(thisNode.attributes.reliability);
+                $("#editAccu").val(thisNode.attributes.accuracy);
+                $("#editRele").val(thisNode.attributes.relevancy);
+                $("#editUniq").val(thisNode.attributes.uniqueness);
+                if (thisNode.type == "reasonAttr") {
+                    $("#editName").prop('disabled', true);
+                } else {
+                    $("#editName").prop('disabled', false);
+                }
             }
         } else {
             window.alert("Please select a node");
@@ -121,14 +138,14 @@ $('#diagramDiv').on('click', '#basic-example > div', function() {
     });
 
     $('#nodeFunctionsWrapper').on('click', '#btnConnect', function () {
-        globablVars.child = findNode($("#parentId").val(), chart_config.nodeStructure);
+        var thisNode = findNode($("#parentId").val(), chart_config.nodeStructure);
+        globablVars.child = thisNode;
         globablVars.selectParent = true;
         console.log(globablVars.child);
         var x = document.getElementById("snackbar")
         x.className = "show";
         x.innerHTML = "Select Parent Node";
     });
-
 });
 
 $('#btnNewNode').click(function () {
@@ -174,28 +191,28 @@ $('#btnImportText').click(function () {
 });
 
 $("#diagramDiv").on("click", "#basic-example > div", function () {
-    $("#parentId").val($(this)[0].id);
-    console.log(findNode($(this)[0].id, chart_config.nodeStructure));
-    console.log(findParent($(this)[0].id, chart_config.nodeStructure));
-
     // This only activates if user has clicked "connect node"
     if (globablVars.selectParent) {
         if ((findNode($(this)[0].id, chart_config.nodeStructure)).type == "conflict") {
             window.alert("Can't connect anymore arguments to the conflicting argument node");
+        } else if ((findNode($(this)[0].id, chart_config.nodeStructure)).type == "reasonAttr") {
+            window.alert("Can't connect other nodes to this node");
         } else {
             chartHistory();
             globablVars.selectParent = false;
             globablVars.parent = findNode($(this)[0].id, chart_config.nodeStructure);
             var x = document.getElementById("snackbar");
-            deleteNode(chart_config.nodeStructure, globablVars.child.id);
+            var originalParent = findParent(globablVars.child.id, chart_config.nodeStructure);
+            if (originalParent.children.length == 2) {
+                deleteNode(chart_config.nodeStructure, originalParent.id);
+            }
             var object = getObjects(chart_config.nodeStructure, 'id', globablVars.parent.id);
-
+            deleteNode(chart_config.nodeStructure, globablVars.child.id);
             if (object[0].type == "reason") {
                 if (globablVars.child.type == "reason") {
                     for (var i = 0; i < globablVars.child.children.length; i++) {
                         if (globablVars.child.children[i].type == "reasonAttr") {
                             deleteNode(globablVars.child.children[i]);
-                            globablVars.countReason--;
                         } else {
                             object[0].children.push(globablVars.child.children[i]);
                         }
@@ -213,7 +230,6 @@ $("#diagramDiv").on("click", "#basic-example > div", function () {
             calculateChartAttributes(chart_config.nodeStructure);
             chart = new Treant(chart_config);
             var x = document.getElementById("snackbar");
-            x.innerHTML = "";
             x.className = x.className.replace("show", "");
         }
     }
@@ -238,17 +254,19 @@ $("#diagramDiv").on("mouseover", "#basic-example > div", function () {
     $(this).find("table").css('background-color', '#DDDDDD');
     $(this).find("p").css('background-color', '#DDDDDD');
     var node = findNode($(this)[0].id, chart_config.nodeStructure);
-    if (node.type != "reason") {
+    if (node.type != "reason" && node.type != "conflict" && node.type != "reasonAttr") {
         // Selects and scrolls to linked text
         var textArea = document.getElementById("text");
         var selectionStart = node.linktext.start;
         var selectionEnd = node.linktext.end;
         textArea.focus();
         textArea.setSelectionRange(selectionStart, selectionEnd);
+        var LineHeight = 20;
+        var Height = textArea.scrollHeight;
         var numberOfLines = Math.floor(Height/LineHeight);
         var charsPerRow = textArea.value.length/numberOfLines;
         var selectionRow = (selectionStart - (selectionStart % charsPerRow)) / charsPerRow;
-        textArea.scrollTop = 20 * selectionRow;
+        textArea.scrollTop = 20 * (selectionRow - 1);
     }
 });
 
@@ -319,7 +337,6 @@ function saveText(text, filename) {
     a.setAttribute('download', filename);
     a.click();
 }
-
 
 var isOpen = true;
 

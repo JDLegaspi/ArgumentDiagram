@@ -13,8 +13,11 @@
 }
 
 #text {
-    width: 100%;
-    height: 100%;
+    position:fixed;
+    left:50px;
+    top:70px;
+    width: 33%;
+    height: 90%;
     line-height: 20px;
     resize: none;
     -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
@@ -22,7 +25,7 @@
     box-sizing: border-box;         /* Opera/IE 8+ */
 }
 
-body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td {
+div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td {
     margin: 0;
     padding: 0;
 }
@@ -51,10 +54,6 @@ q:before, q:after {
 
 abbr, acronym {
     border: 0;
-}
-
-body {
-    background: #fff;
 }
 
 .navbar-main {
@@ -182,7 +181,7 @@ body {
     border: none;
 }
 
-#fileinput, #textInput {
+#fileInput, #textInput {
     display: none;
 }
 
@@ -239,4 +238,39 @@ body {
     padding: 17px 5px;
     font-size: 18px;
     margin: 10px 0;
+}
+
+/* The snackbar - position it at the bottom and in the middle of the screen */
+#snackbar {
+    visibility: hidden; /* Hidden by default. Visible on click */
+    min-width: 250px; /* Set a default minimum width */
+    margin-left: -125px; /* Divide value of min-width by 2 */
+    background-color: #333; /* Black background color */
+    color: #fff; /* White text color */
+    text-align: center; /* Centered text */
+    border-radius: 2px; /* Rounded borders */
+    padding: 16px; /* Padding */
+    position: fixed; /* Sit on top of the screen */
+    z-index: 1; /* Add a z-index if needed */
+    left: 50%; /* Center the snackbar */
+    bottom: 30px; /* 30px from the bottom */
+}
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+#snackbar.show {
+    visibility: visible; /* Show the snackbar */
+
+    -webkit-animation: fadein 0.5s;
+    animation: fadein 0.5s;
+}
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
 }
