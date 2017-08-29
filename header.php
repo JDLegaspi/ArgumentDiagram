@@ -14,15 +14,17 @@
 
     <!-- Load Google Drive API -->
     <?php 
+
+        //require Google API code
         require_once __DIR__ . '/app/google_auth_init.php';
+
+        //create GoogleAuth object using Google client 
         $auth = new GoogleAuth($client);
 
+        //if user has logged in, redirect to clean URL
         if ($auth->checkRedirectCode()) {
             header('Location:' . filter_var($auth_url, FILTER_SANITIZE_URL));
         }
-
-        $drive = new Google_Service_Drive($auth->getClient());
-
     ?>
 
 </head>
@@ -33,10 +35,33 @@
 
             <?php
 
-                if (!$auth->isLoggedIn()): ?>
+                if (!$auth->isLoggedIn()) { ?>
                     <a class="btn btn-default" href="<?php echo $auth->getAuthUrl(); ?>">Sign in with Google</a>
-                <?php else:?>
-                    <div class="my-diagrams">
+                    <?php 
+                } else {
+                    ?>
+                     <div class="my-diagrams">
+                        <ul>
+                            <?php 
+                            
+                            //create Google Drive object based on user's account
+                            $drive = new Google_Service_Drive($auth->getClient());
+                            $files = $drive->files->listFiles(array(
+                                //'q' => "mimeType!='->application/vnd.google-apps.folder'",
+                                'q' => "name contains '.mp3'",
+                                'spaces' => 'drive'
+                            ));
+
+                            //echo var_dump($files['files']);
+
+                            foreach ($files['files'] as $key => $value) {
+                                echo '<li><a>' . $value['name'] . "</a></li>";
+                            }
+                            
+                            ?>
+                        </ul>
+                    </div>
+                    <!-- <div class="my-diagrams">
                         <h2 style="margin-top: 0px;">My Files</h2>
                         <ul>
                             <li><a>Computer Purchase</a></li>
@@ -51,11 +76,11 @@
                             <li><a>Australia Should Allow Online Poker</a></li>
                             <li><a>Jose is Salty About Aus Gambling Laws</a></li>
                         </ul>
-                    </div>
+                    </div>   -->
                     <div class="Logout-Drive">
                         <a class="btn btn-default" href="logout.php">Log Out</a>
                     </div>
-                <?php endif; ?>
+                <?php } ?>
         </div>
     </div>
 
