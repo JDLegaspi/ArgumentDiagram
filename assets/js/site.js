@@ -324,6 +324,7 @@ function parentAttributes(node) {
     node.innerHTML = nodeConstructor(node);
 }
 
+// Calculate the weakened attributes in a conflicting argument
 function conflictAttributes(node) {
     var a = node.children[0];
     var b = node.children[1];
@@ -331,30 +332,7 @@ function conflictAttributes(node) {
     conflictCalculate(b, a);
 }
 
-function conflictOptimistic(a, b) {
-    if (isNaN(a)) {
-        return NaN;
-    } else if (isNaN(b)) {
-        return a;
-    } else if (a >= b && b != 1) {
-        return ((a - b) / (1 - b));
-    } else {
-        return 0;
-    }
-}
-
-function conflictPessimistic(a, b) {
-    if (isNaN(a)) {
-        return NaN;
-    } else if (isNaN(b)) {
-        return a;
-    } else if (a >= b) {
-        return (a - b);
-    } else {
-        return 0;
-    }
-}
-
+// This function allows both sides to be calculated without repeated code
 function conflictCalculate(node1, node2) {
     var a = node1.attributes;
     var b = node2.attributes;
@@ -405,6 +383,32 @@ function getMax(original, comparison, weight) {
         original = comparison * weight;
     }
     return original;
+}
+
+// Optimistic algebra for conflicting argument
+function conflictOptimistic(a, b) {
+    if (isNaN(a)) {
+        return NaN;
+    } else if (isNaN(b)) {
+        return a;
+    } else if (a >= b && b != 1) {
+        return ((a - b) / (1 - b));
+    } else {
+        return 0;
+    }
+}
+
+// Pessimistic algebra for conflicting argument
+function conflictPessimistic(a, b) {
+    if (isNaN(a)) {
+        return NaN;
+    } else if (isNaN(b)) {
+        return a;
+    } else if (a >= b) {
+        return (a - b);
+    } else {
+        return 0;
+    }
 }
 
 // Appending current chart to the history array
