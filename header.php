@@ -11,27 +11,42 @@
 
     <!--Font Awesome-->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <!-- Load Google Drive API -->
+    <?php 
+        require_once __DIR__ . '/app/google_auth_init.php';
+        $client = new Google_Client();
+        $auth = new GoogleAuth($client);
+    ?>
+
 </head>
 <body>
 
     <div id="mySidenav" class="sidenav">
         <div class="my-diagrams-container">
-            <div class="my-diagrams">
-                <h2 style="margin-top: 0px;">My Files</h2>
-                <ul>
-                    <li><a>Computer Purchase</a></li>
-                    <li><a>Seal hunting</a></li>
-                </ul>
-            </div>
-            <div class="my-diagrams">
-                <h2>Shared With Me</h2>
-                <ul>
-                    <li><a>Capstone</a></li>
-                    <li><a>Team 35</a></li>
-                    <li><a>Australia Should Allow Online Poker</a></li>
-                    <li><a>Jose is Salty About Aus Gambling Laws</a></li>
-                </ul>
-            </div>
+
+            <?php
+                if (!$auth->isLoggedIn()) { ?>
+                    <a class="btn btn-default" href="<?php echo $auth->getAuthUrl(); ?>">Sign in with Google</a>
+                <?php 
+                } else {?>
+                    <div class="my-diagrams">
+                        <h2 style="margin-top: 0px;">My Files</h2>
+                        <ul>
+                            <li><a>Computer Purchase</a></li>
+                            <li><a>Seal hunting</a></li>
+                        </ul>
+                    </div>
+                    <div class="my-diagrams">
+                        <h2>Shared With Me</h2>
+                        <ul>
+                            <li><a>Capstone</a></li>
+                            <li><a>Team 35</a></li>
+                            <li><a>Australia Should Allow Online Poker</a></li>
+                            <li><a>Jose is Salty About Aus Gambling Laws</a></li>
+                        </ul>
+                    </div>
+                <?php } ?>
         </div>
     </div>
 
