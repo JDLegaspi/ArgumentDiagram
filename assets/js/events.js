@@ -239,10 +239,16 @@ $("#diagramDiv").on("mouseover", "#basic-example > div", function () {
     $(this).find("p").css('background-color', '#DDDDDD');
     var node = findNode($(this)[0].id, chart_config.nodeStructure);
     if (node.type != "reason") {
-        var textArea = document.getElementById("text")
+        // Selects and scrolls to linked text
+        var textArea = document.getElementById("text");
+        var selectionStart = node.linktext.start;
+        var selectionEnd = node.linktext.end;
         textArea.focus();
-        textArea.selectionStart = node.linktext.start;
-        textArea.selectionEnd = node.linktext.end;
+        textArea.setSelectionRange(selectionStart, selectionEnd);
+        var numberOfLines = Math.floor(Height/LineHeight);
+        var charsPerRow = textArea.value.length/numberOfLines;
+        var selectionRow = (selectionStart - (selectionStart % charsPerRow)) / charsPerRow;
+        textArea.scrollTop = 20 * selectionRow;
     }
 });
 

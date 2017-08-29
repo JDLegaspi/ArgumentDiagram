@@ -8,7 +8,7 @@
 </div>
 <div class="container arg-container" style="display:none">
     <div class="col-md-4 text-center" style="height:100%">
-        <textarea id="text" rows='2' cols='2' style="height:100%" autofocus readonly></textarea>
+        <textarea id="text" style="height:100%" autofocus readonly></textarea>
         <input type="file" id="fileInput"/>
         <input type="file" accept=".txt" id="textInput"/>
         <div id="snackbar"></div>
