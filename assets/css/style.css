@@ -1,14 +1,12 @@
 .arg-container {
     padding-top: 40px;
     height: 80vh;
-    width: 80%;
+    width: 100%;
 }
 
 .vertical-center {
   min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
   min-height: 100vh; /* These two lines are counted as one :-)       */
-
-  display: flex;
   align-items: center;
 }
 
@@ -16,7 +14,7 @@
     position:fixed;
     left:50px;
     top:70px;
-    width: 33%;
+    width: 30%;
     height: 90%;
     line-height: 20px;
     resize: none;

@@ -1,5 +1,5 @@
-       <hr />
         <footer>
+            <hr />
             <p>&copy; 2017 - ArgumentDiagram</p>
         </footer>
     </div>

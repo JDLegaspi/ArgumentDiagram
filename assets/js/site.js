@@ -78,10 +78,17 @@ function nodeConstructor(node) {
         text += node.name + "</p>";
     }
     text += "<table class='nodeAttributes' style='margin: auto'>";
-    text += "<tr><td>" + node.attributes.reliability.toFixed(2) + "</td>" + "<td>" + node.attributes.reliability.toFixed(2) + "</td></tr>";
-    text += "<tr><td>" + node.attributes.accuracy.toFixed(2) + "</td>" + "<td>" + node.attributes.accuracy.toFixed(2) + "</td></tr>";
-    text += "<tr><td>" + node.attributes.relevancy.toFixed(2) + "</td>" + "<td>" + node.attributes.relevancy.toFixed(2) + "</td></tr>";
-    text += "<tr><td>" + node.attributes.uniqueness.toFixed(2) + "</td>" + "<td>" + node.attributes.uniqueness.toFixed(2) + "</td></tr>";
+    if (isNaN(node.attributes.reliWeak) && isNaN(node.attributes.accuWeak) && isNaN(node.attributes.releWeak) && isNaN(node.attributes.uniqWeak)) {
+        text += "<tr><td>" + node.attributes.reliability.toFixed(2) + "</td>" + "<td>" + node.attributes.reliability.toFixed(2) + "</td></tr>";
+        text += "<tr><td>" + node.attributes.accuracy.toFixed(2) + "</td>" + "<td>" + node.attributes.accuracy.toFixed(2) + "</td></tr>";
+        text += "<tr><td>" + node.attributes.relevancy.toFixed(2) + "</td>" + "<td>" + node.attributes.relevancy.toFixed(2) + "</td></tr>";
+        text += "<tr><td>" + node.attributes.uniqueness.toFixed(2) + "</td>" + "<td>" + node.attributes.uniqueness.toFixed(2) + "</td></tr>";
+    } else {
+        text += "<tr><td>" + node.attributes.reliability.toFixed(2) + "</td>" + "<td>" + node.attributes.reliWeak.toFixed(2) + "</td></tr>";
+        text += "<tr><td>" + node.attributes.accuracy.toFixed(2) + "</td>" + "<td>" + node.attributes.accuWeak.toFixed(2) + "</td></tr>";
+        text += "<tr><td>" + node.attributes.relevancy.toFixed(2) + "</td>" + "<td>" + node.attributes.releWeak.toFixed(2) + "</td></tr>";
+        text += "<tr><td>" + node.attributes.uniqueness.toFixed(2) + "</td>" + "<td>" + node.attributes.uniqWeak.toFixed(2) + "</td></tr>";
+    }
     text += "</table>";
     return text;
 }
@@ -97,7 +104,11 @@ function newNode(id, type, name, relia, accur, relev, unique, startSel, endSel) 
           reliability: relia,
           accuracy: accur,
           relevancy: relev,
-          uniqueness: unique
+          uniqueness: unique,
+          reliWeak: NaN,
+          accuWeak: NaN,
+          releWeak: NaN,
+          uniqWeak: NaN
         },
         linktext: {
           start: startSel,
@@ -313,6 +324,55 @@ function parentAttributes(node) {
     node.innerHTML = nodeConstructor(node);
 }
 
+function conflictAttributes(node) {
+    var a = node.children[0];
+    var b = node.children[1];
+    conflictCalculate(a, b);
+    conflictCalculate(b, a);
+}
+
+function conflictOptimistic(a, b) {
+    if (isNaN(a)) {
+        return NaN;
+    } else if (isNaN(b)) {
+        return a;
+    } else if (a >= b && b != 1) {
+        return ((a - b) / (1 - b));
+    } else {
+        return 0;
+    }
+}
+
+function conflictPessimistic(a, b) {
+    if (isNaN(a)) {
+        return NaN;
+    } else if (isNaN(b)) {
+        return a;
+    } else if (a >= b) {
+        return (a - b);
+    } else {
+        return 0;
+    }
+}
+
+function conflictCalculate(node1, node2) {
+    var a = node1.attributes;
+    var b = node2.attributes;
+    a.reliWeak = conflictOptimistic(a.reliability, b.reliability);
+    a.accuWeak = conflictPessimistic(a.accuracy, b.accuracy);
+    if (globablVars.relevancyOpt) {
+        a.releWeak = conflictOptimistic(a.relevancy, b.relevancy);
+    } else {
+        a.releWeak = conflictPessimistic(a.relevancy, b.relevancy);
+    }
+    if (globablVars.uniquenessOpt) {
+        a.uniqWeak = conflictOptimistic(a.uniqueness, b.uniqueness);
+    } else {
+        a.uniqWeak = conflictPessimistic(a.uniqueness, b.uniqueness);
+    }
+    node1.innerHTML = nodeConstructor(node1);
+}
+
 // Iterate through entire chart and calculate attributes
 function calculateChartAttributes(obj) {
     if (obj.children.length && obj.children[0].type == "reason") {
@@ -325,6 +385,9 @@ function calculateChartAttributes(obj) {
         for (var i = 0; i < obj.children.length; i++) {
             calculateChartAttributes(obj.children[i]);
         }
+    }
+    if (obj.type == "conflict") {
+        conflictAttributes(obj);
     }
 }
 
