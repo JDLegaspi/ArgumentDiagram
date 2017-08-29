@@ -213,12 +213,14 @@ $("#diagramDiv").on("click", "#basic-example > div", function () {
             if (object[0].type == "reason") {
                 if (globablVars.child.type == "reason") {
                     for (var i = 0; i < globablVars.child.children.length; i++) {
-                        object[0].children.push(globablVars.child.children[i]);
+                        if (globablVars.child.children[i].type == "reasonAttr") {
+                            deleteNode(globablVars.child.children[i]);
+                        } else {
+                            object[0].children.push(globablVars.child.children[i]);
+                        }
                     }
                 } else {
                     object[0].children.push(globablVars.child);
-                    calculateAttributes(object[0]);
-                    //parentAttributes(findParent(object[0].id, chart_config.nodeStructure));
                 }
             } else {
                 if (globablVars.child.type == "reason") {
