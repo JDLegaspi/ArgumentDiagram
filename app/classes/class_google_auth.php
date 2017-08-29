@@ -13,11 +13,17 @@ class GoogleAuth
             $this->client->setClientSecret('5ntcemikucmm6beGYbkWDJQ8');
             $this->client->setAccessType("offline");
             $this->client->setIncludeGrantedScopes(true);
-            
+
             $this->client->addScope("https://www.googleapis.com/auth/drive");
             $this->client->setRedirectUri('http://localhost:8888/ArgumentDiagram');
         }
     }
+
+    public function getClient() {
+        return $this->client;
+    }
+
+    //LOGIN FUNCTIONS//
 
     public function isLoggedIn() {
         return isset($_SESSION['access_token']);
@@ -29,7 +35,31 @@ class GoogleAuth
         } catch (Exception $e) {
             echo "Exception! " , $e->getMessage() , "\n";
         }
-        
+    }
+
+    public function checkRedirectCode() {
+        try {
+            if (isset($_GET['code'])) {
+                $this->client->authenticate($_GET['code']);
+                $this->setToken($this->client->getAccessToken());
+                return true;
+            }
+            return false;
+
+        } catch (Exception $e) {
+            echo "Exception! " , $e->getMessage() , "\n";
+        }
+    }
+
+    public function setToken($token) {
+        $_SESSION['access_token'] = $token;
+        $this->client->setAccessToken($token);
+    }
+
+    //END LOGIN FUNCTIONS//
+
+    public function logout() {
+        unset($_SESSION['access_token']);
     }
 }
 

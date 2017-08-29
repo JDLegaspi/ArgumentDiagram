@@ -15,8 +15,14 @@
     <!-- Load Google Drive API -->
     <?php 
         require_once __DIR__ . '/app/google_auth_init.php';
-        $client = new Google_Client();
         $auth = new GoogleAuth($client);
+
+        if ($auth->checkRedirectCode()) {
+            header('Location:' . filter_var($auth_url, FILTER_SANITIZE_URL));
+        }
+
+        $drive = new Google_Service_Drive($auth->getClient());
+
     ?>
 
 </head>
@@ -26,10 +32,10 @@
         <div class="my-diagrams-container">
 
             <?php
-                if (!$auth->isLoggedIn()) { ?>
+
+                if (!$auth->isLoggedIn()): ?>
                     <a class="btn btn-default" href="<?php echo $auth->getAuthUrl(); ?>">Sign in with Google</a>
-                <?php 
-                } else {?>
+                <?php else:?>
                     <div class="my-diagrams">
                         <h2 style="margin-top: 0px;">My Files</h2>
                         <ul>
@@ -46,7 +52,10 @@
                             <li><a>Jose is Salty About Aus Gambling Laws</a></li>
                         </ul>
                     </div>
-                <?php } ?>
+                    <div class="Logout-Drive">
+                        <a class="btn btn-default" href="logout.php">Log Out</a>
+                    </div>
+                <?php endif; ?>
         </div>
     </div>
 
