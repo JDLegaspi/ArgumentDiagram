@@ -51,9 +51,9 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav top-nav">
-                    <li><a class="btn btnNew">New</a></li>
+                    <li><a href="javascript:document.getElementById('textInput').click();" class="btn">New</a></li>
                     <li><a class="btn" id="btnSave">Save</a></li>
-                    <li><a class="btn btnLoad">Load</a></li>
+                    <li><a href="javascript:document.getElementById('fileInput').click();" class="btn">Load</a></li>
                     <li><a class="btn" id="btnUndo">Undo</a></li>
                     <li><a class="btn">Export</a></li>
                     <li><a class="btn">Help</a></li>

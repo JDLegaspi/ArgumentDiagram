@@ -3,13 +3,13 @@
 <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
 
 <div class="jumbotron container text-center">
-    <button class="btn btn-primary btnNew">New Diagram</button>
-    <a href="javascript:document.getElementById('fileinput').click();" class="btn btn-primary" id="btnLoad">Load Diagram</a>
+    <a href="javascript:document.getElementById('textInput').click();" class="btn btn-primary" id="btnNew">New Diagram</a>
+    <a href="javascript:document.getElementById('fileInput').click();" class="btn btn-primary" id="btnLoad">Load Diagram</a>
 </div>
 <div class="container arg-container" style="display:none">
     <div class="col-md-4 text-center" style="height:100%">
         <textarea id="text" rows='2' cols='2' style="height:100%" autofocus readonly></textarea>
-        <input type="file" id="fileinput"/>
+        <input type="file" id="fileInput"/>
         <input type="file" accept=".txt" id="textInput"/>
         <div id="snackbar"></div>
     </div>

@@ -139,53 +139,34 @@ $('#btnSave').click(function () {
     saveText(JSON.stringify(chart_config), "diagram.txt");
 });
 
-//$('#btnLoad').click(function () { changed to #fileinput so user doesn't have 2 actions to upload
-$('#fileinput').change(function () {
-    var file = document.getElementById('fileinput').files[0];
+// Input for loading an existing chart
+$('#fileInput').change(function () {
+    var file = document.getElementById('fileInput').files[0];
     if (file) {
         var reader = new FileReader();
         reader.readAsText(file);
         reader.onload = function (e) {
             chart_config = JSON.parse(e.target.result);
-            var chart = new Treant(chart_config);
-            $('#text').val(chart_config.chart.doc.text);
-            globablVars.count = 1;
-            globablVars.reasonNodes = 0;
-            globablVars.history = 0;
-            countNodes(chart_config.nodeStructure);
+            initialise();
         };
-        $('.container').show();
-        $('.jumbotron').hide();
     } else {
         window.alert("No file chosen");
     }
 });
 
+// Input for text and creating a new chart
 $('#textInput').change(function () {
-    console.log("test");
     var file = document.getElementById('textInput').files[0];
     if (file) {
         var reader = new FileReader();
         reader.readAsText(file);
         reader.onload = function () {
-            chart_config.chart.doc.text = reader.result;
-            $('#text').val(reader.result);
+            newChart(reader.result);
+            initialise();
         };
-        $('.container').show();
-        $('.jumbotron').hide();
     } else {
         window.alert("No file chosen");
     }
-});
-
-$('.btnNew').click(function () {
-    initialise();
-    $('#textInput').click();
-    var chart = new Treant(chart_config);
-});
-
-$('.btnLoad').click(function () {
-    $('#fileinput').click();
 });
 
 $('#btnImportText').click(function () {
@@ -197,14 +178,13 @@ $("#diagramDiv").on("click", "#basic-example > div", function () {
     console.log(findNode($(this)[0].id, chart_config.nodeStructure));
     console.log(findParent($(this)[0].id, chart_config.nodeStructure));
 
-    //this only activates if user has clicked "connect node"
+    // This only activates if user has clicked "connect node"
     if (globablVars.selectParent) {
         if ((findNode($(this)[0].id, chart_config.nodeStructure)).type == "conflict") {
             window.alert("Can't connect anymore arguments to the conflicting argument node");
         } else {
             chartHistory();
             globablVars.selectParent = false;
-            // globablVars.selectChild = true;
             globablVars.parent = findNode($(this)[0].id, chart_config.nodeStructure);
             var x = document.getElementById("snackbar");
             deleteNode(chart_config.nodeStructure, globablVars.child.id);
@@ -215,6 +195,7 @@ $("#diagramDiv").on("click", "#basic-example > div", function () {
                     for (var i = 0; i < globablVars.child.children.length; i++) {
                         if (globablVars.child.children[i].type == "reasonAttr") {
                             deleteNode(globablVars.child.children[i]);
+                            globablVars.countReason--;
                         } else {
                             object[0].children.push(globablVars.child.children[i]);
                         }
@@ -224,14 +205,12 @@ $("#diagramDiv").on("click", "#basic-example > div", function () {
                 }
             } else {
                 if (globablVars.child.type == "reason") {
-                    for (var i = 0; i < globablVars.child.children.length; i++) {
-                        object[0].children.push(globablVars.child.children[i]);
-                    }
+                    object[0].children.push(globablVars.child);
                 } else {
                     object[0].children.push(reasonNode(globablVars.child));
                 }
             }
-            calculateParentAttributes(chart_config.nodeStructure);
+            calculateChartAttributes(chart_config.nodeStructure);
             chart = new Treant(chart_config);
             var x = document.getElementById("snackbar");
             x.innerHTML = "";

@@ -4,31 +4,49 @@ var chart_config;
 
 // App initialisation
 function initialise() {
-    // Code for testing purposes with dummy data
-    // chart_config.nodeStructure.children[0].innerHTML = nodeConstructor(chart_config.nodeStructure.children[0]);
-    // chart_config.nodeStructure.children[1].innerHTML = nodeConstructor(chart_config.nodeStructure.children[1]);
-
-    newChart();
     // Getting a count to be used for Node IDs
     globablVars.count = 1;
+    globablVars.countReason = 0;
     countNodes(chart_config.nodeStructure);
     globablVars.history = 0;
-    globablVars.reasonNodes = 0;
 
     // Global variables used for connecting nodes
     globablVars.selectParent = false;
     globablVars.selectChild = false;
 
+    // Whether algebra for attributes are optimistic or pessimistic
     globablVars.relevancyOpt = true;
     globablVars.uniquenessOpt = true;
+
+    // Show main app view
+    $('.container').show();
+    $('.jumbotron').hide();
+
+    // Draw chart and fill text area
+    var chart = new Treant(chart_config);
+    $('#text').val(chart_config.chart.doc.text);
 }
 
-function newChart() {
+// Iterates through the chart to get a count of all nodes
+function countNodes(obj) {
+    if (obj.hasOwnProperty('children')) {
+        globablVars.count += obj.children.length;
+        if (obj.type == "reason") {
+            globablVars.countReason++;
+        }
+        for (var i = 0; i < obj.children.length; i++) {
+            countNodes(obj.children[i]);
+        }
+    }
+}
+
+// Sets up a new chart with a text input
+function newChart(input) {
     chart_config = {
         chart: {
             doc: {
                 title: '',
-                text: ''
+                text: input
             },
             scrollbar: 'fancy',
             container: "#basic-example",
@@ -92,7 +110,7 @@ function newNode(id, type, name, relia, accur, relev, unique, startSel, endSel) 
     return node;
 }
 
-// Finds and returns nodes from an ID
+// Finds and returns node from an ID
 function findNode(id, obj) {
     if (obj.id == id) {
         return obj;
@@ -109,6 +127,7 @@ function findNode(id, obj) {
     return object;
 }
 
+// Finds and returns parent node from an ID
 function findParent(id, obj) {
     var object;
     for (var i = 0; i < obj.children.length; i++) {
@@ -123,6 +142,7 @@ function findParent(id, obj) {
     return object;
 }
 
+// Returns node and all its children
 function getObjects(obj, key, val) {
     var objects = [];
     for (var i in obj) {
@@ -136,26 +156,13 @@ function getObjects(obj, key, val) {
     return objects;
 }
 
-// Iterates through the chart to get a count of all nodes
-function countNodes(obj) {
-    if (obj.hasOwnProperty('children')) {
-        globablVars.count += obj.children.length;
-        if (obj.type == "reason") {
-            globablVars.reasonNodes++;
-        }
-        for (var i = 0; i < obj.children.length; i++) {
-            countNodes(obj.children[i]);
-        }
-    }
-}
-
 // Deletes nodes from the chart, including any of its children
 function deleteNode(obj, nodeId) {
     if (obj.hasOwnProperty('children')) {
         for (var i = 0; i < obj.children.length; i++) {
             if (obj.children[i].id == nodeId) {
                 obj.children.splice(i, 1);
-                calculateParentAttributes(chart_config.nodeStructure);
+                calculateChartAttributes(chart_config.nodeStructure);
                 return;
             } else {
                 deleteNode(obj.children[i], nodeId);
@@ -185,22 +192,23 @@ function editNode(obj, nodeId, text, reli, accu, rele, uniq) {
     } else {
         window.alert("Ummmmm, something is wrong...");
     }
-    calculateParentAttributes(chart_config.nodeStructure);
+    calculateChartAttributes(chart_config.nodeStructure);
 }
 
-// Appends nodes to a reasoning node before adding them to the chart
+// Appends nodes to a reasoning node and its attributes before adding them to the chart
 function reasonNode(child) {
     globablVars.count++;
-    globablVars.reasonNodes++;
+    globablVars.countReason++;
+    var name = "<p class='reason'>dMP (r" + globablVars.countReason + ")</p>"
     var reason =
         {
             id: globablVars.count,
             HTMLid: globablVars.count.toString(),
-            HTMLclass: "reason",
             type: "reason",
             text: {
-                name: "dMP"
+                name: name
             },
+            innerHTML: name,
             attributes: {
               reliability: 0,
               accuracy: 0,
@@ -210,11 +218,10 @@ function reasonNode(child) {
             children: []
         };
     // Setting up Attributes for Reason Node
-    var name = "r" + globablVars.reasonNodes;
+    var name = "r" + globablVars.countReason;
     globablVars.count++;
     reason.children.push(newNode(globablVars.count, "reasonAttr", name, 1, 1, 1, 1, 0, 0));
     reason.children.push(child);
-    calculateAttributes(reason);
     return reason;
 }
 
@@ -244,7 +251,7 @@ function conflictNode(child1, child2) {
     return conflict;
 }
 
-// Calculating attribute values based on child nodes of a reasoning node
+// Calculating attribute values based on the child nodes of a reasoning node
 function calculateAttributes(node) {
     var children = node.children;
     var reliability = NaN;
@@ -271,6 +278,7 @@ function calculateAttributes(node) {
     node.attributes.uniqueness = uniqueness;
 }
 
+// Calculating the attributes for a ndoe based on its connected reasoning nodes
 function parentAttributes(node) {
     var children = node.children;
     var reliability = NaN;
@@ -305,20 +313,22 @@ function parentAttributes(node) {
     node.innerHTML = nodeConstructor(node);
 }
 
-function calculateParentAttributes(obj) {
+// Iterate through entire chart and calculate attributes
+function calculateChartAttributes(obj) {
     if (obj.children.length && obj.children[0].type == "reason") {
         for (var i = 0; i < obj.children.length; i++) {
-            calculateParentAttributes(obj.children[i]);
+            calculateChartAttributes(obj.children[i]);
             calculateAttributes(obj.children[i]);
         }
         parentAttributes(obj);
     } else if (obj.children.length) {
         for (var i = 0; i < obj.children.length; i++) {
-            calculateParentAttributes(obj.children[i]);
+            calculateChartAttributes(obj.children[i]);
         }
     }
 }
 
+// Used for getting minimum attribute for nodes
 function getMin(original, comparison, weight) {
     if ((comparison < original || isNaN(original)) && !isNaN(comparison)) {
         original = comparison * weight;
@@ -326,6 +336,7 @@ function getMin(original, comparison, weight) {
     return original;
 }
 
+// Used for getting maximum attribute for nodes
 function getMax(original, comparison, weight) {
     if ((comparison > original || isNaN(original)) && !isNaN(comparison)) {
         original = comparison * weight;
@@ -333,6 +344,7 @@ function getMax(original, comparison, weight) {
     return original;
 }
 
+// Appending current chart to the history array
 function chartHistory() {
     historyArray.push(JSON.parse(JSON.stringify(chart_config)));
     globablVars.history++;
