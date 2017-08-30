@@ -61,6 +61,7 @@ $("#text").mouseup(function() {
 //show popup dialog on node click
 $('#diagramDiv').on('click', '#basic-example > div', function() {
     $("#parentId").val($(this)[0].id);
+    console.log(findNode($("#parentId").val(), chart_config.nodeStructure));
     if (!globablVars.selectParent && !globablVars.selectConflict1 && !globablVars.selectConflict2 && !$(this).hasClass("conflict")) {
         $("#nodeFunctionsWrapper").fadeIn(200);
         var thisNode = findNode($("#parentId").val(), chart_config.nodeStructure);
@@ -141,7 +142,6 @@ $('#diagramDiv').on('click', '#basic-example > div', function() {
         var thisNode = findNode($("#parentId").val(), chart_config.nodeStructure);
         globablVars.child = thisNode;
         globablVars.selectParent = true;
-        console.log(globablVars.child);
         var x = document.getElementById("snackbar")
         x.className = "show";
         x.innerHTML = "Select Parent Node";
@@ -203,11 +203,11 @@ $("#diagramDiv").on("click", "#basic-example > div", function () {
             globablVars.parent = findNode($(this)[0].id, chart_config.nodeStructure);
             var x = document.getElementById("snackbar");
             var originalParent = findParent(globablVars.child.id, chart_config.nodeStructure);
-            if (originalParent.children.length == 2) {
-                deleteNode(chart_config.nodeStructure, originalParent.id);
-            }
             var object = getObjects(chart_config.nodeStructure, 'id', globablVars.parent.id);
             deleteNode(chart_config.nodeStructure, globablVars.child.id);
+            if (originalParent.children.length == 2 && originalParent.id != 1) {
+                deleteNode(chart_config.nodeStructure, originalParent.id);
+            }
             if (object[0].type == "reason") {
                 if (globablVars.child.type == "reason") {
                     for (var i = 0; i < globablVars.child.children.length; i++) {
@@ -225,6 +225,8 @@ $("#diagramDiv").on("click", "#basic-example > div", function () {
                     object[0].children.push(globablVars.child);
                 } else {
                     object[0].children.push(reasonNode(globablVars.child));
+                    calculateAttributes(object[0].children[0]);
+                    parentAttributes(object[0]);
                 }
             }
             calculateChartAttributes(chart_config.nodeStructure);
@@ -319,10 +321,12 @@ $(".my-diagrams-container").on("click", ".my-diagrams ul li", function () {
 });
 
 $('#btnUndo').click(function () {
-    console.log(historyArray);
     if (globablVars.history != 0) {
         globablVars.history--;
         chart_config = historyArray[globablVars.history];
+        parseNaN(chart_config.nodeStructure);
+        globablVars.count = 1;
+        countNodes(chart_config.nodeStructure);
         var chart = new Treant(chart_config);
     }
 });

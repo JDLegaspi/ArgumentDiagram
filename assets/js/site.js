@@ -221,10 +221,10 @@ function reasonNode(child) {
             },
             innerHTML: name,
             attributes: {
-              reliability: 0,
-              accuracy: 0,
-              relevancy: 0,
-              uniqueness: 0
+              reliability: NaN,
+              accuracy: NaN,
+              relevancy: NaN,
+              uniqueness: NaN
             },
             children: []
         };
@@ -415,4 +415,19 @@ function conflictPessimistic(a, b) {
 function chartHistory() {
     historyArray[globablVars.history] = JSON.parse(JSON.stringify(chart_config));
     globablVars.history++;
+}
+
+// Changes null to NaN when chart is parsed back to JSON for history
+function parseNaN(obj) {
+    if (obj.hasOwnProperty('children') && obj.children.length > 0) {
+        for (var i = 0; i < obj.children.length; i++) {
+            parseNaN(obj.children[i]);
+        }
+    } else if (obj.id != 1) {
+        for (var key in obj.attributes) {
+            if (obj.attributes[key] == null) {
+                obj.attributes[key] = NaN;
+            }
+        }
+    }
 }
