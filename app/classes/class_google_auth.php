@@ -2,6 +2,7 @@
 class GoogleAuth
 {
     protected $client;
+    private $redirectUrl = "http://localhost:8888/ArgumentDiagram";
     
     public function __construct(Google_Client $googleClient = null) {
        
@@ -15,13 +16,12 @@ class GoogleAuth
             $this->client->setIncludeGrantedScopes(true);
 
             $this->client->addScope("https://www.googleapis.com/auth/drive");
-            $this->client->setRedirectUri('http://localhost:8888/ArgumentDiagram');
+            $this->client->setRedirectUri($this->redirectUrl);
         }
     }
 
-    public function getClient() {
-        return $this->client;
-    }
+    public function getClient() { return $this->client; }
+    public function getRedirectUrl() { return $this->redirectUrl; }
 
     //LOGIN FUNCTIONS//
 
@@ -29,7 +29,7 @@ class GoogleAuth
         return isset($_SESSION['access_token']);
     }
 
-    public function getAuthUrl() {
+    public function createGoogleAuthUrl() {
         try {
             return $this->client->createAuthUrl();
         } catch (Exception $e) {
@@ -40,6 +40,7 @@ class GoogleAuth
     public function checkRedirectCode() {
         try {
             if (isset($_GET['code'])) {
+                $_SESSION['lmnop'] = $_GET['code']; //this line fucks things up
                 $this->client->authenticate($_GET['code']);
                 $this->setToken($this->client->getAccessToken());
                 return true;

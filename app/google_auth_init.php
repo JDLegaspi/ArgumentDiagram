@@ -1,6 +1,8 @@
 <?php
 
-session_start();
+if (!isset($_SESSION['access_token'])) {
+    session_start();
+}
 require_once __DIR__ . '/classes/vendor/autoload.php';
 require_once __DIR__ . '/classes/class_google_auth.php';
 $client = new Google_Client();

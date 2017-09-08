@@ -20,11 +20,74 @@
 
         //create GoogleAuth object using Google client 
         $auth = new GoogleAuth($client);
-
+        $auth_url = $auth->getRedirectUrl();
+        // if ($auth->checkRedirectCode()) {
+        //     echo $_SESSION['lmnop'];
+        // }
         //if user has logged in, redirect to clean URL
-        if ($auth->checkRedirectCode()) {
-            header('Location:' . filter_var($auth_url, FILTER_SANITIZE_URL));
+        // if ($auth->checkRedirectCode()) {
+        //     header('Location:' . filter_var($auth_url, FILTER_SANITIZE_URL));
+        // }
+
+        $service = new Google_Service_Drive($auth->getClient());
+
+        if (isset($_GET['code'])) {
+            echo " 1 ";
+            $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
+            echo " 2 ";
+            $client->setAccessToken($token);
+            echo " 3 ";
+            // store in the session also
+            $_SESSION['upload_token'] = $token;
+            echo " 4 ";
+            // redirect back to the example
+            header('Location: ' . filter_var($redirect_uri, FILTER_SANITIZE_URL));
+            echo " 5 ";
         }
+        // set the access token as part of the client
+        if (!empty($_SESSION['upload_token'])) {
+            echo " 6 ";
+            $client->setAccessToken($_SESSION['upload_token']);
+            echo " 7 ";
+            if ($client->isAccessTokenExpired()) {
+                echo " 7.5 ";
+                unset($_SESSION['upload_token']);
+            }
+            echo " 8 ";
+        } else {
+            echo " 9 ";
+            $authUrl = $client->createAuthUrl();
+        }
+
+
+        if (isset($_POST['chart_data'])) {
+            echo " 10 ";
+            $argument_data = $_POST['chart_data']; //not working properly
+            $filename = $_POST['chart_filename'].".argu";
+            $filepath = "assets/diagrams/$filename";
+            $debugFilepath = "assets/diagrams/debug.txt";
+            file_put_contents($filepath, $argument_data);
+            echo " 11 ";
+            $file = new Google_Service_Drive_DriveFile();
+            $content = file_get_contents($filepath);
+            file_put_contents($debugFilepath, $content);
+
+            try {
+                echo " 9 ";
+                $createdFile = $service->files->create(
+                    $file, 
+                    array(
+                        'data' => $content,
+                        'mimeType' => 'application/octet-stream',
+                        'uploadType' => 'media'
+                    )
+                );
+            } catch (Exception $e) {
+                echo 'Caught exception: ',  $e->getMessage(), "\n";
+                printf("Shit it ain't working, dog");           
+            }
+        }
+
     ?>
 
 </head>
@@ -36,7 +99,7 @@
             <?php
 
                 if (!$auth->isLoggedIn()) { ?>
-                    <a class="btn btn-default" href="<?php echo $auth->getAuthUrl(); ?>">Sign in with Google</a>
+                    <a class="btn btn-default" href="<?php echo $auth->createGoogleAuthUrl(); ?>">Sign in with Google</a>
                     <?php 
                 } else {
                     ?>
@@ -45,10 +108,9 @@
                             <?php 
                             
                             //create Google Drive object based on user's account
-                            $drive = new Google_Service_Drive($auth->getClient());
-                            $files = $drive->files->listFiles(array(
+                            $files = $service->files->listFiles(array(
                                 //'q' => "mimeType!='->application/vnd.google-apps.folder'",
-                                'q' => "name contains '.mp3'",
+                                'q' => "name contains '.argu'",
                                 'spaces' => 'drive'
                             ));
 
@@ -61,22 +123,6 @@
                             ?>
                         </ul>
                     </div>
-                    <!-- <div class="my-diagrams">
-                        <h2 style="margin-top: 0px;">My Files</h2>
-                        <ul>
-                            <li><a>Computer Purchase</a></li>
-                            <li><a>Seal hunting</a></li>
-                        </ul>
-                    </div>
-                    <div class="my-diagrams">
-                        <h2>Shared With Me</h2>
-                        <ul>
-                            <li><a>Capstone</a></li>
-                            <li><a>Team 35</a></li>
-                            <li><a>Australia Should Allow Online Poker</a></li>
-                            <li><a>Jose is Salty About Aus Gambling Laws</a></li>
-                        </ul>
-                    </div>   -->
                     <div class="Logout-Drive">
                         <a class="btn btn-default" href="logout.php">Log Out</a>
                     </div>
@@ -102,6 +148,7 @@
                 <ul class="nav navbar-nav top-nav">
                     <li><a class="btn btnNew">New</a></li>
                     <li><a class="btn" id="btnSave">Save</a></li>
+                    <li><a class="btn" id="btnSaveDrive">Save To Drive</a></li>
                     <li><a class="btn btnLoad">Load</a></li>
                     <li><a class="btn" id="btnUndo">Undo</a></li>
                     <li><a class="btn">Export</a></li>

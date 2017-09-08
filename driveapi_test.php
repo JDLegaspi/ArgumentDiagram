@@ -1,91 +1,122 @@
 <?php
-require_once __DIR__ . '/app/classes/vendor/autoload.php';
-
-
-define('APPLICATION_NAME', 'Drive API PHP Quickstart');
-define('CREDENTIALS_PATH', '~/.credentials/drive-php-quickstart.json');
-define('CLIENT_SECRET_PATH', __DIR__ . '/client_secret.json');
-// If modifying these scopes, delete your previously saved credentials
-// at ~/.credentials/drive-php-quickstart.json
-define('SCOPES', implode(' ', array(
-  Google_Service_Drive::DRIVE_METADATA_READONLY)
-));
-
-if (php_sapi_name() != 'cli') {
-  throw new Exception('This application must be run on the command line.');
-}
-
-/**
- * Returns an authorized API client.
- * @return Google_Client the authorized client object
+/*
+ * Copyright 2011 Google Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
-function getClient() {
-  $client = new Google_Client();
-  $client->setApplicationName(APPLICATION_NAME);
-  $client->setScopes(SCOPES);
-  $client->setAuthConfig(CLIENT_SECRET_PATH);
-  $client->setAccessType('offline');
-
-  // Load previously authorized credentials from a file.
-  $credentialsPath = expandHomeDirectory(CREDENTIALS_PATH);
-  if (file_exists($credentialsPath)) {
-    $accessToken = json_decode(file_get_contents($credentialsPath), true);
-  } else {
-    // Request authorization from the user.
-    $authUrl = $client->createAuthUrl();
-    printf("Open the following link in your browser:\n%s\n", $authUrl);
-    print 'Enter verification code: ';
-    $authCode = trim(fgets(STDIN));
-
-    // Exchange authorization code for an access token.
-    $accessToken = $client->fetchAccessTokenWithAuthCode($authCode);
-
-    // Store the credentials to disk.
-    if(!file_exists(dirname($credentialsPath))) {
-      mkdir(dirname($credentialsPath), 0700, true);
-    }
-    file_put_contents($credentialsPath, json_encode($accessToken));
-    printf("Credentials saved to %s\n", $credentialsPath);
-  }
-  $client->setAccessToken($accessToken);
-
-  // Refresh the token if it's expired.
-  if ($client->isAccessTokenExpired()) {
-    $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
-    file_put_contents($credentialsPath, json_encode($client->getAccessToken()));
-  }
-  return $client;
+include_once __DIR__ . '/../vendor/autoload.php';
+include_once "templates/base.php";
+echo pageHeader("File Upload - Uploading a simple file");
+/*************************************************
+ * Ensure you've downloaded your oauth credentials
+ ************************************************/
+if (!$oauth_credentials = getOAuthCredentialsFile()) {
+  echo missingOAuth2CredentialsWarning();
+  return;
 }
-
-/**
- * Expands the home directory alias '~' to the full path.
- * @param string $path the path to expand.
- * @return string the expanded path.
- */
-function expandHomeDirectory($path) {
-  $homeDirectory = getenv('HOME');
-  if (empty($homeDirectory)) {
-    $homeDirectory = getenv('HOMEDRIVE') . getenv('HOMEPATH');
-  }
-  return str_replace('~', realpath($homeDirectory), $path);
-}
-
-// Get the API client and construct the service object.
-$client = getClient();
+/************************************************
+ * The redirect URI is to the current page, e.g:
+ * http://localhost:8080/simple-file-upload.php
+ ************************************************/
+$redirect_uri = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
+$client = new Google_Client();
+$client->setAuthConfig($oauth_credentials);
+$client->setRedirectUri($redirect_uri);
+$client->addScope("https://www.googleapis.com/auth/drive");
 $service = new Google_Service_Drive($client);
-
-// Print the names and IDs for up to 10 files.
-$optParams = array(
-  'pageSize' => 10,
-  'fields' => 'nextPageToken, files(id, name)'
-);
-$results = $service->files->listFiles($optParams);
-
-if (count($results->getFiles()) == 0) {
-  print "No files found.\n";
-} else {
-  print "Files:\n";
-  foreach ($results->getFiles() as $file) {
-    printf("%s (%s)\n", $file->getName(), $file->getId());
-  }
+// add "?logout" to the URL to remove a token from the session
+if (isset($_REQUEST['logout'])) {
+  unset($_SESSION['upload_token']);
 }
+/************************************************
+ * If we have a code back from the OAuth 2.0 flow,
+ * we need to exchange that with the
+ * Google_Client::fetchAccessTokenWithAuthCode()
+ * function. We store the resultant access token
+ * bundle in the session, and redirect to ourself.
+ ************************************************/
+if (isset($_GET['code'])) {
+  $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
+  $client->setAccessToken($token);
+  // store in the session also
+  $_SESSION['upload_token'] = $token;
+  // redirect back to the example
+  header('Location: ' . filter_var($redirect_uri, FILTER_SANITIZE_URL));
+}
+// set the access token as part of the client
+if (!empty($_SESSION['upload_token'])) {
+  $client->setAccessToken($_SESSION['upload_token']);
+  if ($client->isAccessTokenExpired()) {
+    unset($_SESSION['upload_token']);
+  }
+} else {
+  $authUrl = $client->createAuthUrl();
+}
+/************************************************
+ * If we're signed in then lets try to upload our
+ * file. For larger files, see fileupload.php.
+ ************************************************/
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && $client->getAccessToken()) {
+  // We'll setup an empty 1MB file to upload.
+  DEFINE("TESTFILE", 'testfile-small.txt');
+  if (!file_exists(TESTFILE)) {
+    $fh = fopen(TESTFILE, 'w');
+    fseek($fh, 1024 * 1024);
+    fwrite($fh, "!", 1);
+    fclose($fh);
+  }
+  // This is uploading a file directly, with no metadata associated.
+  $file = new Google_Service_Drive_DriveFile();
+  $result = $service->files->create(
+      $file,
+      array(
+        'data' => file_get_contents(TESTFILE),
+        'mimeType' => 'application/octet-stream',
+        'uploadType' => 'media'
+      )
+  );
+  // Now lets try and send the metadata as well using multipart!
+  $file = new Google_Service_Drive_DriveFile();
+  $file->setName("Hello World!");
+  $result2 = $service->files->create(
+      $file,
+      array(
+        'data' => file_get_contents(TESTFILE),
+        'mimeType' => 'application/octet-stream',
+        'uploadType' => 'multipart'
+      )
+  );
+}
+?>
+
+<div class="box">
+<?php if (isset($authUrl)): ?>
+  <div class="request">
+    <a class='login' href='<?= $authUrl ?>'>Connect Me!</a>
+  </div>
+<?php elseif($_SERVER['REQUEST_METHOD'] == 'POST'): ?>
+  <div class="shortened">
+    <p>Your call was successful! Check your drive for the following files:</p>
+    <ul>
+      <li><a href="https://drive.google.com/open?id=<?= $result->id ?>" target="_blank"><?= $result->name ?></a></li>
+      <li><a href="https://drive.google.com/open?id=<?= $result2->id ?>" target="_blank"><?= $result2->name ?></a></li>
+    </ul>
+  </div>
+<?php else: ?>
+  <form method="POST">
+    <input type="submit" value="Click here to upload two small (1MB) test files" />
+  </form>
+<?php endif ?>
+</div>
+
+<?= pageFooter(__FILE__) ?>

@@ -139,6 +139,27 @@ $('#btnSave').click(function () {
     saveText(JSON.stringify(chart_config), "diagram.txt");
 });
 
+//sends ajax request to php file, which saves it locally, then upload to google
+$('#btnSaveDrive').click(function () {
+    
+    var name = prompt("Name your file lol");
+    var filename = name.replace(/ /g,"_");
+    var data = {
+        chart_data: chart_config,
+        chart_filename: filename
+    };
+    
+    $.ajax({
+        type: "POST",
+        //url: "drive_process_file.php",
+        data: data,
+        error: function(req, status, err) {
+            console.log('Something went wrong', status, err);
+        }
+    });
+     
+});
+
 //$('#btnLoad').click(function () { changed to #fileinput so user doesn't have 2 actions to upload
 $('#fileinput').change(function () {
     var file = document.getElementById('fileinput').files[0];
