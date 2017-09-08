@@ -32,48 +32,35 @@
         $service = new Google_Service_Drive($auth->getClient());
 
         if (isset($_GET['code'])) {
-            echo " 1 ";
             $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
-            echo " 2 ";
             $client->setAccessToken($token);
-            echo " 3 ";
             // store in the session also
             $_SESSION['upload_token'] = $token;
-            echo " 4 ";
             // redirect back to the example
             header('Location: ' . filter_var($redirect_uri, FILTER_SANITIZE_URL));
-            echo " 5 ";
         }
         // set the access token as part of the client
         if (!empty($_SESSION['upload_token'])) {
-            echo " 6 ";
             $client->setAccessToken($_SESSION['upload_token']);
-            echo " 7 ";
             if ($client->isAccessTokenExpired()) {
-                echo " 7.5 ";
                 unset($_SESSION['upload_token']);
             }
-            echo " 8 ";
         } else {
-            echo " 9 ";
             $authUrl = $client->createAuthUrl();
         }
 
 
         if (isset($_POST['chart_data'])) {
-            echo " 10 ";
             $argument_data = $_POST['chart_data']; //not working properly
             $filename = $_POST['chart_filename'].".argu";
             $filepath = "assets/diagrams/$filename";
             $debugFilepath = "assets/diagrams/debug.txt";
             file_put_contents($filepath, $argument_data);
-            echo " 11 ";
             $file = new Google_Service_Drive_DriveFile();
             $content = file_get_contents($filepath);
             file_put_contents($debugFilepath, $content);
 
             try {
-                echo " 9 ";
                 $createdFile = $service->files->create(
                     $file, 
                     array(
