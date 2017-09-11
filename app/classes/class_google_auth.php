@@ -53,8 +53,9 @@ class GoogleAuth
     }
 
     public function setToken($token) {
-        $_SESSION['access_token'] = $token;
-        $this->client->setAccessToken($token);
+        $client->setAccessToken($token);
+        // store in the session also
+        $_SESSION['upload_token'] = $token;
     }
 
     //END LOGIN FUNCTIONS//

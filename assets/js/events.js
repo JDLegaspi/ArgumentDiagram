@@ -139,23 +139,58 @@ $('#btnSave').click(function () {
     saveText(JSON.stringify(chart_config), "diagram.txt");
 });
 
+$('#btnDownload').click(function() {
+    saveText(JSON.stringify(chart_config), "diagram.txt");
+});
+
 //sends ajax request to php file, which saves it locally, then upload to google
-$('#btnSaveDrive').click(function () {
+$('#btnSaveDrive').on('click', function () {
     
-    var name = prompt("Name your file lol");
-    var filename = name.replace(/ /g,"_");
+    var filename = chart_config.chart.doc.title.replace(/ /g,"_");
     var data = {
-        chart_data: chart_config,
+        chart_data: JSON.stringify(chart_config),
         chart_filename: filename
     };
     
     $.ajax({
         type: "POST",
-        //url: "drive_process_file.php",
+        url: "drive_process_file.php",
         data: data,
         error: function(req, status, err) {
             console.log('Something went wrong', status, err);
         }
+    });
+
+    if (!globablVars.selectParent) {
+        $("#saveFunctionsWrapper").fadeIn(200);
+    }
+
+    var containerWidth = $("#saveFunctionsWrapper").outerWidth();
+    var containerHeight = $("#saveFunctionsWrapper").outerHeight();
+
+    var popupWidth = $("#saveFunctions").outerWidth();
+    var popupHeight = $("#saveFunctions").outerHeight();
+
+    var paddingTop = (containerHeight - popupHeight) / 2;
+    var paddingLeft = (containerWidth - popupWidth) / 2
+
+    if (mouseX + popupWidth > windowWidth) popupLeft = mouseX - popupWidth - paddingLeft;
+    else popupLeft = mouseX - paddingLeft;
+
+    if (mouseY + popupHeight > windowHeight) popupTop = mouseY - paddingTop;
+    else popupTop = mouseY - paddingTop;
+
+    if (popupLeft < 0) popupLeft = 0;
+    if (popupTop < 0) popupTop = 0;
+
+    $("#saveFunctionsWrapper").offset({ top: popupTop, left: popupLeft });
+
+    $('#saveFunctionsWrapper').mouseleave(function(e) {
+        $('#saveFunctionsWrapper').fadeOut(200);
+    });
+
+    $('#saveFunctionsWrapper').on('click', function() {
+        $('#saveFunctionsWrapper').fadeOut(200);
     });
      
 });

@@ -17,7 +17,64 @@
 
         //require Google API code
         require_once __DIR__ . '/app/google_auth_init.php';
-        
+
+        //create GoogleAuth object using Google client 
+        $auth = new GoogleAuth($client);
+        $auth_url = $auth->getRedirectUrl();
+        // if ($auth->checkRedirectCode()) {
+        //     echo $_SESSION['lmnop'];
+        // }
+        //if user has logged in, redirect to clean URL
+        // if ($auth->checkRedirectCode()) {
+        //     header('Location:' . filter_var($auth_url, FILTER_SANITIZE_URL));
+        // }
+
+        $service = new Google_Service_Drive($auth->getClient());
+
+        if (isset($_GET['code'])) {
+            $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
+            $client->setAccessToken($token);
+            // store in the session also
+            $_SESSION['upload_token'] = $token;
+            // redirect back to the example
+            header('Location: ' . filter_var($redirect_uri, FILTER_SANITIZE_URL));
+        }
+        // set the access token as part of the client
+        if (!empty($_SESSION['upload_token'])) {
+            $client->setAccessToken($_SESSION['upload_token']);
+            if ($client->isAccessTokenExpired()) {
+                unset($_SESSION['upload_token']);
+            }
+        } else {
+            $authUrl = $client->createAuthUrl();
+        }
+
+
+        if (isset($_POST['chart_data'])) {
+            $argument_data = $_POST['chart_data']; //not working properly
+            $filename = $_POST['chart_filename'].".argu";
+            $filepath = "assets/diagrams/$filename";
+            $debugFilepath = "assets/diagrams/debug.txt";
+            file_put_contents($filepath, $argument_data);
+            $file = new Google_Service_Drive_DriveFile();
+            $content = file_get_contents($filepath);
+            file_put_contents($debugFilepath, $content);
+
+            try {
+                $createdFile = $service->files->create(
+                    $file, 
+                    array(
+                        'data' => $content,
+                        'mimeType' => 'application/octet-stream',
+                        'uploadType' => 'media'
+                    )
+                );
+            } catch (Exception $e) {
+                echo 'Caught exception: ',  $e->getMessage(), "\n";
+                printf("Shit it ain't working, dog");           
+            }
+        }
+
     ?>
 
 </head>
@@ -28,8 +85,8 @@
 
             <?php
 
-                if (isset($authUrl)) { ?>
-                    <a class="btn btn-default" href="<?php echo $authUrl; ?>">Sign in with Google</a>
+                if (!$auth->isLoggedIn()) { ?>
+                    <a class="btn btn-default" href="<?php echo $auth->createGoogleAuthUrl(); ?>">Sign in with Google</a>
                     <?php 
                 } else {
                     ?>
