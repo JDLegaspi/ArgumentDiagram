@@ -38,29 +38,4 @@ if (!empty($_SESSION['upload_token'])) {
     
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && $client->getAccessToken()) {
-    echo '4';
-    
-    $file = "/assets/diagrams/diagram.argu";
-    $fileContents = file_get_contents($file);
-
-    // This is uploading a file directly, with no metadata associated.
-    $fileMetaData = new Google_Service_Drive_DriveFile(array(
-        'name' => $_SESSION['chart_filename'].".argu"
-    ));
-    
-    $result = $service->files->create(
-        $fileMetaData,
-        array(
-            'data' => $fileContents,
-            'mimeType' => 'text/csv',
-            'uploadType' => 'multipart'
-        )
-    );
-
-    //delete temporary file after uploading it
-    //unlink($file) or die("Couldn't delete file");
-}
-
-
 ?>

@@ -147,15 +147,15 @@ $('#btnDownload').click(function() {
 $('#btnSaveDrive').on('click', function () {
     
     var filename = chart_config.chart.doc.title.replace(/ /g,"_");
-    var data = {
-        chart_data: JSON.stringify(chart_config),
-        chart_filename: filename
-    };
-    
+    // var data = {
+    //     chart_data: JSON.stringify(chart_config),
+    //     chart_filename: filename
+    // };
+    var str_json = JSON.stringify(chart_config);
     $.ajax({
         type: "POST",
         url: "drive_process_file.php",
-        data: data,
+        data: "chart_config = " + str_json,
         error: function(req, status, err) {
             console.log('Something went wrong', status, err);
         }
@@ -333,10 +333,13 @@ $("#diagramDiv").on("mouseleave", "#basic-example > div", function () {
     }
 });
 
-$(".my-diagrams-container").on("click", ".my-diagrams ul li", function () {
+$(".my-diagrams-container").on("click", ".my-diagrams ul li a", function () {
     if (!globablVars.selectParent) {
         $("#myChartsWrapper").fadeIn(200);
     }
+
+    var itemID = $(this).attr('id');
+    console.log("Google Item ID: #" + itemID);
 
     var containerWidth = $("#myChartsWrapper").outerWidth();
     var containerHeight = $("#myChartsWrapper").outerHeight();
@@ -367,6 +370,23 @@ $(".my-diagrams-container").on("click", ".my-diagrams ul li", function () {
     });
 
     // Button Click Functions Go Here!!!
+
+    $('#myChartsWrapper').on('click', '#btnDeleteChart', function*() {
+        $('#' + itemID).remove();
+        data = {
+            delete_chart: "plez delete mi",
+            file_id: itemID
+        };
+        $.ajax({
+            type: "POST",
+            url: "drive_functions.php",
+            data: data,
+            error: function(req, status, err) {
+                console.log('Something went wrong', status, err);
+            }
+        });
+    });
+
 });
 
 $('#btnUndo').click(function () {

@@ -16,7 +16,7 @@
     <?php 
 
         //require Google API code
-        require_once __DIR__ . '/app/google_auth_init.php';
+        require_once __DIR__ . '/app/drive_functions.php';
         
     ?>
 
@@ -39,15 +39,14 @@
                             
                             //create Google Drive object based on user's account
                             $files = $service->files->listFiles(array(
-                                //'q' => "mimeType!='->application/vnd.google-apps.folder'",
-                                'q' => "name contains '.argu'",
+                                'q' => "name contains '.argu' and trashed != true",
                                 'spaces' => 'drive'
                             ));
 
                             //echo var_dump($files['files']);
 
                             foreach ($files['files'] as $key => $value) {
-                                echo '<li><a>' . $value['name'] . "</a></li>";
+                                echo '<li><a id="'.$value['id'].'">' . $value['name'] . "</a></li>";
                             }
                             
                             ?>
@@ -77,8 +76,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav top-nav">
                     <li><a class="btn btnNew">New</a></li>
-                    <li><a class="btn" id="btnSave">Save</a></li>
-                    <li><a class="btn" id="btnSaveDrive">Save To Drive</a></li>
+                    <li><a class="btn" id="btnSaveDrive">Save</a></li>
                     <li><a class="btn btnLoad">Load</a></li>
                     <li><a class="btn" id="btnUndo">Undo</a></li>
                     <li><a class="btn">Export</a></li>
