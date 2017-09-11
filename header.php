@@ -11,6 +11,9 @@
 
     <!--Font Awesome-->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <!--IntroJS-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.7.0/introjs.min.css" type="text/css"/>
 </head>
 <body>
 
@@ -51,12 +54,12 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav top-nav">
-                    <li><a class="btn btnNew">New</a></li>
-                    <li><a class="btn" id="btnSave">Save</a></li>
+                    <li><a class="btn btnNew" data-intro="HELLO THIS IS THE FIRST STEP BOI, LEARN IT BOI!" data-step="1">New</a></li>
+                    <li><a class="btn" id="btnSave" data-step="2" data-intro="ZAC WRITE IN HERE BOI!">Save</a></li>
                     <li><a class="btn btnLoad">Load</a></li>
                     <li><a class="btn" id="btnUndo">Undo</a></li>
                     <li><a class="btn">Export</a></li>
-                    <li><a class="btn">Help</a></li>
+                    <li><a class="btn" id="btnHelp">Help</a></li>
                 </ul>
             </div>
         </div>

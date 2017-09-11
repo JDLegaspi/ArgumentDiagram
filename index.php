@@ -40,6 +40,7 @@
 <script src="assets/lib/jquery/dist/jquery.min.js"></script>
 <script src="assets/lib/treant-js/vendor/raphael.js"></script>
 <script src="assets/lib/treant-js/Treant.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.7.0/intro.min.js"></script>
 <script src="assets/diagrams/arg1.js"></script>
 <script src="assets/js/site.js"></script>
 <script src="assets/js/events.js"></script>

@@ -313,6 +313,10 @@ $(".my-diagrams-container").on("click", ".my-diagrams ul li", function () {
     // Button Click Functions Go Here!!!
 });
 
+$('#btnHelp').click(function() {
+    introJs().start();
+})
+
 $('#btnUndo').click(function () {
     console.log(historyArray);
     if (globablVars.history != 0) {
