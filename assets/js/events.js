@@ -139,6 +139,99 @@ $('#btnSave').click(function () {
     saveText(JSON.stringify(chart_config), "diagram.txt");
 });
 
+
+//sends ajax request to php file, which saves it locally, then upload to google
+$('#btnSaveDrive').on('click', function () {
+    
+    var filename = chart_config.chart.doc.title.replace(/ /g,"_");
+    // var data = {
+    //     chart_data: JSON.stringify(chart_config),
+    //     chart_filename: filename
+    // };
+    var str_json = JSON.stringify(chart_config);
+    $.ajax({
+        type: "POST",
+        url: "drive_process_file.php",
+        data: str_json,
+        error: function(req, status, err) {
+            console.log('Something went wrong', status, err);
+        }
+    });
+
+    $.ajax({
+        type: "POST",
+        url: "drive_process_filename.php",
+        data: {chart_filename: filename},
+        error: function(req, status, err) {
+            console.log('Something went wrong', status, err);
+        }
+    });
+
+    if (!globablVars.selectParent) {
+        $("#saveFunctionsWrapper").fadeIn(200);
+    }
+
+    var containerWidth = $("#saveFunctionsWrapper").outerWidth();
+    var containerHeight = $("#saveFunctionsWrapper").outerHeight();
+
+    var popupWidth = $("#saveFunctions").outerWidth();
+    var popupHeight = $("#saveFunctions").outerHeight();
+
+    var paddingTop = (containerHeight - popupHeight) / 2;
+    var paddingLeft = (containerWidth - popupWidth) / 2
+
+    if (mouseX + popupWidth > windowWidth) popupLeft = mouseX - popupWidth - paddingLeft;
+    else popupLeft = mouseX - paddingLeft;
+
+    if (mouseY + popupHeight > windowHeight) popupTop = mouseY - paddingTop;
+    else popupTop = mouseY - paddingTop;
+
+    if (popupLeft < 0) popupLeft = 0;
+    if (popupTop < 0) popupTop = 0;
+
+    $("#saveFunctionsWrapper").offset({ top: popupTop, left: popupLeft });
+
+    $('#saveFunctionsWrapper').mouseleave(function(e) {
+        $('#saveFunctionsWrapper').fadeOut(200);
+    });
+
+    $('#saveFunctionsWrapper').on('click', function() {
+        $('#saveFunctionsWrapper').fadeOut(200);
+    });
+
+    $('#saveFunctionsWrapper').one('click', '#btnDownload', function() {
+        saveText(JSON.stringify(chart_config), "diagram.txt");
+    });
+
+    $('#saveFunctionsWrapper').off('click').on('click', '#btnSaveToDrive', function() {
+        
+        var data = {
+            save_to_drive: "pls save mi",
+            file_name: filename,
+            file_contents: str_json
+        };
+        
+        $.ajax({
+            type: "POST",
+            url: "app/drive_functions.php",
+            data: data,
+            success: function(data) {
+                var item_id = data.trim();
+                console.log(item_id);
+                var $newElement = $('<li>', {id: item_id});
+                var $anchor = $('<a>');
+                $anchor.html(filename);
+                $newElement.append($anchor);
+                $(".my-diagrams ul").append($newElement);
+            },
+            error: function(req, status, err) {
+                console.log('Something went wrong', status, err);
+            }
+        });
+    });
+     
+});
+
 //$('#btnLoad').click(function () { changed to #fileinput so user doesn't have 2 actions to upload
 $('#fileinput').change(function () {
     var file = document.getElementById('fileinput').files[0];
@@ -282,6 +375,9 @@ $(".my-diagrams-container").on("click", ".my-diagrams ul li", function () {
         $("#myChartsWrapper").fadeIn(200);
     }
 
+    var itemID = $(this).attr('id');
+    console.log("Google Item ID: #" + itemID);
+
     var containerWidth = $("#myChartsWrapper").outerWidth();
     var containerHeight = $("#myChartsWrapper").outerHeight();
 
@@ -311,6 +407,55 @@ $(".my-diagrams-container").on("click", ".my-diagrams ul li", function () {
     });
 
     // Button Click Functions Go Here!!!
+
+    $('#myChartsWrapper').one('click', '#btnDeleteChart', function() {
+        $('#' + itemID).remove();
+        var data = {
+            delete_chart: "plez delete mi",
+            file_id: itemID
+        };
+        $.ajax({
+            type: "POST",
+            url: "app/drive_functions.php",
+            data: data,
+            error: function(req, status, err) {
+                console.log('Something went wrong', status, err);
+            }
+        });
+    });
+
+    $('#myChartsWrapper').one('click', '#btnOpenChart', function() {
+        var data = {
+            open_chart: "plez open mi",
+            file_id: itemID
+        };
+        $.ajax({
+            type: "POST",
+            url: "app/drive_functions.php",
+            data: data,
+            success: function(data) {
+
+                chart_config = JSON.parse(data);
+                $('#text').val(chart_config.chart.doc.text);
+                
+                globablVars.count = 1;
+                globablVars.reasonNodes = 0;
+                globablVars.history = 0;
+
+                countNodes(chart_config.nodeStructure);
+                
+                $('.container').show();
+                $('.jumbotron').hide();
+
+                var chart = new Treant(chart_config);
+
+            },
+            error: function(req, status, err) {
+                console.log('Something went wrong', status, err);
+            }
+        });
+    });
+
 });
 
 $('#btnUndo').click(function () {

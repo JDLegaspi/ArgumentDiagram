@@ -16,15 +16,8 @@
     <?php 
 
         //require Google API code
-        require_once __DIR__ . '/app/google_auth_init.php';
-
-        //create GoogleAuth object using Google client 
-        $auth = new GoogleAuth($client);
-
-        //if user has logged in, redirect to clean URL
-        if ($auth->checkRedirectCode()) {
-            header('Location:' . filter_var($auth_url, FILTER_SANITIZE_URL));
-        }
+        require_once __DIR__ . '/app/drive_functions.php';
+        
     ?>
 
 </head>
@@ -35,8 +28,8 @@
 
             <?php
 
-                if (!$auth->isLoggedIn()) { ?>
-                    <a class="btn btn-default" href="<?php echo $auth->getAuthUrl(); ?>">Sign in with Google</a>
+                if (isset($authUrl)) { ?>
+                    <a class="btn btn-default" href="<?php echo $authUrl; ?>">Sign in with Google</a>
                     <?php 
                 } else {
                     ?>
@@ -46,17 +39,14 @@
                             <?php 
                             
                             //create Google Drive object based on user's account
-                            $drive = new Google_Service_Drive($auth->getClient());
-                            $files = $drive->files->listFiles(array(
-                                //'q' => "mimeType!='->application/vnd.google-apps.folder'",
-                                'q' => "name contains '.mp3'",
+                            $files = $service->files->listFiles(array(
+                                'q' => "name contains '.argu' and trashed != true",
                                 'spaces' => 'drive'
                             ));
-
                             //echo var_dump($files['files']);
 
                             foreach ($files['files'] as $key => $value) {
-                                echo '<li><a>' . $value['name'] . "</a></li>";
+                                echo '<li id="'.$value['id'].'"><a>' . $value['name'] . "</a></li>";
                             }
                             
                             ?>
@@ -86,7 +76,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav top-nav">
                     <li><a class="btn btnNew">New</a></li>
-                    <li><a class="btn" id="btnSave">Save</a></li>
+                    <li><a class="btn" id="btnSaveDrive">Save</a></li>
                     <li><a class="btn btnLoad">Load</a></li>
                     <li><a class="btn" id="btnUndo">Undo</a></li>
                     <li><a class="btn">Export</a></li>
