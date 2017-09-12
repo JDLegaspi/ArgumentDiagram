@@ -77,7 +77,11 @@ function nodeConstructor(node) {
     } else {
         text += node.name + "</p>";
     }
-    text += "<table class='nodeAttributes' style='margin: auto'>";
+    if (globablVars.hideAttributes) {
+        text += "<table class='nodeAttributes' style='margin: auto; display: none'>";
+    } else {
+        text += "<table class='nodeAttributes' style='margin: auto'>";
+    }
     if (isNaN(node.attributes.reliWeak) && isNaN(node.attributes.accuWeak) && isNaN(node.attributes.releWeak) && isNaN(node.attributes.uniqWeak)) {
         text += "<tr><td>" + node.attributes.reliability.toFixed(2) + "</td>" + "<td>" + node.attributes.reliability.toFixed(2) + "</td></tr>";
         text += "<tr><td>" + node.attributes.accuracy.toFixed(2) + "</td>" + "<td>" + node.attributes.accuracy.toFixed(2) + "</td></tr>";
@@ -114,7 +118,7 @@ function newNode(id, type, name, relia, accur, relev, unique, startSel, endSel) 
           start: startSel,
           end: endSel
         },
-        collapsable: true,
+        collapsed: false,
         children: []
     };
     node.innerHTML = nodeConstructor(node);
@@ -211,6 +215,20 @@ function editNode(obj, nodeId, text, reli, accu, rele, uniq) {
         window.alert("Ummmmm, something is wrong...");
     }
     calculateChartAttributes(chart_config.nodeStructure);
+}
+
+// Changes selectedText
+function editSelection(obj, nodeId, start, end) {
+    if (obj.id == nodeId) {
+        obj.linktext.start = start;
+        obj.linktext.end = end;
+    } else if (obj.hasOwnProperty('children')) {
+        for (var i = 0; i < obj.children.length; i++) {
+            editSelection(obj.children[i], nodeId, start, end);
+        }
+    } else {
+        window.alert("Ummmmm, something is wrong...");
+    }
 }
 
 // Appends nodes to a reasoning node and its attributes before adding them to the chart
@@ -449,6 +467,18 @@ function parseNaN(obj) {
             if (obj.attributes[key] == null) {
                 obj.attributes[key] = NaN;
             }
+        }
+    }
+}
+
+// Iterating through chart and toggling whether attributes are displayed or not
+function toggleAttributes(obj) {
+    if (obj.hasOwnProperty('children')) {
+        for (var i = 0; i < obj.children.length; i++) {
+            if (obj.children[i].type == "reasonAttr" || obj.children[i].type == "fact") {
+                obj.children[i].innerHTML = nodeConstructor(obj.children[i]);
+            }
+            toggleAttributes(obj.children[i]);
         }
     }
 }

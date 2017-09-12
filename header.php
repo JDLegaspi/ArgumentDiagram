@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ArgumentDiagram</title>
 
-    <link rel="stylesheet" href="assets/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="assets/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="assets/css/site.css" />
     <link rel="stylesheet" href="assets/lib/treant-js/Treant.css" type="text/css" />
 

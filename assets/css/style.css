@@ -75,6 +75,11 @@ abbr, acronym {
     /* height: 600px; */
     margin: 5px;
     width: auto;
+    transform-origin: left top;
+}
+
+#chart {
+    overflow: auto;
 }
 
 .Treant > .node, .Treant > .pseudo {

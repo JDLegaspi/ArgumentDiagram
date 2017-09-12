@@ -67,14 +67,18 @@ $('#diagramDiv').on('click', '#basic-example > div', function() {
         $("#nodeFunctionsWrapper").fadeIn(200);
         var thisNode = findNode(globablVars.this, chart_config.nodeStructure);
         if (thisNode.type == "reasonAttr" || findParent(thisNode.id, chart_config.nodeStructure).type == "conflict") {
-            $('#btnConnect').prop('disabled', true);
+            $('#btnConnect').hide();
+            $('#btnCollapse').hide();
         } else {
-            $('#btnConnect').prop('disabled', false);
+            $('#btnConnect').show();
+            $('#btnCollapse').show();
         }
         if (thisNode.type == "reason") {
-            $('#btnEdit').prop('disabled', true);
+            $('#btnEdit').hide();
+            $('#btnCollapse').hide();
         } else {
-            $('#btnEdit').prop('disabled', false);
+            $('#btnEdit').show();
+            $('#btnCollapse').show();
         }
     }
 
@@ -105,46 +109,6 @@ $('#diagramDiv').on('click', '#basic-example > div', function() {
     $('#nodeFunctionsWrapper').on('click', function() {
         $('#nodeFunctionsWrapper').fadeOut(200);
     });
-
-    $('#nodeFunctionsWrapper').on('click', '#btnDelete', function () {
-        if (globablVars.this) {
-            chartHistory();
-            deleteNode(chart_config.nodeStructure, globablVars.this);
-            chart = new Treant(chart_config);
-        } else {
-            window.alert("Please select a node");
-        }
-    });
-
-    $('#nodeFunctionsWrapper').on('click', '#btnEdit', function () {
-        if (globablVars.this) {
-            if ($("#" + globablVars.this).hasClass("reason")) {
-                window.alert("Can't edit reasoning node");
-            } else {
-                var thisNode = findNode(globablVars.this, chart_config.nodeStructure);
-                $('#editNodeModal').modal('show');
-                $("#editName").val(thisNode.name);
-                $("#editReli").val(thisNode.attributes.reliability);
-                $("#editAccu").val(thisNode.attributes.accuracy);
-                $("#editRele").val(thisNode.attributes.relevancy);
-                $("#editUniq").val(thisNode.attributes.uniqueness);
-                if (thisNode.type == "reasonAttr") {
-                    $("#editName").prop('disabled', true);
-                } else {
-                    $("#editName").prop('disabled', false);
-                }
-            }
-        } else {
-            window.alert("Please select a node");
-        }
-    });
-
-    $('#nodeFunctionsWrapper').on('click', '#btnConnect', function () {
-        var thisNode = findNode(globablVars.this, chart_config.nodeStructure);
-        globablVars.child = thisNode;
-        globablVars.selectParent = true;
-        showSnackbar("Select the node to connect to");
-    });
 });
 
 $('#btnNewNode').click(function () {
@@ -163,6 +127,7 @@ $('#fileInput').change(function () {
         reader.readAsText(file);
         reader.onload = function (e) {
             chart_config = JSON.parse(e.target.result);
+            parseNaN(chart_config.nodeStructure);
             initialise();
         };
     } else {
@@ -172,14 +137,37 @@ $('#fileInput').change(function () {
 
 // Input for text and creating a new chart
 $('#textInput').change(function () {
+    var loadFile=function(url,callback){
+            JSZipUtils.getBinaryContent(url,callback);
+        }
     var file = document.getElementById('textInput').files[0];
+    console.log(file.name);
     if (file) {
+        var fileName = file.name;
+        var txt = ".txt";
+        var docx = ".docx";
         var reader = new FileReader();
-        reader.readAsText(file);
-        reader.onload = function () {
-            newChart(reader.result);
-            initialise();
-        };
+        if (fileName.substr(fileName.length - txt.length, txt.length).toLowerCase() == txt.toLowerCase()) {
+            reader.readAsText(file);
+            reader.onload = function () {
+                newChart(reader.result);
+                initialise();
+            };
+        } else if (fileName.substr(fileName.length - docx.length, docx.length).toLowerCase() == docx.toLowerCase()) {
+            reader.onload = function (e) {
+                loadFile(e.target.result,function(error,content){
+                    if (error) { throw error };
+                    var zip = new JSZip(content);
+                    var doc=new Docxtemplater().loadZip(zip)
+                    text=doc.getFullText();
+                    newChart(text);
+                    initialise();
+                });
+            }
+            reader.readAsDataURL(file);
+        } else {
+            window.alert("File type not supported");
+        }
     } else {
         window.alert("No file chosen");
     }
@@ -361,6 +349,31 @@ function saveText(text, filename) {
     a.setAttribute('download', filename);
     a.click();
 }
+
+var currentZoom = 1.0;
+
+$('#btnZoomIn').click(function () {
+    currentZoom = currentZoom+0.05;
+    var scaleString = "scale("+currentZoom+")";
+    $("#basic-example").css("transform", scaleString);
+    $("svg").position.left = 0;
+});
+
+$('#btnZoomOut').click(function () {
+    currentZoom = currentZoom-0.05;
+    var scaleString = "scale("+currentZoom+")";
+    $("#basic-example").css("transform", scaleString);
+});
+
+$("#btnToggleAttributes").click(function () {
+    if (globablVars.hideAttributes) {
+        globablVars.hideAttributes = false;
+    } else {
+        globablVars.hideAttributes = true;
+    }
+    toggleAttributes(chart_config.nodeStructure);
+    var chart = new Treant(chart_config);
+});
 
 var isOpen = true;
 
