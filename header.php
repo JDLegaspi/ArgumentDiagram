@@ -17,16 +17,16 @@
 </head>
 <body>
 
-    <div id="mySidenav" class="sidenav">
+    <div id="mySidenav" class="sidenav" data-step="8" data-intro="Here are extra features exclusive to this thing..">
         <div class="my-diagrams-container">
             <div class="my-diagrams">
-                <h2 style="margin-top: 0px;">My Files</h2>
+                <h2 style="margin-top: 0px;" data-step="9" data-intro="Here is a list of files that have been previously saved">My Files</h2>
                 <ul>
                     <li><a>Computer Purchase</a></li>
                     <li><a>Seal hunting</a></li>
                 </ul>
             </div>
-            <div class="my-diagrams">
+            <div class="my-diagrams" data-step="10" data-intro="This is a list of files you have access too.  These files have been shared to you by other users" >
                 <h2>Shared With Me</h2>
                 <ul>
                     <li><a>Capstone</a></li>
@@ -40,7 +40,7 @@
 
     <nav class="navbar navbar-inverse navbar-main">
         <div class="col-xs-1 cloud">
-            <i class="fa fa-cloud" aria-hidden="true" onclick="toggleNav()" id="open-nav"></i>
+            <i class="fa fa-cloud" aria-hidden="true" onclick="toggleNav()" id="open-nav" data-step="7" data-intro="Click on this Cloud icon to view additional account features"></i>
         </div>
         <div class="container col-xs-11">
             <div class="navbar-header">
@@ -54,12 +54,12 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav top-nav">
-                    <li><a class="btn btnNew" data-intro="HELLO THIS IS THE FIRST STEP BOI, LEARN IT BOI!" data-step="1">New</a></li>
-                    <li><a class="btn" id="btnSave" data-step="2" data-intro="ZAC WRITE IN HERE BOI!">Save</a></li>
-                    <li><a class="btn btnLoad">Load</a></li>
-                    <li><a class="btn" id="btnUndo">Undo</a></li>
-                    <li><a class="btn">Export</a></li>
-                    <li><a class="btn" id="btnHelp">Help</a></li>
+                    <li><a class="btn btnNew" data-intro="Click on New to start a new diagram and import a text file" data-step="1">New</a></li>
+                    <li><a class="btn" id="btnSave" data-step="2" data-intro="Click Save to save the current state of your diagram">Save</a></li>
+                    <li><a class="btn btnLoad" data-step="3" data-intro="Click Load to open a diagram">Load</a></li>
+                    <li><a class="btn" id="btnUndo" data-step="4" data-intro="Click Undo to reverse your last action">Undo</a></li>
+                    <li><a class="btn" data-step="5" data-intro="Click Export to create a pdf file of your diagram">Export</a></li>
+                    <li><a class="btn" id="btnHelp" data-step="6" data-intro="Click Help to start this introduction guide again or view the help page for tips on how to create an argument diagram">Help</a></li>
                 </ul>
             </div>
         </div>
