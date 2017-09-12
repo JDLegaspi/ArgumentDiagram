@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ArgumentDiagram</title>
 
-    <link rel="stylesheet" href="assets/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="assets/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="assets/css/site.css" />
     <link rel="stylesheet" href="assets/lib/treant-js/Treant.css" type="text/css" />
 
@@ -59,7 +59,7 @@
         </div>
     </div>
 
-    <nav class="navbar navbar-inverse navbar-main">
+    <nav class="navbar navbar-inverse navbar-main navbar-fixed-top">
         <div class="col-xs-1 cloud">
             <i class="fa fa-cloud" aria-hidden="true" onclick="toggleNav()" id="open-nav"></i>
         </div>
@@ -75,9 +75,9 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav top-nav">
-                    <li><a class="btn btnNew">New</a></li>
+                    <li><a href="javascript:document.getElementById('textInput').click();" class="btn btnNew">New</a></li>
                     <li><a class="btn" id="btnSaveDrive">Save</a></li>
-                    <li><a class="btn btnLoad">Load</a></li>
+                    <li><a href="javascript:document.getElementById('fileInput').click();" class="btn btnLoad">Load</a></li>
                     <li><a class="btn" id="btnUndo">Undo</a></li>
                     <li><a class="btn">Export</a></li>
                     <li><a class="btn">Help</a></li>
@@ -85,4 +85,3 @@
             </div>
         </div>
     </nav>
-    <div class="container body-content">

@@ -1,6 +1,7 @@
 ﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+    padding-top: 70px;
+    padding-bottom: 55px;
+    background: #fff;
 }
 
 /* Wrapping element */
@@ -13,8 +14,7 @@
 }
 
 /* Set widths on the form inputs since otherwise they're 100% wide */
-input,
-select, {
+input, select, {
     max-width: 280px;
 }
 
@@ -35,4 +35,8 @@ select, {
     .carousel-caption {
         display: none;
     }
+}
+
+footer {
+    padding-bottom: 10px;
 }

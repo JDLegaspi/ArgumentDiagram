@@ -60,8 +60,26 @@ $("#text").mouseup(function() {
 
 //show popup dialog on node click
 $('#diagramDiv').on('click', '#basic-example > div', function() {
+    globablVars.this = $(this)[0].id;
+    $("#parentId").val(globablVars.this);
+    console.log(findNode(globablVars.this, chart_config.nodeStructure));
     if (!globablVars.selectParent && !globablVars.selectConflict1 && !globablVars.selectConflict2 && !$(this).hasClass("conflict")) {
         $("#nodeFunctionsWrapper").fadeIn(200);
+        var thisNode = findNode(globablVars.this, chart_config.nodeStructure);
+        if (thisNode.type == "reasonAttr" || findParent(thisNode.id, chart_config.nodeStructure).type == "conflict") {
+            $('#btnConnect').hide();
+            $('#btnCollapse').hide();
+        } else {
+            $('#btnConnect').show();
+            $('#btnCollapse').show();
+        }
+        if (thisNode.type == "reason") {
+            $('#btnEdit').hide();
+            $('#btnCollapse').hide();
+        } else {
+            $('#btnEdit').show();
+            $('#btnCollapse').show();
+        }
     }
 
     var containerWidth = $("#nodeFunctionsWrapper").outerWidth();
@@ -91,44 +109,6 @@ $('#diagramDiv').on('click', '#basic-example > div', function() {
     $('#nodeFunctionsWrapper').on('click', function() {
         $('#nodeFunctionsWrapper').fadeOut(200);
     });
-
-    $('#nodeFunctionsWrapper').on('click', '#btnDelete', function () {
-        if ($("#parentId").val()) {
-            chartHistory();
-            deleteNode(chart_config.nodeStructure, $("#parentId").val());
-            chart = new Treant(chart_config);
-        } else {
-            window.alert("Please select a node");
-        }
-    });
-
-    $('#nodeFunctionsWrapper').on('click', '#btnEdit', function () {
-        if ($("#parentId").val()) {
-            if ($("#" + $("#parentId").val()).hasClass("reason")) {
-                window.alert("Can't edit reasoning node");
-            } else {
-                $('#editNodeModal').modal('show');
-                var node = findNode($("#parentId").val(), chart_config.nodeStructure);
-                $("#editName").val(node.name);
-                $("#editReli").val(node.attributes.reliability);
-                $("#editAccu").val(node.attributes.accuracy);
-                $("#editRele").val(node.attributes.relevancy);
-                $("#editUniq").val(node.attributes.uniqueness);
-            }
-        } else {
-            window.alert("Please select a node");
-        }
-    });
-
-    $('#nodeFunctionsWrapper').on('click', '#btnConnect', function () {
-        globablVars.child = findNode($("#parentId").val(), chart_config.nodeStructure);
-        globablVars.selectParent = true;
-        console.log(globablVars.child);
-        var x = document.getElementById("snackbar")
-        x.className = "show";
-        x.innerHTML = "Select Parent Node";
-    });
-
 });
 
 $('#btnNewNode').click(function () {
@@ -237,45 +217,50 @@ $('#fileinput').change(function () {
         reader.readAsText(file);
         reader.onload = function (e) {
             chart_config = JSON.parse(e.target.result);
-            var chart = new Treant(chart_config);
-            $('#text').val(chart_config.chart.doc.text);
-            globablVars.count = 1;
-            globablVars.reasonNodes = 0;
-            globablVars.history = 0;
-            countNodes(chart_config.nodeStructure);
+            parseNaN(chart_config.nodeStructure);
+            initialise();
         };
-        $('.container').show();
-        $('.jumbotron').hide();
     } else {
         window.alert("No file chosen");
     }
 });
 
+// Input for text and creating a new chart
 $('#textInput').change(function () {
-    console.log("test");
+    var loadFile=function(url,callback){
+            JSZipUtils.getBinaryContent(url,callback);
+        }
     var file = document.getElementById('textInput').files[0];
+    console.log(file.name);
     if (file) {
+        var fileName = file.name;
+        var txt = ".txt";
+        var docx = ".docx";
         var reader = new FileReader();
-        reader.readAsText(file);
-        reader.onload = function () {
-            chart_config.chart.doc.text = reader.result;
-            $('#text').val(reader.result);
-        };
-        $('.container').show();
-        $('.jumbotron').hide();
+        if (fileName.substr(fileName.length - txt.length, txt.length).toLowerCase() == txt.toLowerCase()) {
+            reader.readAsText(file);
+            reader.onload = function () {
+                newChart(reader.result);
+                initialise();
+            };
+        } else if (fileName.substr(fileName.length - docx.length, docx.length).toLowerCase() == docx.toLowerCase()) {
+            reader.onload = function (e) {
+                loadFile(e.target.result,function(error,content){
+                    if (error) { throw error };
+                    var zip = new JSZip(content);
+                    var doc=new Docxtemplater().loadZip(zip)
+                    text=doc.getFullText();
+                    newChart(text);
+                    initialise();
+                });
+            }
+            reader.readAsDataURL(file);
+        } else {
+            window.alert("File type not supported");
+        }
     } else {
         window.alert("No file chosen");
     }
-});
-
-$('.btnNew').click(function () {
-    initialise();
-    $('#textInput').click();
-    var chart = new Treant(chart_config);
-});
-
-$('.btnLoad').click(function () {
-    $('#fileinput').click();
 });
 
 $('#btnImportText').click(function () {
@@ -283,63 +268,77 @@ $('#btnImportText').click(function () {
 });
 
 $("#diagramDiv").on("click", "#basic-example > div", function () {
-    $("#parentId").val($(this)[0].id);
-    console.log(findNode($(this)[0].id, chart_config.nodeStructure));
-    console.log(findParent($(this)[0].id, chart_config.nodeStructure));
-
-    //this only activates if user has clicked "connect node"
+    // This only activates if user has clicked "connect node"
     if (globablVars.selectParent) {
         if ((findNode($(this)[0].id, chart_config.nodeStructure)).type == "conflict") {
             window.alert("Can't connect anymore arguments to the conflicting argument node");
+        } else if ((findNode($(this)[0].id, chart_config.nodeStructure)).type == "reasonAttr") {
+            window.alert("Can't connect other nodes to this node");
         } else {
             chartHistory();
             globablVars.selectParent = false;
-            // globablVars.selectChild = true;
             globablVars.parent = findNode($(this)[0].id, chart_config.nodeStructure);
-            var x = document.getElementById("snackbar");
-            deleteNode(chart_config.nodeStructure, globablVars.child.id);
+            var originalParent = findParent(globablVars.child.id, chart_config.nodeStructure);
             var object = getObjects(chart_config.nodeStructure, 'id', globablVars.parent.id);
-
+            deleteNode(chart_config.nodeStructure, globablVars.child.id);
+            if (originalParent.children.length == 2 && originalParent.id != 1) {
+                deleteNode(chart_config.nodeStructure, originalParent.id);
+            }
             if (object[0].type == "reason") {
                 if (globablVars.child.type == "reason") {
                     for (var i = 0; i < globablVars.child.children.length; i++) {
-                        object[0].children.push(globablVars.child.children[i]);
+                        if (globablVars.child.children[i].type == "reasonAttr") {
+                            deleteNode(globablVars.child.children[i]);
+                        } else {
+                            object[0].children.push(globablVars.child.children[i]);
+                        }
                     }
                 } else {
                     object[0].children.push(globablVars.child);
-                    calculateAttributes(object[0]);
-                    //parentAttributes(findParent(object[0].id, chart_config.nodeStructure));
                 }
             } else {
                 if (globablVars.child.type == "reason") {
-                    for (var i = 0; i < globablVars.child.children.length; i++) {
-                        object[0].children.push(globablVars.child.children[i]);
-                    }
+                    object[0].children.push(globablVars.child);
                 } else {
                     object[0].children.push(reasonNode(globablVars.child));
+                    calculateAttributes(object[0].children[0]);
+                    parentAttributes(object[0]);
                 }
             }
-            calculateParentAttributes(chart_config.nodeStructure);
+            calculateChartAttributes(chart_config.nodeStructure);
             chart = new Treant(chart_config);
-            var x = document.getElementById("snackbar");
-            x.innerHTML = "";
-            x.className = x.className.replace("show", "");
+            hideSnackbar();
         }
     }
 
     //this only activates if user has clicked "conflict node"
     if (globablVars.selectConflict1) {
-        globablVars.selectConflict1 = false;
-        globablVars.selectConflict2 = true;
-        globablVars.conflict1 = findNode($(this)[0].id, chart_config.nodeStructure);
+        var node = findNode($(this)[0].id, chart_config.nodeStructure);
+        if (findParent(node.id, chart_config.nodeStructure).id != 1) {
+            window.alert("Conflicting argument must be a conclusion");
+        } else {
+            globablVars.selectConflict1 = false;
+            globablVars.selectConflict2 = true;
+            globablVars.conflict1 = findNode($(this)[0].id, chart_config.nodeStructure);
+            showSnackbar("Select Second Conflicting Argument");
+        }
     } else if (globablVars.selectConflict2) {
-        globablVars.selectConflict2 = false;
-        globablVars.conflict2 = findNode($(this)[0].id, chart_config.nodeStructure);
-        chartHistory();
-        chart_config.nodeStructure.children.push(conflictNode(globablVars.conflict1, globablVars.conflict2));
-        deleteNode(chart_config.nodeStructure, globablVars.conflict1.id);
-        deleteNode(chart_config.nodeStructure, globablVars.conflict2.id);
-        var chart = new Treant(chart_config);
+        var node = findNode($(this)[0].id, chart_config.nodeStructure);
+        if (findParent(node.id, chart_config.nodeStructure).id != 1) {
+            window.alert("Conflicting argument must be a conclusion");
+        } else if (node == globablVars.conflict1) {
+            window.alert("Cannot select the same node");
+        } else {
+            globablVars.selectConflict2 = false;
+            globablVars.conflict2 = findNode($(this)[0].id, chart_config.nodeStructure);
+            chartHistory();
+            chart_config.nodeStructure.children.push(conflictNode(globablVars.conflict1, globablVars.conflict2));
+            deleteNode(chart_config.nodeStructure, globablVars.conflict1.id);
+            deleteNode(chart_config.nodeStructure, globablVars.conflict2.id);
+            var chart = new Treant(chart_config);
+            $("#btnConflict").prop('disabled', true);
+            hideSnackbar();
+        }
     }
 });
 
@@ -347,11 +346,19 @@ $("#diagramDiv").on("mouseover", "#basic-example > div", function () {
     $(this).find("table").css('background-color', '#DDDDDD');
     $(this).find("p").css('background-color', '#DDDDDD');
     var node = findNode($(this)[0].id, chart_config.nodeStructure);
-    if (node.type != "reason") {
-        var textArea = document.getElementById("text")
+    if (node.type != "reason" && node.type != "conflict" && node.type != "reasonAttr") {
+        // Selects and scrolls to linked text
+        var textArea = document.getElementById("text");
+        var selectionStart = node.linktext.start;
+        var selectionEnd = node.linktext.end;
         textArea.focus();
-        textArea.selectionStart = node.linktext.start;
-        textArea.selectionEnd = node.linktext.end;
+        textArea.setSelectionRange(selectionStart, selectionEnd);
+        var LineHeight = 20;
+        var Height = textArea.scrollHeight;
+        var numberOfLines = Math.floor(Height/LineHeight);
+        var charsPerRow = textArea.value.length/numberOfLines;
+        var selectionRow = (selectionStart - (selectionStart % charsPerRow)) / charsPerRow;
+        textArea.scrollTop = 20 * (selectionRow - 1);
     }
 });
 
@@ -456,15 +463,25 @@ $(".my-diagrams-container").on("click", ".my-diagrams ul li", function () {
 });
 
 $('#btnUndo').click(function () {
-    console.log(historyArray);
     if (globablVars.history != 0) {
         globablVars.history--;
         chart_config = historyArray[globablVars.history];
+        parseNaN(chart_config.nodeStructure);
+        globablVars.count = 1;
+        countNodes(chart_config.nodeStructure);
         var chart = new Treant(chart_config);
     }
 });
 
+$('#btnCancel').click(function () {
+    hideSnackbar();
+    globablVars.selectConflict1 = false;
+    globablVars.selectConflict2 = false;
+    globablVars.selectParent = false;
+});
+
 $('#btnConflict').click(function () {
+    showSnackbar("Select First Conflicting Argument");
     globablVars.selectConflict1 = true;
 });
 
@@ -475,6 +492,30 @@ function saveText(text, filename) {
     a.click();
 }
 
+var currentZoom = 1.0;
+
+$('#btnZoomIn').click(function () {
+    currentZoom = currentZoom+0.05;
+    var scaleString = "scale("+currentZoom+")";
+    $("#basic-example").css("transform", scaleString);
+    $("svg").position.left = 0;
+});
+
+$('#btnZoomOut').click(function () {
+    currentZoom = currentZoom-0.05;
+    var scaleString = "scale("+currentZoom+")";
+    $("#basic-example").css("transform", scaleString);
+});
+
+$("#btnToggleAttributes").click(function () {
+    if (globablVars.hideAttributes) {
+        globablVars.hideAttributes = false;
+    } else {
+        globablVars.hideAttributes = true;
+    }
+    toggleAttributes(chart_config.nodeStructure);
+    var chart = new Treant(chart_config);
+});
 
 var isOpen = true;
 

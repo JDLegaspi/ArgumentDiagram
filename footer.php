@@ -1,12 +1,12 @@
-       <hr />
-        <footer>
+        <footer class="navbar-fixed-bottom">
+            <hr />
             <p>&copy; 2017 - ArgumentDiagram</p>
         </footer>
     </div>
 
     <environment names="Development">
-        <script src="assets/lib/jquery/dist/jquery.js"></script>
         <script src="assets/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="assets/lib/jquery/dist/jquery.js"></script>
         <script src="assets/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment names="Staging,Production">
@@ -22,8 +22,6 @@
                 crossorigin="anonymous"
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
         </script>
-        <script src="assets/js/site.min.js" asp-append-version="true"></script>
     </environment>
-
 </body>
 </html>
