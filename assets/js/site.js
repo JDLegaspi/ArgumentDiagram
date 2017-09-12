@@ -173,9 +173,15 @@ function deleteNode(obj, nodeId) {
         for (var i = 0; i < obj.children.length; i++) {
             if (obj.children[i].id == nodeId) {
                 obj.children.splice(i, 1);
+                // Removing conflict node if only one argument
+                if (obj.type == "conflict") {
+                    chart_config.nodeStructure.children[0] = obj.children[0];
+                }
                 calculateChartAttributes(chart_config.nodeStructure);
                 return;
             } else {
+                console.log("2");
+                console.log(obj.children[i].id);
                 deleteNode(obj.children[i], nodeId);
                 if (obj.children[i].type == "reason" && obj.children[i].children.length < 1) {
                     obj.children.splice(i, 1);
@@ -409,6 +415,20 @@ function conflictPessimistic(a, b) {
     } else {
         return 0;
     }
+}
+
+// Used for showing the snackbar with a text input
+function showSnackbar(text) {
+    var x = document.getElementById("snackbar")
+    x.className = "show";
+    x.innerHTML = text;
+}
+
+// Used for hiding the snackbar
+function hideSnackbar() {
+    var x = document.getElementById("snackbar");
+    x.innerHTML = "";
+    x.className = x.className.replace("show", "");
 }
 
 // Appending current chart to the history array

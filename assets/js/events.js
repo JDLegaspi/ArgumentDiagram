@@ -60,12 +60,13 @@ $("#text").mouseup(function() {
 
 //show popup dialog on node click
 $('#diagramDiv').on('click', '#basic-example > div', function() {
-    $("#parentId").val($(this)[0].id);
-    console.log(findNode($("#parentId").val(), chart_config.nodeStructure));
+    globablVars.this = $(this)[0].id;
+    $("#parentId").val(globablVars.this);
+    console.log(findNode(globablVars.this, chart_config.nodeStructure));
     if (!globablVars.selectParent && !globablVars.selectConflict1 && !globablVars.selectConflict2 && !$(this).hasClass("conflict")) {
         $("#nodeFunctionsWrapper").fadeIn(200);
-        var thisNode = findNode($("#parentId").val(), chart_config.nodeStructure);
-        if (thisNode.type == "reasonAttr") {
+        var thisNode = findNode(globablVars.this, chart_config.nodeStructure);
+        if (thisNode.type == "reasonAttr" || findParent(thisNode.id, chart_config.nodeStructure).type == "conflict") {
             $('#btnConnect').prop('disabled', true);
         } else {
             $('#btnConnect').prop('disabled', false);
@@ -106,9 +107,9 @@ $('#diagramDiv').on('click', '#basic-example > div', function() {
     });
 
     $('#nodeFunctionsWrapper').on('click', '#btnDelete', function () {
-        if ($("#parentId").val()) {
+        if (globablVars.this) {
             chartHistory();
-            deleteNode(chart_config.nodeStructure, $("#parentId").val());
+            deleteNode(chart_config.nodeStructure, globablVars.this);
             chart = new Treant(chart_config);
         } else {
             window.alert("Please select a node");
@@ -116,11 +117,11 @@ $('#diagramDiv').on('click', '#basic-example > div', function() {
     });
 
     $('#nodeFunctionsWrapper').on('click', '#btnEdit', function () {
-        if ($("#parentId").val()) {
-            if ($("#" + $("#parentId").val()).hasClass("reason")) {
+        if (globablVars.this) {
+            if ($("#" + globablVars.this).hasClass("reason")) {
                 window.alert("Can't edit reasoning node");
             } else {
-                var thisNode = findNode($("#parentId").val(), chart_config.nodeStructure);
+                var thisNode = findNode(globablVars.this, chart_config.nodeStructure);
                 $('#editNodeModal').modal('show');
                 $("#editName").val(thisNode.name);
                 $("#editReli").val(thisNode.attributes.reliability);
@@ -139,12 +140,10 @@ $('#diagramDiv').on('click', '#basic-example > div', function() {
     });
 
     $('#nodeFunctionsWrapper').on('click', '#btnConnect', function () {
-        var thisNode = findNode($("#parentId").val(), chart_config.nodeStructure);
+        var thisNode = findNode(globablVars.this, chart_config.nodeStructure);
         globablVars.child = thisNode;
         globablVars.selectParent = true;
-        var x = document.getElementById("snackbar")
-        x.className = "show";
-        x.innerHTML = "Select Parent Node";
+        showSnackbar("Select the node to connect to");
     });
 });
 
@@ -201,7 +200,6 @@ $("#diagramDiv").on("click", "#basic-example > div", function () {
             chartHistory();
             globablVars.selectParent = false;
             globablVars.parent = findNode($(this)[0].id, chart_config.nodeStructure);
-            var x = document.getElementById("snackbar");
             var originalParent = findParent(globablVars.child.id, chart_config.nodeStructure);
             var object = getObjects(chart_config.nodeStructure, 'id', globablVars.parent.id);
             deleteNode(chart_config.nodeStructure, globablVars.child.id);
@@ -231,24 +229,37 @@ $("#diagramDiv").on("click", "#basic-example > div", function () {
             }
             calculateChartAttributes(chart_config.nodeStructure);
             chart = new Treant(chart_config);
-            var x = document.getElementById("snackbar");
-            x.className = x.className.replace("show", "");
+            hideSnackbar();
         }
     }
 
     //this only activates if user has clicked "conflict node"
     if (globablVars.selectConflict1) {
-        globablVars.selectConflict1 = false;
-        globablVars.selectConflict2 = true;
-        globablVars.conflict1 = findNode($(this)[0].id, chart_config.nodeStructure);
+        var node = findNode($(this)[0].id, chart_config.nodeStructure);
+        if (findParent(node.id, chart_config.nodeStructure).id != 1) {
+            window.alert("Conflicting argument must be a conclusion");
+        } else {
+            globablVars.selectConflict1 = false;
+            globablVars.selectConflict2 = true;
+            globablVars.conflict1 = findNode($(this)[0].id, chart_config.nodeStructure);
+            showSnackbar("Select Second Conflicting Argument");
+        }
     } else if (globablVars.selectConflict2) {
-        globablVars.selectConflict2 = false;
-        globablVars.conflict2 = findNode($(this)[0].id, chart_config.nodeStructure);
-        chartHistory();
-        chart_config.nodeStructure.children.push(conflictNode(globablVars.conflict1, globablVars.conflict2));
-        deleteNode(chart_config.nodeStructure, globablVars.conflict1.id);
-        deleteNode(chart_config.nodeStructure, globablVars.conflict2.id);
-        var chart = new Treant(chart_config);
+        var node = findNode($(this)[0].id, chart_config.nodeStructure);
+        if (findParent(node.id, chart_config.nodeStructure).id != 1) {
+            window.alert("Conflicting argument must be a conclusion");
+        } else if (node == globablVars.conflict1) {
+            window.alert("Cannot select the same node");
+        } else {
+            globablVars.selectConflict2 = false;
+            globablVars.conflict2 = findNode($(this)[0].id, chart_config.nodeStructure);
+            chartHistory();
+            chart_config.nodeStructure.children.push(conflictNode(globablVars.conflict1, globablVars.conflict2));
+            deleteNode(chart_config.nodeStructure, globablVars.conflict1.id);
+            deleteNode(chart_config.nodeStructure, globablVars.conflict2.id);
+            var chart = new Treant(chart_config);
+            hideSnackbar();
+        }
     }
 });
 
@@ -332,6 +343,7 @@ $('#btnUndo').click(function () {
 });
 
 $('#btnConflict').click(function () {
+    showSnackbar("Select First Conflicting Argument");
     globablVars.selectConflict1 = true;
 });
 
