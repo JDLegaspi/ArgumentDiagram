@@ -41,6 +41,7 @@
                 } else {
                     ?>
                      <div class="my-diagrams">
+                        <h2>My Files</h2>
                         <ul>
                             <?php 
                             
@@ -61,22 +62,6 @@
                             ?>
                         </ul>
                     </div>
-                    <!-- <div class="my-diagrams">
-                        <h2 style="margin-top: 0px;">My Files</h2>
-                        <ul>
-                            <li><a>Computer Purchase</a></li>
-                            <li><a>Seal hunting</a></li>
-                        </ul>
-                    </div>
-                    <div class="my-diagrams">
-                        <h2>Shared With Me</h2>
-                        <ul>
-                            <li><a>Capstone</a></li>
-                            <li><a>Team 35</a></li>
-                            <li><a>Australia Should Allow Online Poker</a></li>
-                            <li><a>Jose is Salty About Aus Gambling Laws</a></li>
-                        </ul>
-                    </div>   -->
                     <div class="Logout-Drive">
                         <a class="btn btn-default" href="logout.php">Log Out</a>
                     </div>
