@@ -12,7 +12,10 @@
         <textarea id="text" autofocus readonly></textarea>
         <input type="file" id="fileInput"/>
         <input type="file" accept=".txt" id="textInput"/>
-        <div id="snackbar">Select Parent Node</div>
+        <div id="snackbar">
+            <p id="snackbarText">Select Parent Node</p>
+            <button id='btnCancel' class='btn btn-danger'>Cancel</button>
+        </div>
     </div>
     <div class="col-md-8" id="diagramDiv">
         <div class="row btn-new-node-wrapper">

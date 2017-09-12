@@ -342,6 +342,13 @@ $('#btnUndo').click(function () {
     }
 });
 
+$('#btnCancel').click(function () {
+    hideSnackbar();
+    globablVars.selectConflict1 = false;
+    globablVars.selectConflict2 = false;
+    globablVars.selectParent = false;
+});
+
 $('#btnConflict').click(function () {
     showSnackbar("Select First Conflicting Argument");
     globablVars.selectConflict1 = true;

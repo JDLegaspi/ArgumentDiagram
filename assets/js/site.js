@@ -419,15 +419,15 @@ function conflictPessimistic(a, b) {
 
 // Used for showing the snackbar with a text input
 function showSnackbar(text) {
-    var x = document.getElementById("snackbar")
+    var x = document.getElementById("snackbar");
+    var y = document.getElementById("snackbarText");
     x.className = "show";
-    x.innerHTML = text;
+    y.innerHTML = text;
 }
 
 // Used for hiding the snackbar
 function hideSnackbar() {
     var x = document.getElementById("snackbar");
-    x.innerHTML = "";
     x.className = x.className.replace("show", "");
 }
 
