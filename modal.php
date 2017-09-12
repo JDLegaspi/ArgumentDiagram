@@ -60,10 +60,7 @@
 
 <div id="myChartsWrapper" style="z-index: 2;">
   <div id="myChartsFunctions">
-    <form method="POST">
-      <input style="display:none;" name="open_chart" id="open_chart" value="open pls"/>
-      <button class="btn btn-default" id="btnOpenChart">Open</button>
-    </form>
+    <button class="btn btn-default" id="btnOpenChart">Open</button>
     <button class="btn btn-default" id="btnRenameChart">Rename</button>
     <button class="btn btn-default" id="btnDeleteChart">Delete</button>
     <hr/>
@@ -77,8 +74,8 @@
     <form method="POST">
       <input style="display:none;" name="save_to_drive" id="save_to_drive" value="upload pls"/>
       <button class="btn btn-default" id="btnSaveToDrive">Save To Drive</button>
-      <button class="btn btn-default" id="btnDownload">Download</button>
     </form>
+    <button class="btn btn-default" id="btnDownload">Download</button>
   </div>
 </div>
 

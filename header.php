@@ -42,11 +42,10 @@
                                 'q' => "name contains '.argu' and trashed != true",
                                 'spaces' => 'drive'
                             ));
-
                             //echo var_dump($files['files']);
 
                             foreach ($files['files'] as $key => $value) {
-                                echo '<li><a id="'.$value['id'].'">' . $value['name'] . "</a></li>";
+                                echo '<li id="'.$value['id'].'"><a>' . $value['name'] . "</a></li>";
                             }
                             
                             ?>

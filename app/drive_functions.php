@@ -3,21 +3,21 @@
 require_once 'google_auth_init.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && $client->getAccessToken() && isset($_POST['save_to_drive'])) {
-    echo '4';
-    
-    $file = "/assets/diagrams/diagram.argu";
+
+    $file = "assets/diagrams/diagram.argu";
     $fileContents = file_get_contents($file);
+    $filename = file_get_contents("assets/diagrams/filename.txt");
 
     // This is uploading a file directly, with name metadata.
     $fileMetaData = new Google_Service_Drive_DriveFile(array(
-        'name' => $_SESSION['chart_filename'].".argu"
+        'name' => $filename.".argu"
     ));
     
     $result = $service->files->create(
         $fileMetaData,
         array(
             'data' => $fileContents,
-            'mimeType' => 'text/csv',
+            'mimeType' => 'text/plain',
             'uploadType' => 'multipart'
         )
     );
@@ -30,6 +30,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $client->getAccessToken() && isset($
         $service->files->delete($fileId);
     } catch (Exception $e) {
         print "An error occurred: " . $e->getMessage();
+        file_put_contents("assets/error.txt", $e->getMessage());
+    }
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && $client->getAccessToken() && isset($_POST['open_chart'])) {
+    $fileId = $_POST['file_id'];
+    try {
+        $response = $service->files->get($fileId, array(
+            'alt' => 'media'
+        ));
+        $content = $response->getBody()->getContents();
+        echo $content;
+    } catch (Exception $e) {
+        echo "An error occurred: " . $e->getMessage();
         file_put_contents("assets/error.txt", $e->getMessage());
     }
 }

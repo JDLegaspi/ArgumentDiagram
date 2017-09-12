@@ -139,9 +139,6 @@ $('#btnSave').click(function () {
     saveText(JSON.stringify(chart_config), "diagram.txt");
 });
 
-$('#btnDownload').click(function() {
-    saveText(JSON.stringify(chart_config), "diagram.txt");
-});
 
 //sends ajax request to php file, which saves it locally, then upload to google
 $('#btnSaveDrive').on('click', function () {
@@ -155,7 +152,16 @@ $('#btnSaveDrive').on('click', function () {
     $.ajax({
         type: "POST",
         url: "drive_process_file.php",
-        data: "chart_config = " + str_json,
+        data: str_json,
+        error: function(req, status, err) {
+            console.log('Something went wrong', status, err);
+        }
+    });
+
+    $.ajax({
+        type: "POST",
+        url: "drive_process_filename.php",
+        data: {chart_filename: filename},
         error: function(req, status, err) {
             console.log('Something went wrong', status, err);
         }
@@ -191,6 +197,14 @@ $('#btnSaveDrive').on('click', function () {
 
     $('#saveFunctionsWrapper').on('click', function() {
         $('#saveFunctionsWrapper').fadeOut(200);
+    });
+
+    $('#saveFunctionsWrapper').one('click', '#btnDownload', function() {
+        saveText(JSON.stringify(chart_config), "diagram.txt");
+    });
+
+    $('#saveFunctionsWrapper').one('click', '#btnSaveToDrive', function() {
+        
     });
      
 });
@@ -333,7 +347,7 @@ $("#diagramDiv").on("mouseleave", "#basic-example > div", function () {
     }
 });
 
-$(".my-diagrams-container").on("click", ".my-diagrams ul li a", function () {
+$(".my-diagrams-container").on("click", ".my-diagrams ul li", function () {
     if (!globablVars.selectParent) {
         $("#myChartsWrapper").fadeIn(200);
     }
@@ -371,16 +385,48 @@ $(".my-diagrams-container").on("click", ".my-diagrams ul li a", function () {
 
     // Button Click Functions Go Here!!!
 
-    $('#myChartsWrapper').on('click', '#btnDeleteChart', function*() {
+    $('#myChartsWrapper').one('click', '#btnDeleteChart', function() {
         $('#' + itemID).remove();
-        data = {
+        var data = {
             delete_chart: "plez delete mi",
             file_id: itemID
         };
         $.ajax({
             type: "POST",
-            url: "drive_functions.php",
+            url: "app/drive_functions.php",
             data: data,
+            error: function(req, status, err) {
+                console.log('Something went wrong', status, err);
+            }
+        });
+    });
+
+    $('#myChartsWrapper').one('click', '#btnOpenChart', function() {
+        var data = {
+            open_chart: "plez open mi",
+            file_id: itemID
+        };
+        $.ajax({
+            type: "POST",
+            url: "app/drive_functions.php",
+            data: data,
+            success: function(data) {
+
+                chart_config = JSON.parse(data);
+                $('#text').val(chart_config.chart.doc.text);
+                
+                globablVars.count = 1;
+                globablVars.reasonNodes = 0;
+                globablVars.history = 0;
+
+                countNodes(chart_config.nodeStructure);
+                
+                $('.container').show();
+                $('.jumbotron').hide();
+
+                var chart = new Treant(chart_config);
+
+            },
             error: function(req, status, err) {
                 console.log('Something went wrong', status, err);
             }
