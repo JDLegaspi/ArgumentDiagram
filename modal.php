@@ -62,7 +62,7 @@
         </button>
       </div>
       <div class="modal-body" style="height:">
-        <textarea id="editSelect" style="height:100%; width:100%" autofocus readonly></textarea>
+        <textarea id="editSelect" style="height:300px; width:100%" autofocus readonly></textarea>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" id="saveSelect" data-dismiss="modal">Save</button>
@@ -201,6 +201,26 @@ $('#cancelEdit').click(function () {
 
 $('#textEdit').click(function () {
     $('#editSelectModal').modal('show');
+});
+
+$('#editSelectModal').on('show.bs.modal', function () {
+    console.log("test");
+    var node = findNode(globablVars.this, chart_config.nodeStructure);
+    if (node.type != "reason" && node.type != "conflict" && node.type != "reasonAttr") {
+        console.log("test");
+        // Selects and scrolls to linked text
+        var textArea = document.getElementById("editSelect");
+        var selectionStart = node.linktext.start;
+        var selectionEnd = node.linktext.end;
+        textArea.focus();
+        textArea.setSelectionRange(selectionStart, selectionEnd);
+        var LineHeight = 20;
+        var Height = textArea.scrollHeight;
+        var numberOfLines = Math.floor(Height/LineHeight);
+        var charsPerRow = textArea.value.length/numberOfLines;
+        var selectionRow = (selectionStart - (selectionStart % charsPerRow)) / charsPerRow;
+        textArea.scrollTop = 20 * (selectionRow - 1);
+    }
 });
 
 $('#saveSelect').click(function() {

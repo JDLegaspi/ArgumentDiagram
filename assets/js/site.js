@@ -74,6 +74,8 @@ function nodeConstructor(node) {
     var text = "<p class='nodeTitle'>";
     if (node.name.length > 25) {
         text += node.name.slice(0, 22) + "...</p>";
+    } else if (node.name.length == 0) {
+        text += "#" + node.id;
     } else {
         text += node.name + "</p>";
     }
