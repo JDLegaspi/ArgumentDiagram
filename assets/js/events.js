@@ -144,10 +144,7 @@ $('#btnSave').click(function () {
 $('#btnSaveDrive').on('click', function () {
     
     var filename = chart_config.chart.doc.title.replace(/ /g,"_");
-    // var data = {
-    //     chart_data: JSON.stringify(chart_config),
-    //     chart_filename: filename
-    // };
+    
     var str_json = JSON.stringify(chart_config);
     $.ajax({
         type: "POST",
@@ -220,7 +217,7 @@ $('#btnSaveDrive').on('click', function () {
                 console.log(item_id);
                 var $newElement = $('<li>', {id: item_id});
                 var $anchor = $('<a>');
-                $anchor.html(filename);
+                $anchor.html(filename + ".argu");
                 $newElement.append($anchor);
                 $(".my-diagrams ul").append($newElement);
             },
