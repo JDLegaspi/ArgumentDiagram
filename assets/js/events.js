@@ -60,22 +60,8 @@ $("#text").mouseup(function() {
 
 //show popup dialog on node click
 $('#diagramDiv').on('click', '#basic-example > div', function() {
-    globablVars.this = $(this)[0].id;
-    $("#parentId").val(globablVars.this);
-    console.log(findNode(globablVars.this, chart_config.nodeStructure));
     if (!globablVars.selectParent && !globablVars.selectConflict1 && !globablVars.selectConflict2 && !$(this).hasClass("conflict")) {
         $("#nodeFunctionsWrapper").fadeIn(200);
-        var thisNode = findNode(globablVars.this, chart_config.nodeStructure);
-        if (thisNode.type == "reasonAttr" || findParent(thisNode.id, chart_config.nodeStructure).type == "conflict") {
-            $('#btnConnect').prop('disabled', true);
-        } else {
-            $('#btnConnect').prop('disabled', false);
-        }
-        if (thisNode.type == "reason") {
-            $('#btnEdit').prop('disabled', true);
-        } else {
-            $('#btnEdit').prop('disabled', false);
-        }
     }
 
     var containerWidth = $("#nodeFunctionsWrapper").outerWidth();
@@ -107,9 +93,9 @@ $('#diagramDiv').on('click', '#basic-example > div', function() {
     });
 
     $('#nodeFunctionsWrapper').on('click', '#btnDelete', function () {
-        if (globablVars.this) {
+        if ($("#parentId").val()) {
             chartHistory();
-            deleteNode(chart_config.nodeStructure, globablVars.this);
+            deleteNode(chart_config.nodeStructure, $("#parentId").val());
             chart = new Treant(chart_config);
         } else {
             window.alert("Please select a node");
@@ -117,22 +103,17 @@ $('#diagramDiv').on('click', '#basic-example > div', function() {
     });
 
     $('#nodeFunctionsWrapper').on('click', '#btnEdit', function () {
-        if (globablVars.this) {
-            if ($("#" + globablVars.this).hasClass("reason")) {
+        if ($("#parentId").val()) {
+            if ($("#" + $("#parentId").val()).hasClass("reason")) {
                 window.alert("Can't edit reasoning node");
             } else {
-                var thisNode = findNode(globablVars.this, chart_config.nodeStructure);
                 $('#editNodeModal').modal('show');
-                $("#editName").val(thisNode.name);
-                $("#editReli").val(thisNode.attributes.reliability);
-                $("#editAccu").val(thisNode.attributes.accuracy);
-                $("#editRele").val(thisNode.attributes.relevancy);
-                $("#editUniq").val(thisNode.attributes.uniqueness);
-                if (thisNode.type == "reasonAttr") {
-                    $("#editName").prop('disabled', true);
-                } else {
-                    $("#editName").prop('disabled', false);
-                }
+                var node = findNode($("#parentId").val(), chart_config.nodeStructure);
+                $("#editName").val(node.name);
+                $("#editReli").val(node.attributes.reliability);
+                $("#editAccu").val(node.attributes.accuracy);
+                $("#editRele").val(node.attributes.relevancy);
+                $("#editUniq").val(node.attributes.uniqueness);
             }
         } else {
             window.alert("Please select a node");
@@ -140,11 +121,14 @@ $('#diagramDiv').on('click', '#basic-example > div', function() {
     });
 
     $('#nodeFunctionsWrapper').on('click', '#btnConnect', function () {
-        var thisNode = findNode(globablVars.this, chart_config.nodeStructure);
-        globablVars.child = thisNode;
+        globablVars.child = findNode($("#parentId").val(), chart_config.nodeStructure);
         globablVars.selectParent = true;
-        showSnackbar("Select the node to connect to");
+        console.log(globablVars.child);
+        var x = document.getElementById("snackbar")
+        x.className = "show";
+        x.innerHTML = "Select Parent Node";
     });
+
 });
 
 $('#btnNewNode').click(function () {
@@ -155,34 +139,146 @@ $('#btnSave').click(function () {
     saveText(JSON.stringify(chart_config), "diagram.txt");
 });
 
-// Input for loading an existing chart
-$('#fileInput').change(function () {
-    var file = document.getElementById('fileInput').files[0];
+
+//sends ajax request to php file, which saves it locally, then upload to google
+$('#btnSaveDrive').on('click', function () {
+    
+    var filename = chart_config.chart.doc.title.replace(/ /g,"_");
+    // var data = {
+    //     chart_data: JSON.stringify(chart_config),
+    //     chart_filename: filename
+    // };
+    var str_json = JSON.stringify(chart_config);
+    $.ajax({
+        type: "POST",
+        url: "drive_process_file.php",
+        data: str_json,
+        error: function(req, status, err) {
+            console.log('Something went wrong', status, err);
+        }
+    });
+
+    $.ajax({
+        type: "POST",
+        url: "drive_process_filename.php",
+        data: {chart_filename: filename},
+        error: function(req, status, err) {
+            console.log('Something went wrong', status, err);
+        }
+    });
+
+    if (!globablVars.selectParent) {
+        $("#saveFunctionsWrapper").fadeIn(200);
+    }
+
+    var containerWidth = $("#saveFunctionsWrapper").outerWidth();
+    var containerHeight = $("#saveFunctionsWrapper").outerHeight();
+
+    var popupWidth = $("#saveFunctions").outerWidth();
+    var popupHeight = $("#saveFunctions").outerHeight();
+
+    var paddingTop = (containerHeight - popupHeight) / 2;
+    var paddingLeft = (containerWidth - popupWidth) / 2
+
+    if (mouseX + popupWidth > windowWidth) popupLeft = mouseX - popupWidth - paddingLeft;
+    else popupLeft = mouseX - paddingLeft;
+
+    if (mouseY + popupHeight > windowHeight) popupTop = mouseY - paddingTop;
+    else popupTop = mouseY - paddingTop;
+
+    if (popupLeft < 0) popupLeft = 0;
+    if (popupTop < 0) popupTop = 0;
+
+    $("#saveFunctionsWrapper").offset({ top: popupTop, left: popupLeft });
+
+    $('#saveFunctionsWrapper').mouseleave(function(e) {
+        $('#saveFunctionsWrapper').fadeOut(200);
+    });
+
+    $('#saveFunctionsWrapper').on('click', function() {
+        $('#saveFunctionsWrapper').fadeOut(200);
+    });
+
+    $('#saveFunctionsWrapper').one('click', '#btnDownload', function() {
+        saveText(JSON.stringify(chart_config), "diagram.txt");
+    });
+
+    $('#saveFunctionsWrapper').off('click').on('click', '#btnSaveToDrive', function() {
+        
+        var data = {
+            save_to_drive: "pls save mi",
+            file_name: filename,
+            file_contents: str_json
+        };
+        
+        $.ajax({
+            type: "POST",
+            url: "app/drive_functions.php",
+            data: data,
+            success: function(data) {
+                var item_id = data.trim();
+                console.log(item_id);
+                var $newElement = $('<li>', {id: item_id});
+                var $anchor = $('<a>');
+                $anchor.html(filename);
+                $newElement.append($anchor);
+                $(".my-diagrams ul").append($newElement);
+            },
+            error: function(req, status, err) {
+                console.log('Something went wrong', status, err);
+            }
+        });
+    });
+     
+});
+
+//$('#btnLoad').click(function () { changed to #fileinput so user doesn't have 2 actions to upload
+$('#fileinput').change(function () {
+    var file = document.getElementById('fileinput').files[0];
     if (file) {
         var reader = new FileReader();
         reader.readAsText(file);
         reader.onload = function (e) {
             chart_config = JSON.parse(e.target.result);
-            initialise();
+            var chart = new Treant(chart_config);
+            $('#text').val(chart_config.chart.doc.text);
+            globablVars.count = 1;
+            globablVars.reasonNodes = 0;
+            globablVars.history = 0;
+            countNodes(chart_config.nodeStructure);
         };
+        $('.container').show();
+        $('.jumbotron').hide();
     } else {
         window.alert("No file chosen");
     }
 });
 
-// Input for text and creating a new chart
 $('#textInput').change(function () {
+    console.log("test");
     var file = document.getElementById('textInput').files[0];
     if (file) {
         var reader = new FileReader();
         reader.readAsText(file);
         reader.onload = function () {
-            newChart(reader.result);
-            initialise();
+            chart_config.chart.doc.text = reader.result;
+            $('#text').val(reader.result);
         };
+        $('.container').show();
+        $('.jumbotron').hide();
     } else {
         window.alert("No file chosen");
     }
+});
+
+$('.btnNew').click(function () {
+    initialise();
+    $('#textInput').click();
+    var chart = new Treant(chart_config);
+});
+
+$('.btnLoad').click(function () {
+    $('#fileinput').click();
 });
 
 $('#btnImportText').click(function () {
@@ -190,76 +286,63 @@ $('#btnImportText').click(function () {
 });
 
 $("#diagramDiv").on("click", "#basic-example > div", function () {
-    // This only activates if user has clicked "connect node"
+    $("#parentId").val($(this)[0].id);
+    console.log(findNode($(this)[0].id, chart_config.nodeStructure));
+    console.log(findParent($(this)[0].id, chart_config.nodeStructure));
+
+    //this only activates if user has clicked "connect node"
     if (globablVars.selectParent) {
         if ((findNode($(this)[0].id, chart_config.nodeStructure)).type == "conflict") {
             window.alert("Can't connect anymore arguments to the conflicting argument node");
-        } else if ((findNode($(this)[0].id, chart_config.nodeStructure)).type == "reasonAttr") {
-            window.alert("Can't connect other nodes to this node");
         } else {
             chartHistory();
             globablVars.selectParent = false;
+            // globablVars.selectChild = true;
             globablVars.parent = findNode($(this)[0].id, chart_config.nodeStructure);
-            var originalParent = findParent(globablVars.child.id, chart_config.nodeStructure);
-            var object = getObjects(chart_config.nodeStructure, 'id', globablVars.parent.id);
+            var x = document.getElementById("snackbar");
             deleteNode(chart_config.nodeStructure, globablVars.child.id);
-            if (originalParent.children.length == 2 && originalParent.id != 1) {
-                deleteNode(chart_config.nodeStructure, originalParent.id);
-            }
+            var object = getObjects(chart_config.nodeStructure, 'id', globablVars.parent.id);
+
             if (object[0].type == "reason") {
                 if (globablVars.child.type == "reason") {
                     for (var i = 0; i < globablVars.child.children.length; i++) {
-                        if (globablVars.child.children[i].type == "reasonAttr") {
-                            deleteNode(globablVars.child.children[i]);
-                        } else {
-                            object[0].children.push(globablVars.child.children[i]);
-                        }
+                        object[0].children.push(globablVars.child.children[i]);
                     }
                 } else {
                     object[0].children.push(globablVars.child);
+                    calculateAttributes(object[0]);
+                    //parentAttributes(findParent(object[0].id, chart_config.nodeStructure));
                 }
             } else {
                 if (globablVars.child.type == "reason") {
-                    object[0].children.push(globablVars.child);
+                    for (var i = 0; i < globablVars.child.children.length; i++) {
+                        object[0].children.push(globablVars.child.children[i]);
+                    }
                 } else {
                     object[0].children.push(reasonNode(globablVars.child));
-                    calculateAttributes(object[0].children[0]);
-                    parentAttributes(object[0]);
                 }
             }
-            calculateChartAttributes(chart_config.nodeStructure);
+            calculateParentAttributes(chart_config.nodeStructure);
             chart = new Treant(chart_config);
-            hideSnackbar();
+            var x = document.getElementById("snackbar");
+            x.innerHTML = "";
+            x.className = x.className.replace("show", "");
         }
     }
 
     //this only activates if user has clicked "conflict node"
     if (globablVars.selectConflict1) {
-        var node = findNode($(this)[0].id, chart_config.nodeStructure);
-        if (findParent(node.id, chart_config.nodeStructure).id != 1) {
-            window.alert("Conflicting argument must be a conclusion");
-        } else {
-            globablVars.selectConflict1 = false;
-            globablVars.selectConflict2 = true;
-            globablVars.conflict1 = findNode($(this)[0].id, chart_config.nodeStructure);
-            showSnackbar("Select Second Conflicting Argument");
-        }
+        globablVars.selectConflict1 = false;
+        globablVars.selectConflict2 = true;
+        globablVars.conflict1 = findNode($(this)[0].id, chart_config.nodeStructure);
     } else if (globablVars.selectConflict2) {
-        var node = findNode($(this)[0].id, chart_config.nodeStructure);
-        if (findParent(node.id, chart_config.nodeStructure).id != 1) {
-            window.alert("Conflicting argument must be a conclusion");
-        } else if (node == globablVars.conflict1) {
-            window.alert("Cannot select the same node");
-        } else {
-            globablVars.selectConflict2 = false;
-            globablVars.conflict2 = findNode($(this)[0].id, chart_config.nodeStructure);
-            chartHistory();
-            chart_config.nodeStructure.children.push(conflictNode(globablVars.conflict1, globablVars.conflict2));
-            deleteNode(chart_config.nodeStructure, globablVars.conflict1.id);
-            deleteNode(chart_config.nodeStructure, globablVars.conflict2.id);
-            var chart = new Treant(chart_config);
-            hideSnackbar();
-        }
+        globablVars.selectConflict2 = false;
+        globablVars.conflict2 = findNode($(this)[0].id, chart_config.nodeStructure);
+        chartHistory();
+        chart_config.nodeStructure.children.push(conflictNode(globablVars.conflict1, globablVars.conflict2));
+        deleteNode(chart_config.nodeStructure, globablVars.conflict1.id);
+        deleteNode(chart_config.nodeStructure, globablVars.conflict2.id);
+        var chart = new Treant(chart_config);
     }
 });
 
@@ -267,19 +350,11 @@ $("#diagramDiv").on("mouseover", "#basic-example > div", function () {
     $(this).find("table").css('background-color', '#DDDDDD');
     $(this).find("p").css('background-color', '#DDDDDD');
     var node = findNode($(this)[0].id, chart_config.nodeStructure);
-    if (node.type != "reason" && node.type != "conflict" && node.type != "reasonAttr") {
-        // Selects and scrolls to linked text
-        var textArea = document.getElementById("text");
-        var selectionStart = node.linktext.start;
-        var selectionEnd = node.linktext.end;
+    if (node.type != "reason") {
+        var textArea = document.getElementById("text")
         textArea.focus();
-        textArea.setSelectionRange(selectionStart, selectionEnd);
-        var LineHeight = 20;
-        var Height = textArea.scrollHeight;
-        var numberOfLines = Math.floor(Height/LineHeight);
-        var charsPerRow = textArea.value.length/numberOfLines;
-        var selectionRow = (selectionStart - (selectionStart % charsPerRow)) / charsPerRow;
-        textArea.scrollTop = 20 * (selectionRow - 1);
+        textArea.selectionStart = node.linktext.start;
+        textArea.selectionEnd = node.linktext.end;
     }
 });
 
@@ -299,6 +374,9 @@ $(".my-diagrams-container").on("click", ".my-diagrams ul li", function () {
     if (!globablVars.selectParent) {
         $("#myChartsWrapper").fadeIn(200);
     }
+
+    var itemID = $(this).attr('id');
+    console.log("Google Item ID: #" + itemID);
 
     var containerWidth = $("#myChartsWrapper").outerWidth();
     var containerHeight = $("#myChartsWrapper").outerHeight();
@@ -329,21 +407,67 @@ $(".my-diagrams-container").on("click", ".my-diagrams ul li", function () {
     });
 
     // Button Click Functions Go Here!!!
+
+    $('#myChartsWrapper').one('click', '#btnDeleteChart', function() {
+        $('#' + itemID).remove();
+        var data = {
+            delete_chart: "plez delete mi",
+            file_id: itemID
+        };
+        $.ajax({
+            type: "POST",
+            url: "app/drive_functions.php",
+            data: data,
+            error: function(req, status, err) {
+                console.log('Something went wrong', status, err);
+            }
+        });
+    });
+
+    $('#myChartsWrapper').one('click', '#btnOpenChart', function() {
+        var data = {
+            open_chart: "plez open mi",
+            file_id: itemID
+        };
+        $.ajax({
+            type: "POST",
+            url: "app/drive_functions.php",
+            data: data,
+            success: function(data) {
+
+                chart_config = JSON.parse(data);
+                $('#text').val(chart_config.chart.doc.text);
+                
+                globablVars.count = 1;
+                globablVars.reasonNodes = 0;
+                globablVars.history = 0;
+
+                countNodes(chart_config.nodeStructure);
+                
+                $('.container').show();
+                $('.jumbotron').hide();
+
+                var chart = new Treant(chart_config);
+
+            },
+            error: function(req, status, err) {
+                console.log('Something went wrong', status, err);
+            }
+        });
+    });
+
 });
 
 $('#btnUndo').click(function () {
+    console.log(historyArray);
     if (globablVars.history != 0) {
         globablVars.history--;
         chart_config = historyArray[globablVars.history];
-        parseNaN(chart_config.nodeStructure);
-        globablVars.count = 1;
-        countNodes(chart_config.nodeStructure);
         var chart = new Treant(chart_config);
     }
 });
 
 $('#btnConflict').click(function () {
-    showSnackbar("Select First Conflicting Argument");
     globablVars.selectConflict1 = true;
 });
 
@@ -353,6 +477,7 @@ function saveText(text, filename) {
     a.setAttribute('download', filename);
     a.click();
 }
+
 
 var isOpen = true;
 

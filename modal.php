@@ -69,6 +69,13 @@
   </div>
 </div>
 
+<div id="saveFunctionsWrapper">
+  <div id="saveFunctions">
+    <button class="btn btn-default" id="btnSaveToDrive">Save To Drive</button>
+    <button class="btn btn-default" id="btnDownload">Download</button>
+  </div>
+</div>
+
 <div id="highlightTextWrapper">
   <div id="highlightText">
     <button class="btn btn-default" id="btnNewNode">Add Node</button>

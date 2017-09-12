@@ -149,14 +149,14 @@ abbr, acronym {
     text-align: center;
 }
 
-#nodeFunctionsWrapper, #myChartsWrapper, #highlightTextWrapper{
+#nodeFunctionsWrapper, #myChartsWrapper, #saveFunctionsWrapper, #highlightTextWrapper{
     padding: 30px;
     width: 210px;
     display: none;
     position: absolute;
 }
 
-#nodeFunctions, #myChartsFunctions, #highlightText {
+#nodeFunctions, #saveFunctions, #myChartsFunctions, #highlightText {
     border: 1px solid #000;
     background: #fff;
     height: auto;
@@ -172,7 +172,7 @@ abbr, acronym {
     padding-left: 10px;
 }
 
-#nodeFunctions button, #myChartsFunctions button, #highlightText button{
+#nodeFunctions button, #myChartsFunctions button, #highlightText button, #myChartsFunctions button{
     display: block;
     margin: 0 auto;
     width: 100%;
