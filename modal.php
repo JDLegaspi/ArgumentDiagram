@@ -71,10 +71,7 @@
 
 <div id="saveFunctionsWrapper">
   <div id="saveFunctions">
-    <form method="POST">
-      <input style="display:none;" name="save_to_drive" id="save_to_drive" value="upload pls"/>
-      <button class="btn btn-default" id="btnSaveToDrive">Save To Drive</button>
-    </form>
+    <button class="btn btn-default" id="btnSaveToDrive">Save To Drive</button>
     <button class="btn btn-default" id="btnDownload">Download</button>
   </div>
 </div>

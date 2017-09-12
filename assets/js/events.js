@@ -203,8 +203,31 @@ $('#btnSaveDrive').on('click', function () {
         saveText(JSON.stringify(chart_config), "diagram.txt");
     });
 
-    $('#saveFunctionsWrapper').one('click', '#btnSaveToDrive', function() {
+    $('#saveFunctionsWrapper').off('click').on('click', '#btnSaveToDrive', function() {
         
+        var data = {
+            save_to_drive: "pls save mi",
+            file_name: filename,
+            file_contents: str_json
+        };
+        
+        $.ajax({
+            type: "POST",
+            url: "app/drive_functions.php",
+            data: data,
+            success: function(data) {
+                var item_id = data.trim();
+                console.log(item_id);
+                var $newElement = $('<li>', {id: item_id});
+                var $anchor = $('<a>');
+                $anchor.html(filename);
+                $newElement.append($anchor);
+                $(".my-diagrams ul").append($newElement);
+            },
+            error: function(req, status, err) {
+                console.log('Something went wrong', status, err);
+            }
+        });
     });
      
 });
