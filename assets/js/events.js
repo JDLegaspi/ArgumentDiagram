@@ -258,6 +258,7 @@ $("#diagramDiv").on("click", "#basic-example > div", function () {
             deleteNode(chart_config.nodeStructure, globablVars.conflict1.id);
             deleteNode(chart_config.nodeStructure, globablVars.conflict2.id);
             var chart = new Treant(chart_config);
+            $("#btnConflict").prop('disabled', true);
             hideSnackbar();
         }
     }

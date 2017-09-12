@@ -175,6 +175,7 @@ function deleteNode(obj, nodeId) {
                 obj.children.splice(i, 1);
                 // Removing conflict node if only one argument
                 if (obj.type == "conflict") {
+                    $("#btnConflict").prop('disabled', false);
                     chart_config.nodeStructure.children[0] = obj.children[0];
                 }
                 calculateChartAttributes(chart_config.nodeStructure);

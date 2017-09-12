@@ -20,6 +20,7 @@
     <div class="col-md-8" id="diagramDiv">
         <div class="row btn-new-node-wrapper">
             <button class="btn btn-default" id="btnNewNode">New Node</button>
+            <button class="btn btn-default" id="btnConflict">Conflicting Argument</button>
         </div>
         <div class="row chart" id="basic-example"></div>
         <div class="container" id="debug">
@@ -34,7 +35,6 @@
                     <textarea class="form-control" name="argText" id="argText"></textarea>
                 </div>
             </form>
-            <button class="btn btn-default" id="btnConflict">Conflict Node</button>
             <button class="btn btn-default" id="btnImportText">Import Text</button>
         </div>
     </div>
