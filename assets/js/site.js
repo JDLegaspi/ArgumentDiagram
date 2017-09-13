@@ -9,7 +9,7 @@ function initialise() {
     // chart_config.nodeStructure.children[1].innerHTML = nodeConstructor(chart_config.nodeStructure.children[1]);
     globablVars['filename'] = prompt("Name your chart lol");
     chartName = globablVars['filename'];
-    newChart();
+    newChart(chartName);
     // Getting a count to be used for Node IDs
     globablVars.count = 1;
     globablVars.countReason = 0;
@@ -51,7 +51,7 @@ function newChart(input) {
     chart_config = {
         chart: {
             doc: {
-                title: chartName,
+                title: input,
                 text: ''
             },
             scrollbar: 'fancy',

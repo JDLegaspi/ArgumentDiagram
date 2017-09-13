@@ -462,6 +462,10 @@ $(".my-diagrams-container").on("click", ".my-diagrams ul li", function () {
 
 });
 
+$('#btnHelp').click(function() {
+    introJs().start();
+})
+
 $('#btnUndo').click(function () {
     if (globablVars.history != 0) {
         globablVars.history--;

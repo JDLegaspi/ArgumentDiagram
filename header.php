@@ -20,10 +20,12 @@
         
     ?>
 
+    <!--IntroJS-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.7.0/introjs.min.css" type="text/css"/>
 </head>
 <body>
 
-    <div id="mySidenav" class="sidenav">
+    <div id="mySidenav" class="sidenav" data-step="8" data-intro="Here are extra features exclusive to this thing..">
         <div class="my-diagrams-container">
 
             <?php
@@ -34,8 +36,8 @@
                 } else {
                     ?>
                      <div class="my-diagrams">
-                        <h2>My Files</h2>
-                        <ul>
+                     <h2 style="margin-top: 0px;" data-step="9" data-intro="Here is a list of files that have been previously saved">My Files</h2>
+                     <ul>
                             <?php 
                             
                             //create Google Drive object based on user's account
@@ -61,7 +63,7 @@
 
     <nav class="navbar navbar-inverse navbar-main navbar-fixed-top">
         <div class="col-xs-1 cloud">
-            <i class="fa fa-cloud" aria-hidden="true" onclick="toggleNav()" id="open-nav"></i>
+            <i class="fa fa-cloud" aria-hidden="true" onclick="toggleNav()" id="open-nav" data-step="7" data-intro="Click on this Cloud icon to view additional account features"></i>
         </div>
         <div class="container col-xs-11">
             <div class="navbar-header">
@@ -75,12 +77,12 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav top-nav">
-                    <li><a href="javascript:document.getElementById('textInput').click();" class="btn btnNew">New</a></li>
-                    <li><a class="btn" id="btnSaveDrive">Save</a></li>
-                    <li><a href="javascript:document.getElementById('fileInput').click();" class="btn btnLoad">Load</a></li>
-                    <li><a class="btn" id="btnUndo">Undo</a></li>
-                    <li><a class="btn">Export</a></li>
-                    <li><a class="btn">Help</a></li>
+                    <li><a href="javascript:document.getElementById('textInput').click();" class="btn btnNew" data-intro="Click on New to start a new diagram and import a text file" data-step="1">New</a></li>
+                    <li><a class="btn" id="btnSaveDrive" data-step="2" data-intro="Click Save to save the current state of your diagram">Save</a></li>
+                    <li><a href="javascript:document.getElementById('fileInput').click();" class="btn btnLoad" data-step="3" data-intro="Click Load to open a diagram">Load</a></li>
+                    <li><a class="btn" id="btnUndo" data-step="4" data-intro="Click Undo to reverse your last action">Undo</a></li>
+                    <li><a class="btn" data-step="5" data-intro="Click Export to create a pdf file of your diagram">Export</a></li>
+                    <li><a class="btn" data-intro="Click Help to start this introduction guide again or view the help page for tips on how to create an argument diagram">Help</a></li>
                 </ul>
             </div>
         </div>
