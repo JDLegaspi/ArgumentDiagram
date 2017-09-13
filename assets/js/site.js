@@ -7,9 +7,7 @@ function initialise() {
     // Code for testing purposes with dummy data
     // chart_config.nodeStructure.children[0].innerHTML = nodeConstructor(chart_config.nodeStructure.children[0]);
     // chart_config.nodeStructure.children[1].innerHTML = nodeConstructor(chart_config.nodeStructure.children[1]);
-    globablVars['filename'] = prompt("Name your chart lol");
-    chartName = globablVars['filename'];
-    newChart(chartName);
+
     // Getting a count to be used for Node IDs
     globablVars.count = 1;
     globablVars.countReason = 0;
@@ -47,12 +45,12 @@ function countNodes(obj) {
 }
 
 // Sets up a new chart with a text input
-function newChart(input) {
+function newChart(text, title) {
     chart_config = {
         chart: {
             doc: {
-                title: input,
-                text: ''
+                title: title,
+                text: text
             },
             scrollbar: 'fancy',
             container: "#basic-example",
