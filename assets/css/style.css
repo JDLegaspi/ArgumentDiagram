@@ -75,6 +75,11 @@ abbr, acronym {
     /* height: 600px; */
     margin: 5px;
     width: auto;
+    transform-origin: left top;
+}
+
+#chart {
+    overflow: auto;
 }
 
 .Treant > .node, .Treant > .pseudo {
@@ -109,7 +114,7 @@ abbr, acronym {
     -moz-border-radius: 3px;
     border-radius: 3px;
     border: 1px solid #000;
-    width: 200px;
+    width: 150px;
 }
 
 .nodeAttributes > table {

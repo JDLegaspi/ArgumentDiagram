@@ -1,6 +1,6 @@
 ﻿body {
     padding-top: 70px;
-    padding-bottom: 20px;
+    padding-bottom: 55px;
     background: #fff;
 }
 
@@ -35,4 +35,8 @@ input, select, {
     .carousel-caption {
         display: none;
     }
+}
+
+footer {
+    padding-bottom: 10px;
 }

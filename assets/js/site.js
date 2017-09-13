@@ -4,6 +4,12 @@ var chart_config;
 
 // App initialisation
 function initialise() {
+    // Code for testing purposes with dummy data
+    // chart_config.nodeStructure.children[0].innerHTML = nodeConstructor(chart_config.nodeStructure.children[0]);
+    // chart_config.nodeStructure.children[1].innerHTML = nodeConstructor(chart_config.nodeStructure.children[1]);
+    globablVars['filename'] = prompt("Name your chart lol");
+    chartName = globablVars['filename'];
+    newChart();
     // Getting a count to be used for Node IDs
     globablVars.count = 1;
     globablVars.countReason = 0;
@@ -45,8 +51,8 @@ function newChart(input) {
     chart_config = {
         chart: {
             doc: {
-                title: '',
-                text: input
+                title: chartName,
+                text: ''
             },
             scrollbar: 'fancy',
             container: "#basic-example",
@@ -74,10 +80,16 @@ function nodeConstructor(node) {
     var text = "<p class='nodeTitle'>";
     if (node.name.length > 25) {
         text += node.name.slice(0, 22) + "...</p>";
+    } else if (node.name.length == 0) {
+        text += "#" + node.id;
     } else {
         text += node.name + "</p>";
     }
-    text += "<table class='nodeAttributes' style='margin: auto'>";
+    if (globablVars.hideAttributes) {
+        text += "<table class='nodeAttributes' style='margin: auto; display: none'>";
+    } else {
+        text += "<table class='nodeAttributes' style='margin: auto'>";
+    }
     if (isNaN(node.attributes.reliWeak) && isNaN(node.attributes.accuWeak) && isNaN(node.attributes.releWeak) && isNaN(node.attributes.uniqWeak)) {
         text += "<tr><td>" + node.attributes.reliability.toFixed(2) + "</td>" + "<td>" + node.attributes.reliability.toFixed(2) + "</td></tr>";
         text += "<tr><td>" + node.attributes.accuracy.toFixed(2) + "</td>" + "<td>" + node.attributes.accuracy.toFixed(2) + "</td></tr>";
@@ -114,7 +126,7 @@ function newNode(id, type, name, relia, accur, relev, unique, startSel, endSel) 
           start: startSel,
           end: endSel
         },
-        collapsable: true,
+        collapsed: false,
         children: []
     };
     node.innerHTML = nodeConstructor(node);
@@ -175,6 +187,7 @@ function deleteNode(obj, nodeId) {
                 obj.children.splice(i, 1);
                 // Removing conflict node if only one argument
                 if (obj.type == "conflict") {
+                    $("#btnConflict").prop('disabled', false);
                     chart_config.nodeStructure.children[0] = obj.children[0];
                 }
                 calculateChartAttributes(chart_config.nodeStructure);
@@ -210,6 +223,20 @@ function editNode(obj, nodeId, text, reli, accu, rele, uniq) {
         window.alert("Ummmmm, something is wrong...");
     }
     calculateChartAttributes(chart_config.nodeStructure);
+}
+
+// Changes selectedText
+function editSelection(obj, nodeId, start, end) {
+    if (obj.id == nodeId) {
+        obj.linktext.start = start;
+        obj.linktext.end = end;
+    } else if (obj.hasOwnProperty('children')) {
+        for (var i = 0; i < obj.children.length; i++) {
+            editSelection(obj.children[i], nodeId, start, end);
+        }
+    } else {
+        window.alert("Ummmmm, something is wrong...");
+    }
 }
 
 // Appends nodes to a reasoning node and its attributes before adding them to the chart
@@ -419,15 +446,15 @@ function conflictPessimistic(a, b) {
 
 // Used for showing the snackbar with a text input
 function showSnackbar(text) {
-    var x = document.getElementById("snackbar")
+    var x = document.getElementById("snackbar");
+    var y = document.getElementById("snackbarText");
     x.className = "show";
-    x.innerHTML = text;
+    y.innerHTML = text;
 }
 
 // Used for hiding the snackbar
 function hideSnackbar() {
     var x = document.getElementById("snackbar");
-    x.innerHTML = "";
     x.className = x.className.replace("show", "");
 }
 
@@ -448,6 +475,18 @@ function parseNaN(obj) {
             if (obj.attributes[key] == null) {
                 obj.attributes[key] = NaN;
             }
+        }
+    }
+}
+
+// Iterating through chart and toggling whether attributes are displayed or not
+function toggleAttributes(obj) {
+    if (obj.hasOwnProperty('children')) {
+        for (var i = 0; i < obj.children.length; i++) {
+            if (obj.children[i].type == "reasonAttr" || obj.children[i].type == "fact") {
+                obj.children[i].innerHTML = nodeConstructor(obj.children[i]);
+            }
+            toggleAttributes(obj.children[i]);
         }
     }
 }
