@@ -43,6 +43,9 @@
         </div>
     </div>
 </div>
+
+<?php include 'modal.php'; ?>
+
 <script src="assets/lib/jquery/dist/jquery.min.js"></script>
 <script src="assets/lib/treant-js/vendor/raphael.js"></script>
 <script src="assets/lib/treant-js/Treant.js"></script>
@@ -81,7 +84,5 @@ document.onmouseup = document.onkeyup = document.onselectionchange = function() 
   document.getElementById("argText").value = getSelectionText();
 };
 </script>
-
-<?php include 'modal.php'; ?>
 
 <?php include 'footer.php'; ?>
