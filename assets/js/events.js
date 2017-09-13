@@ -122,9 +122,9 @@ $('#btnSave').click(function () {
 
 //sends ajax request to php file, which saves it locally, then upload to google
 $('#btnSaveDrive').on('click', function () {
-    
+
     var filename = chart_config.chart.doc.title.replace(/ /g,"_");
-    
+
     var str_json = JSON.stringify(chart_config);
     $.ajax({
         type: "POST",
@@ -181,13 +181,13 @@ $('#btnSaveDrive').on('click', function () {
     });
 
     $('#saveFunctionsWrapper').off('click').on('click', '#btnSaveToDrive', function() {
-        
+
         var data = {
             save_to_drive: "pls save mi",
             file_name: filename,
             file_contents: str_json
         };
-        
+
         $.ajax({
             type: "POST",
             url: "app/drive_functions.php",
@@ -206,12 +206,13 @@ $('#btnSaveDrive').on('click', function () {
             }
         });
     });
-     
+
 });
 
 //$('#btnLoad').click(function () { changed to #fileinput so user doesn't have 2 actions to upload
-$('#fileinput').change(function () {
-    var file = document.getElementById('fileinput').files[0];
+$('#fileInput').change(function () {
+  console.log("test");
+    var file = document.getElementById('fileInput').files[0];
     if (file) {
         var reader = new FileReader();
         reader.readAsText(file);
@@ -240,7 +241,9 @@ $('#textInput').change(function () {
         if (fileName.substr(fileName.length - txt.length, txt.length).toLowerCase() == txt.toLowerCase()) {
             reader.readAsText(file);
             reader.onload = function () {
-                newChart(reader.result);
+                globablVars['filename'] = prompt("Name your chart lol");
+                chartName = globablVars['filename'];
+                newChart(reader.result, chartName);
                 initialise();
             };
         } else if (fileName.substr(fileName.length - docx.length, docx.length).toLowerCase() == docx.toLowerCase()) {
@@ -250,7 +253,9 @@ $('#textInput').change(function () {
                     var zip = new JSZip(content);
                     var doc=new Docxtemplater().loadZip(zip)
                     text=doc.getFullText();
-                    newChart(text);
+                    globablVars['filename'] = prompt("Name your chart lol");
+                    chartName = globablVars['filename'];
+                    newChart(text, chartName);
                     initialise();
                 });
             }
@@ -441,13 +446,13 @@ $(".my-diagrams-container").on("click", ".my-diagrams ul li", function () {
 
                 chart_config = JSON.parse(data);
                 $('#text').val(chart_config.chart.doc.text);
-                
+
                 globablVars.count = 1;
                 globablVars.reasonNodes = 0;
                 globablVars.history = 0;
 
                 countNodes(chart_config.nodeStructure);
-                
+
                 $('.container').show();
                 $('.jumbotron').hide();
 
