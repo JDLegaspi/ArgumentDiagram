@@ -115,10 +115,6 @@ $('#btnNewNode').click(function () {
     $('#newNodeModal').modal('show');
 });
 
-$('#btnSave').click(function () {
-    saveText(JSON.stringify(chart_config), "diagram.txt");
-});
-
 
 //sends ajax request to php file, which saves it locally, then upload to google
 $('#btnSaveDrive').on('click', function () {
@@ -174,10 +170,6 @@ $('#btnSaveDrive').on('click', function () {
 
     $('#saveFunctionsWrapper').on('click', function() {
         $('#saveFunctionsWrapper').fadeOut(200);
-    });
-
-    $('#saveFunctionsWrapper').one('click', '#btnDownload', function() {
-        saveText(JSON.stringify(chart_config), "diagram.txt");
     });
 
     $('#saveFunctionsWrapper').off('click').on('click', '#btnSaveToDrive', function() {

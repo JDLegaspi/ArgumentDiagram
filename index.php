@@ -39,10 +39,6 @@
                     <label for="argText">Argument:</label>
                     <input type="text" class="form-control" name="argText" id="argText" />
                 </div>
-                <select id="algebraSelect">
-                  <option value="true">Optimistic</option>
-                  <option value="false">Pessimistic</option>
-                </select>
             </form>
         </div>
     </div>

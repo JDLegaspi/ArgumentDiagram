@@ -14,7 +14,7 @@
             Accuracy:<input type="number" id="accuracy" min="0" max="1" step="0.05"><br>
             Relevancy:<input type="number" id="relevancy" min="0" max="1" step="0.05"><br>
             Uniqueness:<input type="number" id="uniqueness" min="0" max="1" step="0.05"><br>
-        </form> 
+        </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" id="submitNew">New Node</button>
@@ -238,5 +238,10 @@ $('#saveSelect').click(function() {
     $("#selectedText").val(selectedText);
     $('#editNodeModal').modal('show');
     $('#editSelectModal').find('form').trigger('reset');
+});
+
+$('#saveFunctionsWrapper').on('click', '#btnDownload', function() {
+  console.log("Test");
+    saveText(JSON.stringify(chart_config), "diagram.txt");
 });
 </script>

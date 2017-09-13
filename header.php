@@ -13,11 +13,11 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
     <!-- Load Google Drive API -->
-    <?php 
+    <?php
 
         //require Google API code
         require_once __DIR__ . '/app/drive_functions.php';
-        
+
     ?>
 
     <!--IntroJS-->
@@ -32,14 +32,14 @@
 
                 if (isset($authUrl)) { ?>
                     <a class="btn btn-default" href="<?php echo $authUrl; ?>">Sign in with Google</a>
-                    <?php 
+                    <?php
                 } else {
                     ?>
                      <div class="my-diagrams">
                      <h2 style="margin-top: 0px;" data-step="8" data-intro="Here is a list of files that have been previously saved">My Files</h2>
                      <ul>
-                            <?php 
-                            
+                            <?php
+
                             //create Google Drive object based on user's account
                             $files = $service->files->listFiles(array(
                                 'q' => "name contains '.argu' and trashed != true",
@@ -50,7 +50,7 @@
                             foreach ($files['files'] as $key => $value) {
                                 echo '<li id="'.$value['id'].'"><a>' . $value['name'] . "</a></li>";
                             }
-                            
+
                             ?>
                         </ul>
                     </div>
@@ -83,6 +83,10 @@
                     <li><a class="btn" id="btnUndo" data-step="4" data-intro="Click Undo to reverse your last action">Undo</a></li>
                     <li><a class="btn" data-step="5" data-intro="Click Export to create a pdf file of your diagram">Export</a></li>
                     <li><a id="btnHelp" class="btn" data-intro="Click Help to start this introduction guide again or view the help page for tips on how to create an argument diagram">Help</a></li>
+                    <select id="algebraSelect">
+                      <option value="true">Optimistic</option>
+                      <option value="false">Pessimistic</option>
+                    </select>
                 </ul>
             </div>
         </div>
