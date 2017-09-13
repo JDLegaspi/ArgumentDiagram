@@ -210,8 +210,9 @@ $('#btnSaveDrive').on('click', function () {
 });
 
 //$('#btnLoad').click(function () { changed to #fileinput so user doesn't have 2 actions to upload
-$('#fileinput').change(function () {
-    var file = document.getElementById('fileinput').files[0];
+$('#fileInput').change(function () {
+  console.log("test");
+    var file = document.getElementById('fileInput').files[0];
     if (file) {
         var reader = new FileReader();
         reader.readAsText(file);
