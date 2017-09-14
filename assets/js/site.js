@@ -188,11 +188,8 @@ function deleteNode(obj, nodeId) {
                     $("#btnConflict").prop('disabled', false);
                     chart_config.nodeStructure.children[0] = obj.children[0];
                 }
-                calculateChartAttributes(chart_config.nodeStructure);
                 return;
             } else {
-                console.log("2");
-                console.log(obj.children[i].id);
                 deleteNode(obj.children[i], nodeId);
                 if (obj.children[i].type == "reason" && obj.children[i].children.length < 1) {
                     obj.children.splice(i, 1);
@@ -320,7 +317,7 @@ function calculateAttributes(node) {
     node.attributes.uniqueness = uniqueness;
 }
 
-// Calculating the attributes for a ndoe based on its connected reasoning nodes
+// Calculating the attributes for a node based on its connected reasoning nodes
 function parentAttributes(node) {
     var children = node.children;
     var reliability = NaN;
@@ -467,6 +464,11 @@ function parseNaN(obj) {
     if (obj.hasOwnProperty('children') && obj.children.length > 0) {
         for (var i = 0; i < obj.children.length; i++) {
             parseNaN(obj.children[i]);
+        }
+        for (var key in obj.attributes) {
+            if (obj.attributes[key] == null) {
+                obj.attributes[key] = NaN;
+            }
         }
     } else if (obj.id != 1) {
         for (var key in obj.attributes) {

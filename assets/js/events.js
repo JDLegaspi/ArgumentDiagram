@@ -540,6 +540,7 @@ $('#nodeFunctionsWrapper').on('click', '#btnDelete', function () {
     if (globablVars.this) {
         chartHistory();
         deleteNode(chart_config.nodeStructure, globablVars.this);
+        calculateChartAttributes(chart_config.nodeStructure);
         chart = new Treant(chart_config);
     } else {
         window.alert("Please select a node");
