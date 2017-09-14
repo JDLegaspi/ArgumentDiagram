@@ -14,11 +14,12 @@
             Accuracy:<input type="number" id="accuracy" min="0" max="1" step="0.05"><br>
             Relevancy:<input type="number" id="relevancy" min="0" max="1" step="0.05"><br>
             Uniqueness:<input type="number" id="uniqueness" min="0" max="1" step="0.05"><br>
+            Completeness:<input type="number" id="completeness" min="0" max="1" step="0.05"><br>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="submitNew">New Node</button>
-        <button type="button" class="btn btn-secondary" id="cancelNew">Close</button>
+        <button type="button" class="btn btn-primary" id="submitNew" data-dismiss="modal">New Node</button>
+        <button type="button" class="btn btn-secondary" id="cancelNew" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
@@ -40,6 +41,7 @@
             Accuracy:<input type="number" id="editAccu" min="0" max="1" step="0.05"><br>
             Relevancy:<input type="number" id="editRele" min="0" max="1" step="0.05"><br>
             Uniqueness:<input type="number" id="editUniq" min="0" max="1" step="0.05"><br>
+            Completeness:<input type="number" id="editComp" min="0" max="1" step="0.05"><br>
             Selected Text:<input type="text" id="selectedText" readonly><br>
         </form>
       </div>
@@ -67,6 +69,92 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" id="saveSelect" data-dismiss="modal">Save</button>
         <button type="button" class="btn btn-secondary" id="cancelEdit" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="algebraModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">New Node</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+            Reliability<br>
+            Supporting: <select id="">
+              <option value="max">Max</option>
+              <option value="min">Min</option>
+          </select><br>
+            Acrrual: <select id="">
+              <option value="max">Max(a + b, 1)</option>
+              <option value="min">Min(a + b, 1)</option>
+            </select><br>
+            Conflict: <select id="">
+              <option value="max">(a - b) / (1 - b)</option>
+              <option value="min">a - b</option>
+            </select><br>
+            Accuracy<br>
+            Supporting: <select id="">
+              <option value="max">Max</option>
+              <option value="min">Min</option>
+          </select><br>
+            Acrrual: <select id="">
+              <option value="max">Max(a + b, 1)</option>
+              <option value="min">Min(a + b, 1)</option>
+            </select><br>
+            Conflict: <select id="">
+              <option value="max">(a - b) / (1 - b)</option>
+              <option value="min">a - b</option>
+            </select><br>
+            Relevancy<br>
+            Supporting: <select id="">
+              <option value="max">Max</option>
+              <option value="min">Min</option>
+          </select><br>
+            Acrrual: <select id="">
+              <option value="max">Max(a + b, 1)</option>
+              <option value="min">Min(a + b, 1)</option>
+            </select><br>
+            Conflict: <select id="">
+              <option value="max">(a - b) / (1 - b)</option>
+              <option value="min">a - b</option>
+            </select><br>
+            Uniqueness<br>
+            Supporting: <select id="">
+              <option value="max">Max</option>
+              <option value="min">Min</option>
+          </select><br>
+            Acrrual: <select id="">
+              <option value="max">Max(a + b, 1)</option>
+              <option value="min">Min(a + b, 1)</option>
+            </select><br>
+            Conflict: <select id="">
+              <option value="max">(a - b) / (1 - b)</option>
+              <option value="min">a - b</option>
+            </select><br>
+            Completeness<br>
+            Supporting: <select id="">
+              <option value="max">Max</option>
+              <option value="min">Min</option>
+          </select><br>
+            Acrrual: <select id="">
+              <option value="max">Max(a + b, 1)</option>
+              <option value="min">Min(a + b, 1)</option>
+            </select><br>
+            Conflict: <select id="">
+              <option value="max">(a - b) / (1 - b)</option>
+              <option value="min">a - b</option>
+            </select><br>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="submitAlgebra" data-dismiss="modal">Save</button>
+        <button type="button" class="btn btn-secondary" id="cancelAlgebra" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

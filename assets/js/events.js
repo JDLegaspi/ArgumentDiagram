@@ -602,6 +602,7 @@ $('#submitNew').click(function () {
     var accur = parseFloat($('#accuracy').val());
     var relev = parseFloat($('#relevancy').val());
     var unique = parseFloat($('#uniqueness').val());
+    var comple = parseFloat($('#completeness').val());
     var startSel = document.getElementById("text").selectionStart;
     var endSel = document.getElementById("text").selectionEnd;
     if (startSel == endSel) {
@@ -609,7 +610,7 @@ $('#submitNew').click(function () {
         endSel = null;
     }
     chartHistory();
-    chart_config.nodeStructure.children.push(newNode(id, type, name, relia, accur, relev, unique, startSel, endSel));
+    chart_config.nodeStructure.children.push(newNode(id, type, name, relia, accur, relev, unique, comple, startSel, endSel));
     var chart = new Treant(chart_config);
     $('#newNodeModal').find('form').trigger('reset');
 });
@@ -626,8 +627,9 @@ $('#submitEdit').click(function () {
     var accu = parseFloat($('#editAccu').val());
     var rele = parseFloat($('#editRele').val());
     var uniq = parseFloat($('#editUniq').val());
+    var comp = parseFloat($('#editComp').val());
     chartHistory();
-    editNode(chart_config.nodeStructure, globablVars.this, name, reli, accu, rele, uniq);
+    editNode(chart_config.nodeStructure, globablVars.this, name, reli, accu, rele, uniq, comp);
     var chart = new Treant(chart_config);
     $('#editNodeModal').find('form').trigger('reset');
 });
@@ -639,6 +641,10 @@ $('#cancelEdit').click(function () {
 
 $('#textEdit').click(function () {
     $('#editSelectModal').modal('show');
+});
+
+$('#btnAlgebra').click(function () {
+    $('#algebraModal').modal('show');
 });
 
 $('#editSelectModal').on('show.bs.modal', function () {

@@ -21,6 +21,9 @@ function initialise() {
     // Whether algebra for attributes are optimistic or pessimistic
     globablVars.relevancyOpt = true;
     globablVars.uniquenessOpt = true;
+    globablVars.support = {reliability: 1, accuracy: 1, relevancy: 1, uniqueness: 1, completeness: 1};
+    globablVars.accrual = {reliability: 1, accuracy: 1, relevancy: 1, uniqueness: 1, completeness: 1};
+    globablVars.conflict = {reliability: 1, accuracy: 1, relevancy: 1, uniqueness: 1, completeness: 1};
 
     // Show main app view
     $('.container').show();
@@ -93,18 +96,20 @@ function nodeConstructor(node) {
         text += "<tr><td>" + node.attributes.accuracy.toFixed(2) + "</td>" + "<td>" + node.attributes.accuracy.toFixed(2) + "</td></tr>";
         text += "<tr><td>" + node.attributes.relevancy.toFixed(2) + "</td>" + "<td>" + node.attributes.relevancy.toFixed(2) + "</td></tr>";
         text += "<tr><td>" + node.attributes.uniqueness.toFixed(2) + "</td>" + "<td>" + node.attributes.uniqueness.toFixed(2) + "</td></tr>";
+        text += "<tr><td>" + node.attributes.completeness.toFixed(2) + "</td>" + "<td>" + node.attributes.completeness.toFixed(2) + "</td></tr>";
     } else {
         text += "<tr><td>" + node.attributes.reliability.toFixed(2) + "</td>" + "<td>" + node.attributes.reliWeak.toFixed(2) + "</td></tr>";
         text += "<tr><td>" + node.attributes.accuracy.toFixed(2) + "</td>" + "<td>" + node.attributes.accuWeak.toFixed(2) + "</td></tr>";
         text += "<tr><td>" + node.attributes.relevancy.toFixed(2) + "</td>" + "<td>" + node.attributes.releWeak.toFixed(2) + "</td></tr>";
         text += "<tr><td>" + node.attributes.uniqueness.toFixed(2) + "</td>" + "<td>" + node.attributes.uniqWeak.toFixed(2) + "</td></tr>";
+        text += "<tr><td>" + node.attributes.completeness.toFixed(2) + "</td>" + "<td>" + node.attributes.compWeak.toFixed(2) + "</td></tr>";
     }
     text += "</table>";
     return text;
 }
 
 // Create and return new nodes
-function newNode(id, type, name, relia, accur, relev, unique, startSel, endSel) {
+function newNode(id, type, name, relia, accur, relev, unique, comple, startSel, endSel) {
     var node = {
         id: id,
         HTMLid: id.toString(),
@@ -115,10 +120,12 @@ function newNode(id, type, name, relia, accur, relev, unique, startSel, endSel) 
           accuracy: accur,
           relevancy: relev,
           uniqueness: unique,
+          completeness: comple,
           reliWeak: NaN,
           accuWeak: NaN,
           releWeak: NaN,
-          uniqWeak: NaN
+          uniqWeak: NaN,
+          compWeak: NaN
         },
         linktext: {
           start: startSel,
@@ -202,17 +209,18 @@ function deleteNode(obj, nodeId) {
 }
 
 // Changes node values
-function editNode(obj, nodeId, text, reli, accu, rele, uniq) {
+function editNode(obj, nodeId, text, reli, accu, rele, uniq, comp) {
     if (obj.id == nodeId) {
         obj.name = text;
         obj.attributes.reliability = reli;
         obj.attributes.accuracy = accu;
         obj.attributes.relevancy = rele;
         obj.attributes.uniqueness = uniq;
+        obj.attributes.completeness = comp;
         obj.innerHTML = nodeConstructor(obj);
     } else if (obj.hasOwnProperty('children')) {
         for (var i = 0; i < obj.children.length; i++) {
-            editNode(obj.children[i], nodeId, text, reli, accu, rele, uniq);
+            editNode(obj.children[i], nodeId, text, reli, accu, rele, uniq, comp);
         }
     } else {
         window.alert("Ummmmm, something is wrong...");
@@ -252,7 +260,8 @@ function reasonNode(child) {
               reliability: NaN,
               accuracy: NaN,
               relevancy: NaN,
-              uniqueness: NaN
+              uniqueness: NaN,
+              completeness: NaN
             },
             children: []
         };
@@ -298,23 +307,19 @@ function calculateAttributes(node) {
     var relevancy = NaN;
     var uniqueness = NaN;
     for (var i = 1; i < children.length; i++) {
-        reliability = getMin(reliability, children[i].attributes.reliability, children[0].attributes.reliability);
-        accuracy = getMin(accuracy, children[i].attributes.accuracy, children[0].attributes.accuracy);
-        if (globablVars.relevancyOpt) {
-            relevancy = getMax(relevancy, children[i].attributes.relevancy, children[0].attributes.relevancy);
-        } else {
-            relevancy = getMin(relevancy, children[i].attributes.relevancy, children[0].attributes.relevancy);
-        }
-        if (globablVars.uniquenessOpt) {
-            uniqueness = getMax(uniqueness, children[i].attributes.uniqueness, children[0].attributes.uniqueness);
-        } else {
-            uniqueness = getMin(uniqueness, children[i].attributes.uniqueness, children[0].attributes.uniqueness);
+        for (var key in children[i].attributes) {
+            console.log(key);
+            var count = 0;
+            while (count < 5) {
+                if (globablVars.support[key] == 1) {
+                     node.attributes[key] = getMin(reliability, children[i].attributes.reliability, children[0].attributes.reliability);
+                } else if (globablVars.support[key] == 2) {
+                     node.attributes[key] = getMax(reliability, children[i].attributes.reliability, children[0].attributes.reliability);
+                }
+                count++;
+            }
         }
     }
-    node.attributes.reliability = reliability;
-    node.attributes.accuracy = accuracy;
-    node.attributes.relevancy = relevancy;
-    node.attributes.uniqueness = uniqueness;
 }
 
 // Calculating the attributes for a node based on its connected reasoning nodes
