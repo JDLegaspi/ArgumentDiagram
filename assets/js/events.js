@@ -121,25 +121,6 @@ $('#btnSaveDrive').on('click', function () {
 
     var filename = chart_config.chart.doc.title.replace(/ /g,"_");
 
-    var str_json = JSON.stringify(chart_config);
-    $.ajax({
-        type: "POST",
-        url: "drive_process_file.php",
-        data: str_json,
-        error: function(req, status, err) {
-            console.log('Something went wrong', status, err);
-        }
-    });
-
-    $.ajax({
-        type: "POST",
-        url: "drive_process_filename.php",
-        data: {chart_filename: filename},
-        error: function(req, status, err) {
-            console.log('Something went wrong', status, err);
-        }
-    });
-
     if (!globablVars.selectParent) {
         $("#saveFunctionsWrapper").fadeIn(200);
     }
@@ -372,10 +353,7 @@ $("#diagramDiv").on("mouseleave", "#basic-example > div", function () {
 });
 
 $(".my-diagrams-container").on("click", ".my-diagrams ul li", function () {
-    if (!globablVars.selectParent) {
-        $("#myChartsWrapper").fadeIn(200);
-    }
-
+    $("#myChartsWrapper").fadeIn(200);
     var itemID = $(this).attr('id');
     console.log("Google Item ID: #" + itemID);
 

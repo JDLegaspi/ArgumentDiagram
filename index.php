@@ -1,8 +1,6 @@
 <?php include 'header.php'; ?>
 <div class="container body-content">
 
-<link rel="stylesheet" type="text/css" href="assets/css/style.css" />
-
 <div class="starting-screen container text-center">
     <div class="col-md-6">
 

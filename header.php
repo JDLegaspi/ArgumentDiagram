@@ -10,6 +10,8 @@
 
     <link rel="stylesheet" href="assets/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="assets/css/site.css" />
+    <link rel="stylesheet" href="assets/css/modal_styles.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/lib/treant-js/Treant.css" type="text/css" />
 
     <!--Font Awesome-->

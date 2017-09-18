@@ -9,11 +9,25 @@
       </div>
       <div class="modal-body">
         <form>
-            Node Name:<input type="text" id="nodename"><br>
-            Reliability:<input type="number" id="reliability" min="0" max="1" step="0.05"><br>
-            Accuracy:<input type="number" id="accuracy" min="0" max="1" step="0.05"><br>
-            Relevancy:<input type="number" id="relevancy" min="0" max="1" step="0.05"><br>
-            Uniqueness:<input type="number" id="uniqueness" min="0" max="1" step="0.05"><br>
+          <div class="form-group">
+            <label for="nodename">Node Name:</label>
+            <input type="text" id="nodename" name="nodename"><br>
+          </div>
+          <div class="form-group">
+            <label for="reliability">Reliability:</label>
+            <input type="number" id="reliability" name="reliability" min="0" max="1" step="0.05"><br>
+          </div>
+          <div class="form-group">
+            <label for="accuracy">Accuracy:</label>
+            <input type="number" id="accuracy" name="accuracy" min="0" max="1" step="0.05"><br>
+          </div>
+          <div class="form-group">
+            <label for="relevancy">Relevancy:</label>
+            <input type="number" id="relevancy" name="relevancy" min="0" max="1" step="0.05"><br>
+          </div>
+          <div class="form-group">
+            <label for="uniqueness">Uniqueness:</label>
+            <input type="number" id="uniqueness" name="uniqueness" min="0" max="1" step="0.05"><br>
         </form>
       </div>
       <div class="modal-footer">
