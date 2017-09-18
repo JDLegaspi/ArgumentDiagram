@@ -84,10 +84,6 @@
                     <li><a class="btn" data-step="5" data-intro="Click Export to create a pdf file of your diagram">Export</a></li>
                     <li><a id="btnHelp" class="btn" data-intro="Click Help to start this introduction guide again or view the help page for tips on how to create an argument diagram">Help</a></li>
                     <li><a id="btnAlgebra" class="btn">Algebra</a></li>
-                    <select id="algebraSelect">
-                      <option value="true">Optimistic</option>
-                      <option value="false">Pessimistic</option>
-                    </select>
                 </ul>
             </div>
         </div>

@@ -298,8 +298,6 @@ $("#diagramDiv").on("click", "#basic-example > div", function () {
                     object[0].children.push(globablVars.child);
                 } else {
                     object[0].children.push(reasonNode(globablVars.child));
-                    calculateAttributes(object[0].children[0]);
-                    parentAttributes(object[0]);
                 }
             }
             calculateChartAttributes(chart_config.nodeStructure);
@@ -630,6 +628,7 @@ $('#submitEdit').click(function () {
     var comp = parseFloat($('#editComp').val());
     chartHistory();
     editNode(chart_config.nodeStructure, globablVars.this, name, reli, accu, rele, uniq, comp);
+    calculateChartAttributes(chart_config.nodeStructure);
     var chart = new Treant(chart_config);
     $('#editNodeModal').find('form').trigger('reset');
 });
@@ -645,6 +644,41 @@ $('#textEdit').click(function () {
 
 $('#btnAlgebra').click(function () {
     $('#algebraModal').modal('show');
+});
+
+$('#submitAlgebra').click(function () {
+    $('#algebraModal').modal('hide');
+    // Super super janky option select. Whoever sees this I am sorry
+    var support = [];
+    var accrual = [];
+    var conflict = [];
+    support.push($('#supportReli').val());
+    support.push($('#supportAccu').val());
+    support.push($('#supportRele').val());
+    support.push($('#supportUniq').val());
+    support.push($('#supportComp').val());
+
+    accrual.push($('#accrualReli').val());
+    accrual.push($('#accrualAccu').val());
+    accrual.push($('#accrualRele').val());
+    accrual.push($('#accrualUniq').val());
+    accrual.push($('#accrualComp').val());
+
+    conflict.push($('#conflictReli').val());
+    conflict.push($('#conflictAccu').val());
+    conflict.push($('#conflictRele').val());
+    conflict.push($('#conflictUniq').val());
+    conflict.push($('#conflictComp').val());
+    var i = 0;
+    for (var key in globablVars.support) {
+        globablVars.support[key] = support[i];
+        globablVars.accrual[key] = accrual[i];
+        globablVars.conflict[key] = conflict[i];
+        i++;
+    }
+    calculateChartAttributes(chart_config.nodeStructure);
+    console.log(support);
+    var chart = new Treant(chart_config);
 });
 
 $('#editSelectModal').on('show.bs.modal', function () {

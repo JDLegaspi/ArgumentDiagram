@@ -19,8 +19,8 @@ function initialise() {
     globablVars.selectChild = false;
 
     // Whether algebra for attributes are optimistic or pessimistic
-    globablVars.relevancyOpt = true;
-    globablVars.uniquenessOpt = true;
+    // 1 = Pessimistic
+    // 2 = Optimistic
     globablVars.support = {reliability: 1, accuracy: 1, relevancy: 1, uniqueness: 1, completeness: 1};
     globablVars.accrual = {reliability: 1, accuracy: 1, relevancy: 1, uniqueness: 1, completeness: 1};
     globablVars.conflict = {reliability: 1, accuracy: 1, relevancy: 1, uniqueness: 1, completeness: 1};
@@ -225,7 +225,6 @@ function editNode(obj, nodeId, text, reli, accu, rele, uniq, comp) {
     } else {
         window.alert("Ummmmm, something is wrong...");
     }
-    calculateChartAttributes(chart_config.nodeStructure);
 }
 
 // Changes selectedText
@@ -268,7 +267,7 @@ function reasonNode(child) {
     // Setting up Attributes for Reason Node
     var name = "r" + globablVars.countReason;
     globablVars.count++;
-    reason.children.push(newNode(globablVars.count, "reasonAttr", name, 1, 1, 1, 1, 0, 0));
+    reason.children.push(newNode(globablVars.count, "reasonAttr", name, 1, 1, 1, 1, 1, 0, 0));
     reason.children.push(child);
     return reason;
 }
@@ -299,61 +298,59 @@ function conflictNode(child1, child2) {
     return conflict;
 }
 
-// Calculating attribute values based on the child nodes of a reasoning node
+// Calculate supporting algebra for a decision node
 function calculateAttributes(node) {
     var children = node.children;
-    var reliability = NaN;
-    var accuracy = NaN;
-    var relevancy = NaN;
-    var uniqueness = NaN;
-    for (var i = 1; i < children.length; i++) {
-        for (var key in children[i].attributes) {
-            console.log(key);
-            var count = 0;
-            while (count < 5) {
-                if (globablVars.support[key] == 1) {
-                     node.attributes[key] = getMin(reliability, children[i].attributes.reliability, children[0].attributes.reliability);
-                } else if (globablVars.support[key] == 2) {
-                     node.attributes[key] = getMax(reliability, children[i].attributes.reliability, children[0].attributes.reliability);
+    var count = 0;
+    for (var key in children[0].attributes) {
+        if (count < 5) {
+            var attributeArray = [];
+            for (var i = 0; i < children.length; i++) {
+                if (!isNaN(children[i].attributes[key])) {
+                    attributeArray.push(children[i].attributes[key]);
                 }
-                count++;
+            }
+            // Optimistic Algebra
+            if (globablVars.support[key] == 2) {
+                node.attributes[key] = Math.max(...attributeArray);
+            // Pessimistic Algebra
+            } else {
+                node.attributes[key] = Math.min(...attributeArray);
             }
         }
+        count++;
     }
 }
 
-// Calculating the attributes for a node based on its connected reasoning nodes
+// Calculate accrual algebra for a fact node with children
 function parentAttributes(node) {
     var children = node.children;
-    var reliability = NaN;
-    var accuracy = NaN;
-    var relevancy = NaN;
-    var uniqueness = NaN;
-    if (children.length == 1) {
-        for (var i = 0; i < children.length; i++) {
-            reliability = children[i].attributes.reliability;
-            accuracy = children[i].attributes.accuracy;
-            relevancy = children[i].attributes.relevancy;
-            uniqueness = children[i].attributes.uniqueness;
+    var count = 0;
+    for (var key in children[0].attributes) {
+        if (count < 5) {
+            if (children.length == 1) {
+                node.attributes[key] = children[0].attributes[key];
+            } else {
+                var attributeArray = [];
+                for (var i = 0; i < children.length; i++) {
+                    if (!isNaN(children[i].attributes[key])) {
+                        attributeArray.push(children[i].attributes[key]);
+                    }
+                }
+                // Optimistic Algebra
+                if (globablVars.accrual[key] == 2) {
+                    for (var i = 0; i < attributeArray.length - 1; i++) {
+                        attributeArray[i + 1] = attributeArray[i] + attributeArray[i + 1] - (attributeArray[i] * attributeArray[i + 1]);
+                        node.attributes[key] = attributeArray[i + 1];
+                    }
+                // Pessimistic Algebra
+                } else {
+                    node.attributes[key] = Math.min(attributeArray.reduce((a, b) => a + b, 0), 1);
+                }
+            }
         }
-    } else {
-        reliability = children[0].attributes.reliability + children[1].attributes.reliability - (children[0].attributes.reliability * children[1].attributes.reliability);
-        accuracy = Math.min(children[0].attributes.accuracy + children[1].attributes.accuracy, 1);
-        if (globablVars.relevancyOpt) {
-            relevancy = Math.min(children[0].attributes.relevancy + children[1].attributes.relevancy, 1);
-        } else {
-            relevancy = children[0].attributes.relevancy + children[1].attributes.relevancy - (children[0].attributes.relevancy * children[1].attributes.relevancy);
-        }
-        if (globablVars.uniquenessOpt) {
-            uniqueness = Math.min(children[0].attributes.uniqueness + children[1].attributes.uniqueness, 1);
-        } else {
-            uniqueness = children[0].attributes.uniqueness + children[1].attributes.uniqueness - (children[0].attributes.uniqueness * children[1].attributes.uniqueness);
-        }
+        count++;
     }
-    node.attributes.reliability = reliability;
-    node.attributes.accuracy = accuracy;
-    node.attributes.relevancy = relevancy;
-    node.attributes.uniqueness = uniqueness;
     node.innerHTML = nodeConstructor(node);
 }
 
@@ -362,24 +359,42 @@ function conflictAttributes(node) {
     var a = node.children[0];
     var b = node.children[1];
     conflictCalculate(a, b);
-    conflictCalculate(b, a);
+    //conflictCalculate(b, a);
 }
 
 // This function allows both sides to be calculated without repeated code
 function conflictCalculate(node1, node2) {
     var a = node1.attributes;
     var b = node2.attributes;
-    a.reliWeak = conflictOptimistic(a.reliability, b.reliability);
-    a.accuWeak = conflictPessimistic(a.accuracy, b.accuracy);
-    if (globablVars.relevancyOpt) {
+
+    if (globablVars.conflict.reliability == 2) {
+        a.reliWeak = conflictOptimistic(a.reliability, b.reliability);
+    } else {
+        a.reliWeak = conflictPessimistic(a.reliability, b.reliability);
+    }
+
+    if (globablVars.conflict.accuracy == 2) {
+        a.accuWeak = conflictOptimistic(a.accuracy, b.accuracy);
+    } else {
+        a.accuWeak = conflictPessimistic(a.accuracy, b.accuracy);
+    }
+
+    if (globablVars.conflict.relevancy == 2) {
         a.releWeak = conflictOptimistic(a.relevancy, b.relevancy);
     } else {
         a.releWeak = conflictPessimistic(a.relevancy, b.relevancy);
     }
-    if (globablVars.uniquenessOpt) {
+
+    if (globablVars.conflict.uniqueness == 2) {
         a.uniqWeak = conflictOptimistic(a.uniqueness, b.uniqueness);
     } else {
         a.uniqWeak = conflictPessimistic(a.uniqueness, b.uniqueness);
+    }
+
+    if (globablVars.conflict.completeness == 2) {
+        a.compWeak = conflictOptimistic(a.completeness, b.completeness);
+    } else {
+        a.compWeak = conflictPessimistic(a.completeness, b.completeness);
     }
     node1.innerHTML = nodeConstructor(node1);
 }
@@ -400,22 +415,6 @@ function calculateChartAttributes(obj) {
     if (obj.type == "conflict") {
         conflictAttributes(obj);
     }
-}
-
-// Used for getting minimum attribute for nodes
-function getMin(original, comparison, weight) {
-    if ((comparison < original || isNaN(original)) && !isNaN(comparison)) {
-        original = comparison * weight;
-    }
-    return original;
-}
-
-// Used for getting maximum attribute for nodes
-function getMax(original, comparison, weight) {
-    if ((comparison > original || isNaN(original)) && !isNaN(comparison)) {
-        original = comparison * weight;
-    }
-    return original;
 }
 
 // Optimistic algebra for conflicting argument

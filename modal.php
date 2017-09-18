@@ -86,69 +86,84 @@
       <div class="modal-body">
         <form>
             Reliability<br>
-            Supporting: <select id="">
-              <option value="max">Max</option>
-              <option value="min">Min</option>
-          </select><br>
-            Acrrual: <select id="">
-              <option value="max">Max(a + b, 1)</option>
-              <option value="min">Min(a + b, 1)</option>
+            Supporting:
+            <select id="supportReli">
+              <option value=1>Min</option>
+              <option value=2>Max</option>
             </select><br>
-            Conflict: <select id="">
-              <option value="max">(a - b) / (1 - b)</option>
-              <option value="min">a - b</option>
+            Acrrual:
+            <select id="accrualReli">
+              <option value=1>a + b - ab</option>
+              <option value=2>Min(a + b, 1)</option>
+            </select><br>
+            Conflict:
+            <select id="conflictReli">
+              <option value=1>(a - b) / (1 - b)</option>
+              <option value=2>a - b</option>
             </select><br>
             Accuracy<br>
-            Supporting: <select id="">
-              <option value="max">Max</option>
-              <option value="min">Min</option>
-          </select><br>
-            Acrrual: <select id="">
-              <option value="max">Max(a + b, 1)</option>
-              <option value="min">Min(a + b, 1)</option>
+            Supporting:
+            <select id="supportAccu">
+              <option value=1>Min</option>
+              <option value=2>Max</option>
             </select><br>
-            Conflict: <select id="">
-              <option value="max">(a - b) / (1 - b)</option>
-              <option value="min">a - b</option>
+            Acrrual:
+            <select id="accrualAccu">
+              <option value=1>a + b - ab</option>
+              <option value=2>Min(a + b, 1)</option>
+            </select><br>
+            Conflict:
+            <select id="conflictAccu">
+              <option value=1>(a - b) / (1 - b)</option>
+              <option value=2>a - b</option>
             </select><br>
             Relevancy<br>
-            Supporting: <select id="">
-              <option value="max">Max</option>
-              <option value="min">Min</option>
-          </select><br>
-            Acrrual: <select id="">
-              <option value="max">Max(a + b, 1)</option>
-              <option value="min">Min(a + b, 1)</option>
+            Supporting:
+            <select id="supportRele">
+              <option value=1>Min</option>
+              <option value=2>Max</option>
             </select><br>
-            Conflict: <select id="">
-              <option value="max">(a - b) / (1 - b)</option>
-              <option value="min">a - b</option>
+            Acrrual:
+            <select id="accrualRele">
+              <option value=1>a + b - ab</option>
+              <option value=2>Min(a + b, 1)</option>
+            </select><br>
+            Conflict:
+            <select id="conflictRele">
+              <option value=1>(a - b) / (1 - b)</option>
+              <option value=2>a - b</option>
             </select><br>
             Uniqueness<br>
-            Supporting: <select id="">
-              <option value="max">Max</option>
-              <option value="min">Min</option>
-          </select><br>
-            Acrrual: <select id="">
-              <option value="max">Max(a + b, 1)</option>
-              <option value="min">Min(a + b, 1)</option>
+            Supporting:
+            <select id="supportUniq">
+              <option value=1>Min</option>
+              <option value=2>Max</option>
             </select><br>
-            Conflict: <select id="">
-              <option value="max">(a - b) / (1 - b)</option>
-              <option value="min">a - b</option>
+            Acrrual:
+            <select id="accrualUniq">
+              <option value=1>a + b - ab</option>
+              <option value=2>Min(a + b, 1)</option>
+            </select><br>
+            Conflict:
+            <select id="conflictUniq">
+              <option value=1>(a - b) / (1 - b)</option>
+              <option value=2>a - b</option>
             </select><br>
             Completeness<br>
-            Supporting: <select id="">
-              <option value="max">Max</option>
-              <option value="min">Min</option>
-          </select><br>
-            Acrrual: <select id="">
-              <option value="max">Max(a + b, 1)</option>
-              <option value="min">Min(a + b, 1)</option>
+            Supporting:
+            <select id="supportComp">
+              <option value=1>Min</option>
+              <option value=2>Max</option>
             </select><br>
-            Conflict: <select id="">
-              <option value="max">(a - b) / (1 - b)</option>
-              <option value="min">a - b</option>
+            Acrrual:
+            <select id="accrualComp">
+              <option value=1>a + b - ab</option>
+              <option value=2>Min(a + b, 1)</option>
+            </select><br>
+            Conflict:
+            <select id="conflictComp">
+              <option value=1>(a - b) / (1 - b)</option>
+              <option value=2>a - b</option>
             </select><br>
         </form>
       </div>
