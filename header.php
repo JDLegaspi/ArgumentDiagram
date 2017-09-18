@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ArgumentDiagram</title>
 
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700|Raleway:400,500,600,700" rel="stylesheet">
+
     <link rel="stylesheet" href="assets/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="assets/css/site.css" />
     <link rel="stylesheet" href="assets/lib/treant-js/Treant.css" type="text/css" />
@@ -73,7 +76,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="ArgumentDiagram" asp-action="Index" class="navbar-brand">ArgumentDiagram</a>
+                <a class="navbar-brand">Argument Diagram Creator</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav top-nav">

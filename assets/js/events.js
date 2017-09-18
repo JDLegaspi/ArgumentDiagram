@@ -426,6 +426,7 @@ $(".my-diagrams-container").on("click", ".my-diagrams ul li", function () {
     });
 
     $('#myChartsWrapper').one('click', '#btnOpenChart', function() {
+        showSnackbar("Opening Chart...");
         var data = {
             open_chart: "plez open mi",
             file_id: itemID
@@ -446,15 +447,17 @@ $(".my-diagrams-container").on("click", ".my-diagrams ul li", function () {
                 countNodes(chart_config.nodeStructure);
 
                 $('.container').show();
-                $('.jumbotron').hide();
+                $('.starting-screen').hide();
 
                 var chart = new Treant(chart_config);
+                hideSnackbar();
 
             },
             error: function(req, status, err) {
                 console.log('Something went wrong', status, err);
             }
         });
+        toggleNav();
     });
 
 });

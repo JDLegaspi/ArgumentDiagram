@@ -24,7 +24,7 @@ function initialise() {
 
     // Show main app view
     $('.container').show();
-    $('.jumbotron').hide();
+    $('.starting-screen').hide();
 
     // Draw chart and fill text area
     var chart = new Treant(chart_config);
