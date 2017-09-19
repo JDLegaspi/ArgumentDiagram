@@ -26,7 +26,7 @@
             <button class="btn btn-default pull-right" id="btnZoomIn">+</button>
         </div>
         <div id="chart" style="height:90%">
-            <div class="row chart" id="basic-example"></div>
+            <div class="row chart" id="basic-example" style="overflow-x: visible; overflow-y: visible"></div>
         </div>
         <div class="container" id="debug">
             <form class="form-inline" id="argumentForm">

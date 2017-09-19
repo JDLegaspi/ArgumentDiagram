@@ -66,12 +66,14 @@ $('#diagramDiv').on('click', '#basic-example > div', function() {
     if (!globablVars.selectParent && !globablVars.selectConflict1 && !globablVars.selectConflict2 && !$(this).hasClass("conflict")) {
         $("#nodeFunctionsWrapper").fadeIn(200);
         var thisNode = findNode(globablVars.this, chart_config.nodeStructure);
-        if (thisNode.type == "reasonAttr" || findParent(thisNode.id, chart_config.nodeStructure).type == "conflict") {
+        if (thisNode.type == "reasonAttr") {
             $('#btnConnect').hide();
             $('#btnCollapse').hide();
+            $('#btnDelete').hide();
         } else {
             $('#btnConnect').show();
             $('#btnCollapse').show();
+            $('#btnDelete').show();
         }
         if (thisNode.type == "reason") {
             $('#btnEdit').hide();
@@ -497,6 +499,7 @@ $('#btnZoomIn').click(function () {
     currentZoom = currentZoom+0.05;
     var scaleString = "scale("+currentZoom+")";
     $("#basic-example").css("transform", scaleString);
+    $("#basic-example").css("overflow", 'visible');
     $("svg").position.left = 0;
 });
 
@@ -504,6 +507,7 @@ $('#btnZoomOut').click(function () {
     currentZoom = currentZoom-0.05;
     var scaleString = "scale("+currentZoom+")";
     $("#basic-example").css("transform", scaleString);
+    $("#basic-example").css("overflow", 'visible');
 });
 
 $("#btnToggleAttributes").click(function () {

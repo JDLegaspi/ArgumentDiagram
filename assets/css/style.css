@@ -76,6 +76,7 @@ abbr, acronym {
     margin: 5px;
     width: auto;
     transform-origin: left top;
+    overflow: visible;
 }
 
 #chart {
