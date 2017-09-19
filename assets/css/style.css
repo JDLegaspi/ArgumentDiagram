@@ -318,7 +318,7 @@ abbr, acronym {
 .starting-screen {
     width: 100%;
     height: 80vh;
-    background: url('../images/Zacery.jpg') center;
+    background: url('../images/Zacery.jpg') center top;
 }
 
 .starting-screen h1 {
