@@ -11,16 +11,17 @@
 }
 
 #text {
-    position:fixed;
-    left:50px;
-    top:70px;
-    width: 30%;
-    height: 85%;
+    position: fixed;
+    left: 0;
+    top: 53px;
+    width: 35%;
+    height: 89%;
     line-height: 20px;
+    border: none;
     resize: none;
-    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
-    box-sizing: border-box;         /* Opera/IE 8+ */
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td {
@@ -41,11 +42,6 @@ caption, th {
     text-align: left;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    font-size: 100%;
-    font-weight: normal;
-}
-
 q:before, q:after {
     content: '';
 }
@@ -62,12 +58,13 @@ abbr, acronym {
 .cloud i {
     font-size: 40px;
     padding: 7px;
+    transition: 0.2s;
     cursor: pointer;
-    color: #cacaca;
+    color: #fff !important;
 }
 
 .cloud i:hover {
-    color: #fff;
+    color: #bbb !important;
 }
 
 /* optional Container STYLES */
@@ -170,6 +167,8 @@ abbr, acronym {
     text-align: center;
 }
 
+
+
 #myChartsFunctions {
     text-align: left;
 }
@@ -178,7 +177,7 @@ abbr, acronym {
     padding-left: 10px;
 }
 
-#nodeFunctions button, #myChartsFunctions button, #highlightText button, #myChartsFunctions button{
+#nodeFunctions button, #myChartsFunctions button, #highlightText button, #myChartsFunctions button, #saveFunctions button{
     display: block;
     margin: 0 auto;
     width: 100%;
@@ -207,10 +206,19 @@ abbr, acronym {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 15px;
-    color: #cacaca;
+    color: #fff;
     display: block;
     transition: 0.2s;
     cursor: pointer;
+}
+
+.sidenav li {
+    padding: 10px 0;
+    transition: 0.3s;
+}
+
+.sidenav li:hover {
+    background-color: #151515;
 }
 
 /* When you mouse over the navigation links, change their color */
@@ -227,9 +235,38 @@ abbr, acronym {
     margin-left: 50px;
 }
 
+.sidenav .btn {
+    color: #222;
+    padding-left: 0;
+    margin: 20px;
+    text-transform: uppercase;
+}
+
+.sidenav .btn:hover {
+    color: #222;
+    background-color: #d2d2d2;
+}
+
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 .navbar-main {
     transition: margin-left .5s;
+}
+
+.navbar-brand:hover {
+    cursor: pointer;
+}
+
+.navbar-inverse .navbar-nav>li>a, .navbar-brand {
+    color: #fff !important;
+    transition: 0.3s;
+}
+
+.navbar-inverse .navbar-nav>li>a:hover, .navbar-brand:hover {
+    color: #bbb !important;
+}
+
+.my-diagrams-container, .my-diagrams {
+    width: 100%;
 }
 
 .my-diagrams-container {
@@ -238,15 +275,15 @@ abbr, acronym {
 }
 
 .my-diagrams h2{
-    background: #95BCF2;
+    background: #3b3b39;
+    color: #fff;
     padding: 17px 5px;
     font-size: 18px;
-    margin: 10px 0;
 }
 
 /* The snackbar - position it at the bottom and in the middle of the screen */
 #snackbar {
-    visibility: hidden; /* Hidden by default. Visible on click */
+    display: none; /* Hidden by default. Visible on click */
     min-width: 250px; /* Set a default minimum width */
     margin-left: -125px; /* Divide value of min-width by 2 */
     background-color: #333; /* Black background color */
@@ -277,4 +314,70 @@ abbr, acronym {
 @keyframes fadein {
     from {bottom: 0; opacity: 0;}
     to {bottom: 30px; opacity: 1;}
+}
+
+.starting-screen {
+    width: 100%;
+    height: 80vh;
+    background: url('../images/Zacery.jpg') center top;
+}
+
+.starting-screen h1 {
+    margin-bottom: 20px;
+}
+
+.starting-screen p {
+    padding: 25px 20% 0;
+    text-align: justify;
+    font-size: 16px;
+    font-family: 'raleway';
+}
+
+.starting-screen a {
+    margin-top: 50px;
+    font-size: 15px;
+    margin-right: 20px;
+    padding: 14px 50px;
+    transition: all .25s;
+    font-weight: 600;
+    border-width: 2px;
+    text-transform: uppercase;
+}
+
+.starting-screen > div {
+    position: relative;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+
+#btnNew {
+    color: #fff;
+    background-color: #222222;
+    border-color: #222222;
+}
+
+#btnNew:hover {
+    border-color: #000;
+    background-color: #000;
+}
+
+#btnLoad {
+    left: -5px;
+    border-color: #222222;
+    color: #222222;
+    position: relative;
+    z-index: 2;
+    background-color: #fff;
+}
+
+#btnLoad:hover {
+    background-color: #d2d2d2;
+}
+
+#snackbar {
+    transition: 0.5s;
+}
+
+#snackbarText {
+    padding-bottom: 15px;
 }

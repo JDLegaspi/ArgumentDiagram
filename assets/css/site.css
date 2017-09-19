@@ -1,14 +1,22 @@
 ﻿body {
-    padding-top: 70px;
+    padding-top: 54px;
     padding-bottom: 55px;
     background: #fff;
+    font-family: 'Open Sans', sans-serif;
+}
+
+h1 {
+    font-family: 'raleway';
+    font-size: 45px;
+    font-weight: 700;
+    text-transform: uppercase;
 }
 
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 0;
+    padding-right: 0;
     width: 100%;
     margin: 0px;
 }
@@ -37,6 +45,11 @@ input, select, {
     }
 }
 
+nav {
+    z-index: auto !important;
+}
+
 footer {
     padding-bottom: 10px;
+    z-index: 0 !important;
 }

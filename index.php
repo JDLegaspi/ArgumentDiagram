@@ -1,21 +1,22 @@
 <?php include 'header.php'; ?>
 <div class="container body-content">
 
-<link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+<div class="starting-screen container text-center">
+    <div class="col-md-6">
 
-<div class="jumbotron container text-center">
-    <a href="javascript:document.getElementById('textInput').click();" class="btn btn-primary" id="btnNew">New Diagram</a>
-    <a href="javascript:document.getElementById('fileInput').click();" class="btn btn-primary" id="btnLoad">Load Diagram</a>
+        <h1>Argument Diagram Creator</h1>
+        <p><b>Never lose an argument</b>, or prove yourself wrong, by constructing cohesive arguments using <b>Argument Diagram Creator.</b></p>
+        <p>Our diagram creator is a great way to create <b>visual representations of a verbal argument</b>, by visualising multiple aspects of the argument, including: visualising how facts <b>support a given conclusion</b>, or constructing and <b>measuring counter arguments.</b></p>
+        <a href="javascript:document.getElementById('textInput').click();" class="btn btn-primary" id="btnNew">New Diagram</a>
+        <a href="javascript:document.getElementById('fileInput').click();" class="btn btn-primary" id="btnLoad">Load Diagram</a>
+
+    </div>
 </div>
 <div class="container arg-container" style="display:none">
     <div class="col-md-4 text-center" style="height:100%">
         <textarea id="text" autofocus readonly></textarea>
         <input type="file" id="fileInput"/>
         <input type="file" accept=".txt, .docx" id="textInput"/>
-        <div id="snackbar">
-            <p id="snackbarText">Select Parent Node</p>
-            <button id='btnCancel' class='btn btn-danger'>Cancel</button>
-        </div>
     </div>
     <div class="col-md-8" id="diagramDiv" style="height:100%">
         <div class="row btn-new-node-wrapper">
@@ -42,6 +43,11 @@
             </form>
         </div>
     </div>
+</div>
+
+<div id="snackbar">
+    <p id="snackbarText">Select Parent Node</p>
+    <button id='btnCancel' class='btn btn-danger'>Cancel</button>
 </div>
 
 <?php include 'modal.php'; ?>

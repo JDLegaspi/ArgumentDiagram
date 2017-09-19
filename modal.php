@@ -9,12 +9,26 @@
       </div>
       <div class="modal-body">
         <form>
-            Node Name:<input type="text" id="nodename"><br>
-            Reliability:<input type="number" id="reliability" min="0" max="1" step="0.05"><br>
-            Accuracy:<input type="number" id="accuracy" min="0" max="1" step="0.05"><br>
-            Relevancy:<input type="number" id="relevancy" min="0" max="1" step="0.05"><br>
-            Uniqueness:<input type="number" id="uniqueness" min="0" max="1" step="0.05"><br>
-            Completeness:<input type="number" id="completeness" min="0" max="1" step="0.05"><br>
+          <div class="form-group">
+            <label for="nodename">Node Name:</label>
+            <input type="text" id="nodename" name="nodename"><br>
+          </div>
+          <div class="form-group">
+            <label for="reliability">Reliability:</label>
+            <input type="number" id="reliability" name="reliability" min="0" max="1" step="0.05"><br>
+          </div>
+          <div class="form-group">
+            <label for="accuracy">Accuracy:</label>
+            <input type="number" id="accuracy" name="accuracy" min="0" max="1" step="0.05"><br>
+          </div>
+          <div class="form-group">
+            <label for="relevancy">Relevancy:</label>
+            <input type="number" id="relevancy" name="relevancy" min="0" max="1" step="0.05"><br>
+          </div>
+          <div class="form-group">
+            <label for="uniqueness">Uniqueness:</label>
+            <input type="number" id="uniqueness" name="uniqueness" min="0" max="1" step="0.05"><br>
+          </div>
         </form>
       </div>
       <div class="modal-footer">
@@ -36,13 +50,31 @@
       </div>
       <div class="modal-body">
         <form>
-            Node Name:<input type="text" id="editName"><br>
-            Reliability:<input type="number" id="editReli" min="0" max="1" step="0.05"><br>
-            Accuracy:<input type="number" id="editAccu" min="0" max="1" step="0.05"><br>
-            Relevancy:<input type="number" id="editRele" min="0" max="1" step="0.05"><br>
-            Uniqueness:<input type="number" id="editUniq" min="0" max="1" step="0.05"><br>
-            Completeness:<input type="number" id="editComp" min="0" max="1" step="0.05"><br>
-            Selected Text:<input type="text" id="selectedText" readonly><br>
+          <div class="form-group">
+            <label for="nodename">Node Name:</label>
+            <input type="text" id="nodename" name="nodename">
+          </div>
+          <div class="form-group">
+            <label for="reliability">Reliability:</label>
+            <input type="number" id="reliability" name="reliability" min="0" max="1" step="0.05">
+          </div>
+          <div class="form-group">
+            <label for="accuracy">Accuracy:</label>
+            <input type="number" id="accuracy" name="accuracy" min="0" max="1" step="0.05">
+          </div>
+          <div class="form-group">
+            <label for="relevancy">Relevancy:</label>
+            <input type="number" id="relevancy" name="relevancy" min="0" max="1" step="0.05">
+          </div>
+          <div class="form-group">
+            <label for="uniqueness">Uniqueness:</label>
+            <input type="number" id="uniqueness" name="uniqueness" min="0" max="1" step="0.05">
+          </div>
+          <div class="form-group">
+            <label for="uniqueness">Selected Text:</label>
+            <input type="text" id="selectedText" readonly>
+          </div>
+
         </form>
       </div>
       <div class="modal-footer">

@@ -5,9 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ArgumentDiagram</title>
 
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700|Raleway:400,500,600,700" rel="stylesheet">
+
     <link rel="stylesheet" href="assets/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="assets/css/site.css" />
+    <link rel="stylesheet" href="assets/css/site.css" type="text/css" />
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css" />
     <link rel="stylesheet" href="assets/lib/treant-js/Treant.css" type="text/css" />
+    <link rel="stylesheet" href="assets/css/modal_styles.css" type="text/css"/>
 
     <!--Font Awesome-->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
@@ -73,7 +78,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="ArgumentDiagram" asp-action="Index" class="navbar-brand">ArgumentDiagram</a>
+                <a class="navbar-brand">Argument Diagram Creator</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav top-nav">
