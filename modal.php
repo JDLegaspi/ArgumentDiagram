@@ -15,19 +15,19 @@
           </div>
           <div class="form-group">
             <label for="reliability">Reliability:</label>
-            <input type="number" id="reliability" name="reliability" min="0" max="1" step="0.05"><br>
+            <input type="number" id="reliability" name="reliability" min="0" max="1" step="0.01"><br>
           </div>
           <div class="form-group">
             <label for="accuracy">Accuracy:</label>
-            <input type="number" id="accuracy" name="accuracy" min="0" max="1" step="0.05"><br>
+            <input type="number" id="accuracy" name="accuracy" min="0" max="1" step="0.01"><br>
           </div>
           <div class="form-group">
             <label for="relevancy">Relevancy:</label>
-            <input type="number" id="relevancy" name="relevancy" min="0" max="1" step="0.05"><br>
+            <input type="number" id="relevancy" name="relevancy" min="0" max="1" step="0.01"><br>
           </div>
           <div class="form-group">
             <label for="uniqueness">Uniqueness:</label>
-            <input type="number" id="uniqueness" name="uniqueness" min="0" max="1" step="0.05"><br>
+            <input type="number" id="uniqueness" name="uniqueness" min="0" max="1" step="0.01"><br>
           </div>
         </form>
       </div>
@@ -56,19 +56,19 @@
           </div>
           <div class="form-group">
             <label for="reliability">Reliability:</label>
-            <input type="number" id="reliability" name="reliability" min="0" max="1" step="0.05">
+            <input type="number" id="reliability" name="reliability" min="0" max="1" step="0.01">
           </div>
           <div class="form-group">
             <label for="accuracy">Accuracy:</label>
-            <input type="number" id="accuracy" name="accuracy" min="0" max="1" step="0.05">
+            <input type="number" id="accuracy" name="accuracy" min="0" max="1" step="0.01">
           </div>
           <div class="form-group">
             <label for="relevancy">Relevancy:</label>
-            <input type="number" id="relevancy" name="relevancy" min="0" max="1" step="0.05">
+            <input type="number" id="relevancy" name="relevancy" min="0" max="1" step="0.01">
           </div>
           <div class="form-group">
             <label for="uniqueness">Uniqueness:</label>
-            <input type="number" id="uniqueness" name="uniqueness" min="0" max="1" step="0.05">
+            <input type="number" id="uniqueness" name="uniqueness" min="0" max="1" step="0.01">
           </div>
           <div class="form-group">
             <label for="uniqueness">Selected Text:</label>
