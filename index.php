@@ -14,7 +14,7 @@
 </div>
 <div class="container arg-container" style="display:none">
     <div class="col-md-4 text-center" style="height:100%">
-        <textarea id="text" autofocus readonly></textarea>
+        <textarea class="well" id="text" autofocus readonly></textarea>
         <input type="file" id="fileInput"/>
         <input type="file" accept=".txt, .docx" id="textInput"/>
     </div>
