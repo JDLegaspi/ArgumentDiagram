@@ -13,12 +13,13 @@
 #text {
     position: fixed;
     left: 0;
-    top: 53px;
+    top: 10%;
     width: 35%;
-    height: 89%;
+    height: 80%;
     line-height: 20px;
     border: none;
     resize: none;
+    padding: 30px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -102,6 +103,11 @@ abbr, acronym {
 .nodeExample1 {
     font-family: Tahoma;
     font-size: 12px;
+}
+
+.nodeExample1 .nodeTitle, .nodeExample1 .nodeAttributes, .nodeExample1 .reason {
+    background-color: rgb(253, 253, 253);
+    transition: 0.2s;
 }
 
 .nodeTitle {
