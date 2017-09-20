@@ -216,7 +216,7 @@
   </div>
 </div>
 
-<div id="myChartsWrapper" style="z-index: 2;">
+<div id="myChartsWrapper">
   <div id="myChartsFunctions">
     <button class="btn btn-default" id="btnOpenChart">Open</button>
     <button class="btn btn-default" id="btnRenameChart">Rename</button>

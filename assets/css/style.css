@@ -159,6 +159,10 @@ abbr, acronym {
     text-align: center;
 }
 
+#mySidenav {
+    z-index: 4;
+}
+
 #nodeFunctionsWrapper, #myChartsWrapper, #saveFunctionsWrapper, #highlightTextWrapper{
     padding: 30px;
     width: 210px;
