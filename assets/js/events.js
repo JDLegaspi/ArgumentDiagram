@@ -157,6 +157,8 @@ $('#btnSaveDrive').on('click', function () {
 
     $('#saveFunctionsWrapper').off('click').on('click', '#btnSaveToDrive', function() {
 
+        str_json = JSON.stringify(chart_config);
+
         var data = {
             save_to_drive: "pls save mi",
             file_name: filename,
