@@ -51,5 +51,5 @@ nav {
 
 footer {
     padding-bottom: 10px;
-    z-index: 0 !important;
+    z-index: -2 !important;
 }
