@@ -195,6 +195,7 @@ $('#fileInput').change(function () {
             chart_config = JSON.parse(e.target.result);
             parseNaN(chart_config.nodeStructure);
             initialise();
+            drawChart();
         };
     } else {
         window.alert("No file chosen");

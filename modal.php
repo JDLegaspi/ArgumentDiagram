@@ -29,6 +29,10 @@
             <label for="uniqueness">Uniqueness:</label>
             <input type="number" id="uniqueness" name="uniqueness" min="0" max="1" step="0.01"><br>
           </div>
+          <div class="form-group">
+            <label for="completeness">Completeness:</label>
+            <input type="number" id="completeness" name="completeness" min="0" max="1" step="0.01"><br>
+          </div>
         </form>
       </div>
       <div class="modal-footer">
@@ -51,27 +55,31 @@
       <div class="modal-body">
         <form>
           <div class="form-group">
-            <label for="nodename">Node Name:</label>
-            <input type="text" id="nodename" name="nodename">
+            <label for="editName">Node Name:</label>
+            <input type="text" id="editName" name="nodename">
           </div>
           <div class="form-group">
-            <label for="reliability">Reliability:</label>
-            <input type="number" id="reliability" name="reliability" min="0" max="1" step="0.01">
+            <label for="editReli">Reliability:</label>
+            <input type="number" id="editReli" name="reliability" min="0" max="1" step="0.01">
           </div>
           <div class="form-group">
-            <label for="accuracy">Accuracy:</label>
-            <input type="number" id="accuracy" name="accuracy" min="0" max="1" step="0.01">
+            <label for="editAccu">Accuracy:</label>
+            <input type="number" id="editAccu" name="accuracy" min="0" max="1" step="0.01">
           </div>
           <div class="form-group">
-            <label for="relevancy">Relevancy:</label>
-            <input type="number" id="relevancy" name="relevancy" min="0" max="1" step="0.01">
+            <label for="editRele">Relevancy:</label>
+            <input type="number" id="editRele" name="relevancy" min="0" max="1" step="0.01">
           </div>
           <div class="form-group">
-            <label for="uniqueness">Uniqueness:</label>
-            <input type="number" id="uniqueness" name="uniqueness" min="0" max="1" step="0.01">
+            <label for="editUniq">Uniqueness:</label>
+            <input type="number" id="editUniq" name="uniqueness" min="0" max="1" step="0.01">
           </div>
           <div class="form-group">
-            <label for="uniqueness">Selected Text:</label>
+            <label for="editComp">Completeness:</label>
+            <input type="number" id="editComp" name="completeness" min="0" max="1" step="0.01"><br>
+          </div>
+          <div class="form-group">
+            <label for="selectedText">Selected Text:</label>
             <input type="text" id="selectedText" readonly>
           </div>
 
