@@ -76,6 +76,12 @@ function newChart(text, title) {
     };
 }
 
+//
+function drawChart() {
+    var chart = new Treant(chart_config);
+    $("#basic-example").css("overflow", 'visible');
+}
+
 // Generate and return HTML for nodes
 function nodeConstructor(node) {
     var text = "<p class='nodeTitle'>";

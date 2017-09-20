@@ -284,7 +284,7 @@ $("#diagramDiv").on("click", "#basic-example > div", function () {
                 }
             }
             calculateChartAttributes(chart_config.nodeStructure);
-            chart = new Treant(chart_config);
+            drawChart();
             hideSnackbar();
         }
     }
@@ -313,7 +313,7 @@ $("#diagramDiv").on("click", "#basic-example > div", function () {
             chart_config.nodeStructure.children.push(conflictNode(globablVars.conflict1, globablVars.conflict2));
             deleteNode(chart_config.nodeStructure, globablVars.conflict1.id);
             deleteNode(chart_config.nodeStructure, globablVars.conflict2.id);
-            var chart = new Treant(chart_config);
+            drawChart();
             $("#btnConflict").prop('disabled', true);
             hideSnackbar();
         }
@@ -427,7 +427,7 @@ $(".my-diagrams-container").on("click", ".my-diagrams ul li", function () {
                 $('.container').show();
                 $('.starting-screen').hide();
 
-                var chart = new Treant(chart_config);
+                drawChart();
                 hideSnackbar();
 
             },
@@ -451,7 +451,7 @@ $('#btnUndo').click(function () {
         parseNaN(chart_config.nodeStructure);
         globablVars.count = 1;
         countNodes(chart_config.nodeStructure);
-        var chart = new Treant(chart_config);
+        drawChart();
     }
 });
 
@@ -480,7 +480,6 @@ $('#btnZoomIn').click(function () {
     currentZoom = currentZoom+0.05;
     var scaleString = "scale("+currentZoom+")";
     $("#basic-example").css("transform", scaleString);
-    $("#basic-example").css("overflow", 'visible');
     $("svg").position.left = 0;
 });
 
@@ -488,7 +487,6 @@ $('#btnZoomOut').click(function () {
     currentZoom = currentZoom-0.05;
     var scaleString = "scale("+currentZoom+")";
     $("#basic-example").css("transform", scaleString);
-    $("#basic-example").css("overflow", 'visible');
 });
 
 $("#btnToggleAttributes").click(function () {
@@ -498,7 +496,7 @@ $("#btnToggleAttributes").click(function () {
         globablVars.hideAttributes = true;
     }
     toggleAttributes(chart_config.nodeStructure);
-    var chart = new Treant(chart_config);
+    drawChart();
 });
 
 var isOpen = true;
@@ -524,7 +522,7 @@ $('#nodeFunctionsWrapper').on('click', '#btnDelete', function () {
         chartHistory();
         deleteNode(chart_config.nodeStructure, globablVars.this);
         calculateChartAttributes(chart_config.nodeStructure);
-        chart = new Treant(chart_config);
+        drawChart();
     } else {
         window.alert("Please select a node");
     }
@@ -572,7 +570,7 @@ $('#nodeFunctionsWrapper').on('click', '#btnCollapse', function () {
     } else {
         thisNode.collapsed = true;
     }
-    var chart = new Treant(chart_config);
+    drawChart();
 });
 
 $('#submitNew').click(function () {
@@ -594,7 +592,7 @@ $('#submitNew').click(function () {
     }
     chartHistory();
     chart_config.nodeStructure.children.push(newNode(id, type, name, relia, accur, relev, unique, comple, startSel, endSel));
-    var chart = new Treant(chart_config);
+    drawChart();
     $('#newNodeModal').find('form').trigger('reset');
 });
 
@@ -614,7 +612,7 @@ $('#submitEdit').click(function () {
     chartHistory();
     editNode(chart_config.nodeStructure, globablVars.this, name, reli, accu, rele, uniq, comp);
     calculateChartAttributes(chart_config.nodeStructure);
-    var chart = new Treant(chart_config);
+    drawChart();
     $('#editNodeModal').find('form').trigger('reset');
 });
 
@@ -663,7 +661,7 @@ $('#submitAlgebra').click(function () {
     }
     calculateChartAttributes(chart_config.nodeStructure);
     console.log(support);
-    var chart = new Treant(chart_config);
+    drawChart();
 });
 
 $('#editSelectModal').on('show.bs.modal', function () {
