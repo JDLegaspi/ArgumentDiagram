@@ -14,7 +14,8 @@
     position: fixed;
     left: 1%;
     top: 10%;
-    width: 35%;
+    width: 33%;
+    z-index: 3;
     height: 80%;
     line-height: 20px;
     border: none;
