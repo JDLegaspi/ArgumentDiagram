@@ -56,8 +56,8 @@ function parentAttributes(node) {
 
 // Calculate the weakened attributes in a conflicting argument
 function conflictAttributes(node) {
-    var a = node.children[0];
-    var b = node.children[1];
+    var a = findParent(node.id, chart_config.nodeStructure);
+    var b = node.children[0];
     conflictCalculate(a, b);
     //conflictCalculate(b, a);
 }
@@ -106,7 +106,9 @@ function calculateChartAttributes(obj) {
             calculateChartAttributes(obj.children[i]);
             calculateAttributes(obj.children[i]);
         }
-        parentAttributes(obj);
+        if (obj.type != 'conflict') {
+            parentAttributes(obj);
+        }
     } else if (obj.children.length) {
         for (var i = 0; i < obj.children.length; i++) {
             calculateChartAttributes(obj.children[i]);

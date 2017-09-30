@@ -172,6 +172,7 @@ $('#diagramDiv').on('click', '#basic-example > div', function() {
             chartHistory();
             deleteNode(node.id, chart_config.nodeStructure);
             globalVars.conflict1.children.push(conflictNode(node));
+            calculateChartAttributes(chart_config.nodeStructure);
             drawChart();
             hideSnackbar();
         }
@@ -441,8 +442,7 @@ $('#btnUndo').click(function () {
 
 $('#btnCancel').click(function () {
     hideSnackbar();
-    globalVars.selectConflict1 = false;
-    globalVars.selectConflict2 = false;
+    globalVars.selectConflict = false;
     globalVars.selectParent = false;
 });
 
