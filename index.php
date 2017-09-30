@@ -21,7 +21,6 @@
     <div class="col-md-8" id="diagramDiv" style="height:100%">
         <div class="row btn-new-node-wrapper">
             <button class="btn btn-default" id="btnNewNode">New Node</button>
-            <button class="btn btn-default" id="btnConflict">Conflicting Argument</button>
             <button class="btn btn-default pull-right" id="btnToggleAttributes">Toggle Attributes</button>
             <button class="btn btn-default pull-right" id="btnZoomOut">-</button>
             <button class="btn btn-default pull-right" id="btnZoomIn">+</button>
@@ -59,6 +58,7 @@
 <script src="assets/diagrams/arg1.js"></script>
 <script src="assets/js/site.js"></script>
 <script src="assets/js/events.js"></script>
+<script src="assets/js/algebra.js"></script>
 
 <script src="assets/lib/docx/docxgen.js"></script>
 <script src="assets/lib/docx/jszip.js"></script>

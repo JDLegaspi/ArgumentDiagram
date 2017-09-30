@@ -220,6 +220,7 @@
     <button class="btn btn-default" id="btnConnect">Connect Node</button>
     <button class="btn btn-default" id="btnEdit">Edit Node</button>
     <button class="btn btn-default" id="btnDelete">Delete Node</button>
+    <button class="btn btn-default" id="btnConflict">Add Conflict</button>
     <button class="btn btn-default" id="btnCollapse">Collapse/Expand</button>
   </div>
 </div>
