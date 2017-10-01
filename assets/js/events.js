@@ -302,47 +302,72 @@ $('#fileInput').change(function () {
     } else {
         window.alert("No file chosen");
     }
+    this.form.reset();
 });
 
-// Input for text and creating a new chart
+// Validation for text input. Moves onto naming chart if valid file type
 $('#textInput').change(function () {
-    var loadFile=function(url,callback){
-            JSZipUtils.getBinaryContent(url,callback);
-        }
     var file = document.getElementById('textInput').files[0];
-    console.log(file.name);
     if (file) {
         var fileName = file.name;
         var txt = ".txt";
         var docx = ".docx";
-        var reader = new FileReader();
-        if (fileName.substr(fileName.length - txt.length, txt.length).toLowerCase() == txt.toLowerCase()) {
-            reader.readAsText(file);
-            reader.onload = function () {
-                globalVars.fileName = prompt("Name your chart lol");
-                chartName = globalVars.fileName;
-                newChart(reader.result, chartName);
-                initialise();
-            };
-        } else if (fileName.substr(fileName.length - docx.length, docx.length).toLowerCase() == docx.toLowerCase()) {
-            reader.onload = function (e) {
-                loadFile(e.target.result,function(error,content){
-                    if (error) { throw error };
-                    var zip = new JSZip(content);
-                    var doc=new Docxtemplater().loadZip(zip)
-                    text=doc.getFullText();
-                    globalVars.fileName = prompt("Name your chart lol");
-                    chartName = globalVars.fileName;
-                    newChart(text, chartName);
-                    initialise();
-                });
-            }
-            reader.readAsDataURL(file);
-        } else {
+        if (fileName.substr(fileName.length - txt.length, txt.length).toLowerCase() != txt.toLowerCase()
+            & fileName.substr(fileName.length - docx.length, docx.length).toLowerCase() != docx.toLowerCase())
+        {
             window.alert("File type not supported");
+        } else {
+            $('.arg-container').hide();
+            $('.starting-screen').hide();
+            $('.name-chart').show();
         }
     } else {
         window.alert("No file chosen");
+    }
+});
+
+// Used to name and initialise chart
+$('#start').click(function () {
+    console.log($('#chartName').val());
+    if ($('#chartName').val() != '') {
+        var loadFile=function(url,callback){
+                JSZipUtils.getBinaryContent(url,callback);
+            }
+        var file = document.getElementById('textInput').files[0];
+        console.log(file.name);
+        if (file) {
+            var fileName = file.name;
+            var txt = ".txt";
+            var docx = ".docx";
+            var reader = new FileReader();
+            if (fileName.substr(fileName.length - txt.length, txt.length).toLowerCase() == txt.toLowerCase()) {
+                reader.readAsText(file);
+                reader.onload = function () {
+                    chartName = $('#chartName').val();
+                    newChart(reader.result, chartName);
+                    initialise();
+                };
+            } else if (fileName.substr(fileName.length - docx.length, docx.length).toLowerCase() == docx.toLowerCase()) {
+                reader.onload = function (e) {
+                    loadFile(e.target.result,function(error,content){
+                        if (error) { throw error };
+                        var zip = new JSZip(content);
+                        var doc=new Docxtemplater().loadZip(zip)
+                        text=doc.getFullText();
+                        chartName = $('#chartName').val();
+                        newChart(text, chartName);
+                        initialise();
+                    });
+                }
+                reader.readAsDataURL(file);
+            } else {
+                window.alert("File type not supported");
+            }
+        } else {
+            window.alert("No file chosen");
+        }
+    } else {
+        window.alert("Please enter a file name")
     }
 });
 
@@ -682,4 +707,20 @@ $('#saveSelect').click(function() {
 $('#saveFunctionsWrapper').on('click', '#btnDownload', function() {
   console.log("Test");
     saveText(JSON.stringify(chart_config), "diagram.txt");
+});
+
+$('#btnExport').click(function () {
+    html2canvas($('#chart'), {
+        onrendered: function(canvas) {
+            var a = document.createElement('a');
+            // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
+            a.href = canvas.toDataURL();
+            console.log(chart_config.chart.doc.title);
+            a.download = chart_config.chart.doc.title;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        },
+        background: '#fff'
+    });
 });

@@ -12,11 +12,26 @@
 
     </div>
 </div>
+
+<div class="jumbotron name-chart container text-center" style="display:none">
+    <form>
+        <div class="form-group">
+            <label for="chartName">Name Your Chart</label>
+            <input type="text" id="chartName"/>
+        </div>
+    </form>
+    <button type="button" class="btn btn-primary" id="start">Start</button>
+</div>
+
 <div class="container arg-container" style="display:none">
     <div class="col-md-4 text-center" style="height:100%">
         <textarea class="well" id="text" autofocus readonly></textarea>
-        <input type="file" id="fileInput"/>
-        <input type="file" accept=".txt, .docx" id="textInput"/>
+        <form>
+            <input type="file" id="fileInput"/>
+        </form>
+        <form>
+            <input type="file" accept=".txt, .docx" id="textInput"/>
+        </form>
     </div>
     <div class="col-md-8" id="diagramDiv" style="height:100%">
         <div class="row btn-new-node-wrapper">
@@ -55,7 +70,7 @@
 <script src="assets/lib/treant-js/vendor/raphael.js"></script>
 <script src="assets/lib/treant-js/Treant.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.7.0/intro.min.js"></script>
-<script src="assets/diagrams/arg1.js"></script>
+<script src="assets/js/html2canvas.js"></script>
 <script src="assets/js/site.js"></script>
 <script src="assets/js/events.js"></script>
 <script src="assets/js/algebra.js"></script>

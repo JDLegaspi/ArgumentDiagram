@@ -86,7 +86,7 @@
                     <li><a class="btn" id="btnSaveDrive" data-step="2" data-intro="Click Save to save the current state of your diagram">Save</a></li>
                     <li><a href="javascript:document.getElementById('fileInput').click();" class="btn btnLoad" data-step="3" data-intro="Click Load to open a diagram">Load</a></li>
                     <li><a class="btn" id="btnUndo" data-step="4" data-intro="Click Undo to reverse your last action">Undo</a></li>
-                    <li><a class="btn" data-step="5" data-intro="Click Export to create a pdf file of your diagram">Export</a></li>
+                    <li><a id="btnExport" class="btn" data-step="5" data-intro="Click Export to create a pdf file of your diagram">Export</a></li>
                     <li><a id="btnHelp" class="btn" data-intro="Click Help to start this introduction guide again or view the help page for tips on how to create an argument diagram">Help</a></li>
                     <li><a id="btnAlgebra" class="btn">Algebra</a></li>
                 </ul>

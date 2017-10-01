@@ -22,9 +22,13 @@ function initialise() {
     globalVars.accrual = {reliability: 1, accuracy: 1, relevancy: 1, uniqueness: 1, completeness: 1};
     globalVars.conflict = {reliability: 1, accuracy: 1, relevancy: 1, uniqueness: 1, completeness: 1};
 
-    // Show main app view and hide starting view
-    $('.container').show();
+    // Show main app view and hide starting views
+    $('.arg-container').show();
+    $('.name-chart').hide();
     $('.starting-screen').hide();
+
+    document.getElementById('textInput').form.reset();
+    document.getElementById('chartName').form.reset();
 
     // Draw chart and fill text area
     var chart = new Treant(chart_config);
