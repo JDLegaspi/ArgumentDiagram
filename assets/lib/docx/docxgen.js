@@ -1604,7 +1604,7 @@ function xmlMatcher(content, tagsXmlArray) {
 	res.content = content;
 	res.tagsXmlArray = tagsXmlArray;
 	res.tagsXmlArrayJoined = res.tagsXmlArray.join("|");
-	var regexp = new RegExp("(<(?:" + res.tagsXmlArrayJoined + ")[^>]*>)([^<>]*)</(?:" + res.tagsXmlArrayJoined + ")>", "g");
+	var regexp = new RegExp("((<(?:" + res.tagsXmlArrayJoined + ")[^>]*>)([^<>]*)</(?:" + res.tagsXmlArrayJoined + ")>)|(<(?:\/w:p)>)", "g");
 	res.matches = DocUtils.pregMatchAll(regexp, res.content);
 	return handleRecursiveCase(res);
 }
@@ -1640,7 +1640,11 @@ var _render = require("./render.js");
 function _getFullText(content, tagsXmlArray) {
 	var matcher = xmlMatcher(content, tagsXmlArray);
 	var result = matcher.matches.map(function (match) {
-		return match.array[2];
+        if (match.array[4]) {
+            return "\n";
+        } else {
+		    return (match.array[3]);
+        }
 	});
 	return wordToUtf8(convertSpaces(result.join("")));
 }

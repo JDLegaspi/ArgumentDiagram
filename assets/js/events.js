@@ -352,7 +352,7 @@ $('#start').click(function () {
                     loadFile(e.target.result,function(error,content){
                         if (error) { throw error };
                         var zip = new JSZip(content);
-                        var doc=new Docxtemplater().loadZip(zip)
+                        var doc=new Docxtemplater().loadZip(zip);
                         text=doc.getFullText();
                         chartName = $('#chartName').val();
                         newChart(text, chartName);
@@ -705,8 +705,7 @@ $('#saveSelect').click(function() {
 });
 
 $('#saveFunctionsWrapper').on('click', '#btnDownload', function() {
-  console.log("Test");
-    saveText(JSON.stringify(chart_config), "diagram.txt");
+    saveText(JSON.stringify(chart_config), (chart_config.chart.doc.title + ".argu"));
 });
 
 $('#btnExport').click(function () {
