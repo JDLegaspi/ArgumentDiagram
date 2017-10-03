@@ -13,7 +13,11 @@ $redirect_uri = $auth->getRedirectUrl();
 $service = new Google_Service_Drive($auth->getClient());
 
 if (isset($_GET['code'])) {
-    $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
+    try {
+        $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
+    } catch (Exception $e) {
+        echo $e->getMessage();
+    }
     $client->setAccessToken($token);
     $_SESSION['upload_token'] = $token;
     

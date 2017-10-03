@@ -72,6 +72,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.7.0/intro.min.js"></script>
 <script src="assets/js/html2canvas.js"></script>
 <script src="assets/js/site.js"></script>
+<script src="assets/js/google_nlp.js"></script>
 <script src="assets/js/events.js"></script>
 <script src="assets/js/algebra.js"></script>
 
