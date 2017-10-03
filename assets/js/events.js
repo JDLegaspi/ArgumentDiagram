@@ -262,7 +262,8 @@ $('#btnSaveDrive').on('click', function () {
         var data = {
             save_to_drive: "pls save mi",
             file_name: filename,
-            file_contents: str_json
+            file_contents: str_json,
+            drive_id: globalVars.driveId
         };
 
         $.ajax({
@@ -270,13 +271,16 @@ $('#btnSaveDrive').on('click', function () {
             url: "app/drive_functions.php",
             data: data,
             success: function(data) {
-                var item_id = data.trim();
-                console.log(item_id);
-                var $newElement = $('<li>', {id: item_id});
-                var $anchor = $('<a>');
-                $anchor.html(filename + ".argu");
-                $newElement.append($anchor);
-                $(".my-diagrams ul").append($newElement);
+                if (globalVars.driveId == null) {
+                    var item_id = data.trim();
+                    globalVars.driveId = item_id;
+                    var $newElement = $('<li>', {id: item_id});
+                    var $anchor = $('<a>');
+                    $anchor.html(filename + ".argu");
+                    $newElement.append($anchor);
+                    $(".my-diagrams #myFiles").append($newElement);
+                }
+
             },
             error: function(req, status, err) {
                 console.log('Something went wrong', status, err);
@@ -294,6 +298,7 @@ $('#fileInput').change(function () {
         var reader = new FileReader();
         reader.readAsText(file);
         reader.onload = function (e) {
+            globalVars.driveId = null;
             chart_config = JSON.parse(e.target.result);
             parseNaN(chart_config.nodeStructure);
             initialise();
@@ -330,6 +335,7 @@ $('#textInput').change(function () {
 $('#start').click(function () {
     console.log($('#chartName').val());
     if ($('#chartName').val() != '') {
+        globalVars.driveId = null;
         var loadFile=function(url,callback){
                 JSZipUtils.getBinaryContent(url,callback);
             }
@@ -372,7 +378,19 @@ $('#start').click(function () {
 });
 
 $(".my-diagrams-container").on("click", ".my-diagrams ul li", function () {
+    if ($(this).parent().attr('id') == "myFiles") {
+        $('#btnShareChart').show();
+        $('#btnDeleteChart').show();
+        $('#btnRenameChart').show();
+        $('#btnRemoveChart').hide();
+    } else if ($(this).parent().attr('id') == "sharedFiles") {
+        $('#btnShareChart').hide();
+        //$('#btnDeleteChart').hide();
+        $('#btnRenameChart').hide();
+        $('#btnRemoveChart').show();
+    }
     $("#myChartsWrapper").fadeIn(200);
+    console.log($(this).parent().attr('id'));
     var itemID = $(this).attr('id');
     console.log("Google Item ID: #" + itemID);
 
@@ -402,6 +420,32 @@ $(".my-diagrams-container").on("click", ".my-diagrams ul li", function () {
 
     $('#myChartsWrapper').on('click', function() {
         $('#myChartsWrapper').fadeOut(200);
+    });
+
+    $('#myChartsWrapper').one('click', '#btnShareChart', function() {
+        // var email = prompt("Enter Email address of user you would like to share file with");
+        var email = "testa8326@gmail.com";
+        var data = {
+            share_chart: "plez share mi",
+            email: email,
+            file_id: itemID
+        };
+        $.ajax({
+            type: "POST",
+            url: "app/drive_functions.php",
+            data: data,
+            success: function(data) {
+                showSnackbar("Shared with " + email);
+            },
+            error: function(req, status, err) {
+                showSnackbar("Failed to share");
+                console.log('Something went wrong', status, err);
+            }
+        });
+    });
+
+    $('#myChartsWrapper').one('click', '#btnRemoveChart', function() {
+        window.alert("You must use the Google Drive site to remove shared files");
     });
 
     $('#myChartsWrapper').one('click', '#btnDeleteChart', function() {
@@ -434,6 +478,7 @@ $(".my-diagrams-container").on("click", ".my-diagrams ul li", function () {
 
                 chart_config = JSON.parse(data);
                 $('#text').val(chart_config.chart.doc.text);
+                globalVars.driveId = itemID;
 
                 globalVars.count = 1;
                 globalVars.reasonNodes = 0;
@@ -441,12 +486,13 @@ $(".my-diagrams-container").on("click", ".my-diagrams ul li", function () {
 
                 countNodes(chart_config.nodeStructure);
 
-                $('.container').show();
+                // Show main app view and hide starting views
+                $('.arg-container').show();
+                $('.name-chart').hide();
                 $('.starting-screen').hide();
 
                 drawChart();
                 hideSnackbar();
-
             },
             error: function(req, status, err) {
                 console.log('Something went wrong', status, err);
@@ -712,7 +758,6 @@ $('#btnExport').click(function () {
     html2canvas($('#chart'), {
         onrendered: function(canvas) {
             var a = document.createElement('a');
-            // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
             a.href = canvas.toDataURL();
             console.log(chart_config.chart.doc.title);
             a.download = chart_config.chart.doc.title;

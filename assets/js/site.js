@@ -50,6 +50,7 @@ function countNodes(obj) {
 
 // Sets up a new chart with a text input
 function newChart(text, title) {
+    globalVars.driveId = null;
     chart_config = {
         chart: {
             doc: {

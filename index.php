@@ -80,21 +80,6 @@
 <script src="assets/lib/docx/jszip-utils.js"></script>
 <script src="assets/lib/docx/FileSaver.js"></script>
 <script>
-$("#algebraSelect").change(function() {
-    console.log($("#algebraSelect").val());
-    if ($("#algebraSelect").val() == "true") {
-        console.log(true);
-        globablVars.relevancyOpt = true;
-        globablVars.uniquenessOpt = true;
-    } else {
-        console.log(false);
-        globablVars.relevancyOpt = false;
-        globablVars.uniquenessOpt = false;
-    }
-    calculateChartAttributes(chart_config.nodeStructure);
-    var chart = new Treant(chart_config);
-});
-
 function getSelectionText() {
     var textArea = document.getElementById("text");
     var text = textArea.selectionStart.toString() + ", " + textArea.selectionEnd.toString();
