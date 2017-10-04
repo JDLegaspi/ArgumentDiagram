@@ -423,8 +423,8 @@ $(".my-diagrams-container").on("click", ".my-diagrams ul li", function () {
     });
 
     $('#myChartsWrapper').one('click', '#btnShareChart', function() {
-        // var email = prompt("Enter Email address of user you would like to share file with");
-        var email = "testa8326@gmail.com";
+        var email = prompt("Enter Email address of user you would like to share file with");
+        // var email = "testa8326@gmail.com";
         var data = {
             share_chart: "plez share mi",
             email: email,
