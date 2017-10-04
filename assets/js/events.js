@@ -458,8 +458,13 @@ $(".my-diagrams-container").on("click", ".my-diagrams ul li", function () {
 });
 
 $('#btnHelp').click(function() {
-    introJs().start();
-})
+    //introJs()
+    introJs().onbeforechange(function(openNav) {
+        if (openNav.id == $('#mySidenav').attr('id') || openNav.id == $('#btnHelp').attr('id')) {
+            $('#open-nav').click();
+        }
+    }).start();
+});
 
 $('#btnUndo').click(function () {
     undoChart();

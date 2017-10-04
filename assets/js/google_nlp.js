@@ -9,7 +9,6 @@ function analyseSyntax(string) {
             content: string
         }
     };
-    console.log(data);
 
     $.ajax({
         type: "POST",
@@ -19,8 +18,13 @@ function analyseSyntax(string) {
         contentType: 'application/json',
         success: function(data) {
             console.log(data);
-            console.log(processRootWords(data));
-            return data;
+
+            var sentences = processRootWords(data);
+
+            console.log(sentences);
+
+            return sentences;
+            //return data;
         },
         error: function(data) {
             console.log('Something went wrong:');
