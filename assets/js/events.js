@@ -422,7 +422,7 @@ $(".my-diagrams-container").on("click", ".my-diagrams ul li", function () {
         $('#myChartsWrapper').fadeOut(200);
     });
 
-    $('#myChartsWrapper').one('click', '#btnShareChart', function() {
+    $('#myChartsWrapper').off('click').on('click', '#btnShareChart', function() {
         var email = prompt("Enter Email address of user you would like to share file with");
         // var email = "testa8326@gmail.com";
         var data = {
@@ -755,7 +755,13 @@ $('#saveFunctionsWrapper').on('click', '#btnDownload', function() {
 });
 
 $('#btnExport').click(function () {
-    html2canvas($('#chart'), {
+    html2canvas($('.chart'), {
+        onpreloaded: function () {
+          $('#chart').css("overflow", 'visible');
+        },
+        onparsed: function () {
+          $('#chart').css("overflow", 'auto');
+        },
         onrendered: function(canvas) {
             var a = document.createElement('a');
             a.href = canvas.toDataURL();
@@ -765,6 +771,7 @@ $('#btnExport').click(function () {
             a.click();
             document.body.removeChild(a);
         },
+        allowTaint: true,
         background: '#fff'
     });
 });
