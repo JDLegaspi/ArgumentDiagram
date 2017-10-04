@@ -475,23 +475,10 @@ $(".my-diagrams-container").on("click", ".my-diagrams ul li", function () {
             url: "app/drive_functions.php",
             data: data,
             success: function(data) {
-
                 chart_config = JSON.parse(data);
-                $('#text').val(chart_config.chart.doc.text);
+                parseNaN(chart_config.nodeStructure);
                 globalVars.driveId = itemID;
-
-                globalVars.count = 1;
-                globalVars.reasonNodes = 0;
-                globalVars.history = 0;
-
-                countNodes(chart_config.nodeStructure);
-
-                // Show main app view and hide starting views
-                $('.arg-container').show();
-                $('.name-chart').hide();
-                $('.starting-screen').hide();
-
-                drawChart();
+                initialise();
                 hideSnackbar();
             },
             error: function(req, status, err) {
@@ -755,23 +742,22 @@ $('#saveFunctionsWrapper').on('click', '#btnDownload', function() {
 });
 
 $('#btnExport').click(function () {
+	$('#chart').css("height", '');
+	$('html').css("overflow", 'visible');
     html2canvas($('.chart'), {
-        onpreloaded: function () {
-          $('#chart').css("overflow", 'visible');
-        },
-        onparsed: function () {
-          $('#chart').css("overflow", 'auto');
-        },
-        onrendered: function(canvas) {
-            var a = document.createElement('a');
-            a.href = canvas.toDataURL();
-            console.log(chart_config.chart.doc.title);
-            a.download = chart_config.chart.doc.title;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-        },
         allowTaint: true,
+		useOverflow: true,
         background: '#fff'
-    });
+    }).then(function(canvas) {
+		console.log("Hello?");
+		var a = document.createElement('a');
+		a.href = canvas.toDataURL();
+		console.log(chart_config.chart.doc.title);
+		a.download = chart_config.chart.doc.title;
+		document.body.appendChild(a);
+		a.click();
+		document.body.removeChild(a);
+		$('#chart').css("height", '90%');
+		$('html').css("overflow", 'hidden');
+	});
 });

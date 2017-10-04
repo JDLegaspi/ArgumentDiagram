@@ -31,7 +31,7 @@ function initialise() {
     document.getElementById('chartName').form.reset();
 
     // Draw chart and fill text area
-    var chart = new Treant(chart_config);
+    drawChart();
     $('#text').val(chart_config.chart.doc.text);
 }
 
