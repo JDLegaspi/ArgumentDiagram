@@ -69,7 +69,7 @@ function processRootWords(json) {
                     break loop3;
                 }
                 if (getLabel(tokens[i]) == "CC" && i > rootTokenIndex) break loop3;
-                if (getLabel(tokens[i]) == "AUX" || getLabel(tokens[i]) == "NSUBJ" || getLabel(tokens[i]) == "TMOD" || getLabel(tokens[i]) == "DOBJ" || getLabel(tokens[i]) == "NEG" || getLabel(tokens[i]) == "ROOT") {
+                if (getLabel(tokens[i]) == "AUX" || getLabel(tokens[i]) == "NSUBJ" || getLabel(tokens[i]) == "TMOD" || getLabel(tokens[i]) == "DOBJ" || getLabel(tokens[i]) == "NEG" || getLabel(tokens[i]) == "ROOT" || getLabel(tokens[i]) == "XCOMP" || getLabel(tokens[i]) == "ACOMP" || getLabel(tokens[i]) == "AUXPASS" || getLabel(tokens[i]) == "NSUBJPASS" || getLabel(tokens[i]) == "ATTR") {
                     if (getLabel(tokens[i]) == "DOBJ" || getLabel(tokens[i]) == "TMOD") {
                         
                         loop4:
@@ -79,11 +79,30 @@ function processRootWords(json) {
                                 break loop4;
                             }
                         }   
-                    }     
+                    } 
+
+                    if (getLabel(tokens[i]) == "ATTR") {
+                        loop5:
+                        for (var j = sentenceIndex; j <tokens.length; j++) {
+                            if (isDependant(tokens[j], i) && getLabel(tokens[j]) == "AMOD") {
+                                string += " " + tokens[j]['text']['content'];
+                            }
+                        }
+                    }
+                    
                     if (!(tokens[i]['text']['content'] == "n't" || tokens[i]['text']['content'] == "'s'" || tokens[i]['text']['beginOffset'] == 0)) {
                         string += " ";
                     }        
                     string += tokens[i]['text']['content'];
+
+                    if (getLabel(tokens[i]) == "XCOMP") {
+                        loop5:
+                        for (var j = sentenceIndex; j <tokens.length; j++) {
+                            if (isDependant(tokens[j], i) && getLabel(tokens[j]) == "DOBJ") {
+                                string += " " + tokens[j]['text']['content'];
+                            }
+                        }
+                    }
                 }
             }
         }
