@@ -262,7 +262,8 @@ $('#btnSaveDrive').on('click', function () {
         var data = {
             save_to_drive: "pls save mi",
             file_name: filename,
-            file_contents: str_json
+            file_contents: str_json,
+            drive_id: globalVars.driveId
         };
 
         $.ajax({
@@ -270,13 +271,16 @@ $('#btnSaveDrive').on('click', function () {
             url: "app/drive_functions.php",
             data: data,
             success: function(data) {
-                var item_id = data.trim();
-                console.log(item_id);
-                var $newElement = $('<li>', {id: item_id});
-                var $anchor = $('<a>');
-                $anchor.html(filename + ".argu");
-                $newElement.append($anchor);
-                $(".my-diagrams ul").append($newElement);
+                if (globalVars.driveId == null) {
+                    var item_id = data.trim();
+                    globalVars.driveId = item_id;
+                    var $newElement = $('<li>', {id: item_id});
+                    var $anchor = $('<a>');
+                    $anchor.html(filename + ".argu");
+                    $newElement.append($anchor);
+                    $(".my-diagrams #myFiles").append($newElement);
+                }
+
             },
             error: function(req, status, err) {
                 console.log('Something went wrong', status, err);
@@ -294,6 +298,7 @@ $('#fileInput').change(function () {
         var reader = new FileReader();
         reader.readAsText(file);
         reader.onload = function (e) {
+            globalVars.driveId = null;
             chart_config = JSON.parse(e.target.result);
             parseNaN(chart_config.nodeStructure);
             initialise();
@@ -330,6 +335,7 @@ $('#textInput').change(function () {
 $('#start').click(function () {
     console.log($('#chartName').val());
     if ($('#chartName').val() != '') {
+        globalVars.driveId = null;
         var loadFile=function(url,callback){
                 JSZipUtils.getBinaryContent(url,callback);
             }
@@ -352,7 +358,7 @@ $('#start').click(function () {
                     loadFile(e.target.result,function(error,content){
                         if (error) { throw error };
                         var zip = new JSZip(content);
-                        var doc=new Docxtemplater().loadZip(zip)
+                        var doc=new Docxtemplater().loadZip(zip);
                         text=doc.getFullText();
                         chartName = $('#chartName').val();
                         newChart(text, chartName);
@@ -372,7 +378,19 @@ $('#start').click(function () {
 });
 
 $(".my-diagrams-container").on("click", ".my-diagrams ul li", function () {
+    if ($(this).parent().attr('id') == "myFiles") {
+        $('#btnShareChart').show();
+        $('#btnDeleteChart').show();
+        $('#btnRenameChart').show();
+        $('#btnRemoveChart').hide();
+    } else if ($(this).parent().attr('id') == "sharedFiles") {
+        $('#btnShareChart').hide();
+        //$('#btnDeleteChart').hide();
+        $('#btnRenameChart').hide();
+        $('#btnRemoveChart').show();
+    }
     $("#myChartsWrapper").fadeIn(200);
+    console.log($(this).parent().attr('id'));
     var itemID = $(this).attr('id');
     console.log("Google Item ID: #" + itemID);
 
@@ -404,6 +422,32 @@ $(".my-diagrams-container").on("click", ".my-diagrams ul li", function () {
         $('#myChartsWrapper').fadeOut(200);
     });
 
+    $('#myChartsWrapper').off('click').on('click', '#btnShareChart', function() {
+        var email = prompt("Enter Email address of user you would like to share file with");
+        // var email = "testa8326@gmail.com";
+        var data = {
+            share_chart: "plez share mi",
+            email: email,
+            file_id: itemID
+        };
+        $.ajax({
+            type: "POST",
+            url: "app/drive_functions.php",
+            data: data,
+            success: function(data) {
+                showSnackbar("Shared with " + email);
+            },
+            error: function(req, status, err) {
+                showSnackbar("Failed to share");
+                console.log('Something went wrong', status, err);
+            }
+        });
+    });
+
+    $('#myChartsWrapper').one('click', '#btnRemoveChart', function() {
+        window.alert("You must use the Google Drive site to remove shared files");
+    });
+
     $('#myChartsWrapper').one('click', '#btnDeleteChart', function() {
         $('#' + itemID).remove();
         var data = {
@@ -431,22 +475,11 @@ $(".my-diagrams-container").on("click", ".my-diagrams ul li", function () {
             url: "app/drive_functions.php",
             data: data,
             success: function(data) {
-
                 chart_config = JSON.parse(data);
-                $('#text').val(chart_config.chart.doc.text);
-
-                globalVars.count = 1;
-                globalVars.reasonNodes = 0;
-                globalVars.history = 0;
-
-                countNodes(chart_config.nodeStructure);
-
-                $('.container').show();
-                $('.starting-screen').hide();
-
-                drawChart();
+                parseNaN(chart_config.nodeStructure);
+                globalVars.driveId = itemID;
+                initialise();
                 hideSnackbar();
-
             },
             error: function(req, status, err) {
                 console.log('Something went wrong', status, err);
@@ -710,22 +743,26 @@ $('#saveSelect').click(function() {
 });
 
 $('#saveFunctionsWrapper').on('click', '#btnDownload', function() {
-  console.log("Test");
-    saveText(JSON.stringify(chart_config), "diagram.txt");
+    saveText(JSON.stringify(chart_config), (chart_config.chart.doc.title + ".argu"));
 });
 
 $('#btnExport').click(function () {
-    html2canvas($('#chart'), {
-        onrendered: function(canvas) {
-            var a = document.createElement('a');
-            // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
-            a.href = canvas.toDataURL();
-            console.log(chart_config.chart.doc.title);
-            a.download = chart_config.chart.doc.title;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-        },
+	$('#chart').css("height", '');
+	$('html').css("overflow", 'visible');
+    html2canvas($('.chart'), {
+        allowTaint: true,
+		useOverflow: true,
         background: '#fff'
-    });
+    }).then(function(canvas) {
+		console.log("Hello?");
+		var a = document.createElement('a');
+		a.href = canvas.toDataURL();
+		console.log(chart_config.chart.doc.title);
+		a.download = chart_config.chart.doc.title;
+		document.body.appendChild(a);
+		a.click();
+		document.body.removeChild(a);
+		$('#chart').css("height", '90%');
+		$('html').css("overflow", 'hidden');
+	});
 });

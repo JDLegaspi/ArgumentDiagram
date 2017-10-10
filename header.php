@@ -42,22 +42,27 @@
                     ?>
                      <div class="my-diagrams">
                      <h2 style="margin-top: 0px;" data-step="8" data-intro="Here is a list of files that have been previously saved">My Files</h2>
-                     <ul>
+                        <ul id='myFiles'>
                             <?php
 
                             //create Google Drive object based on user's account
                             $files = $service->files->listFiles(array(
                                 'q' => "name contains '.argu' and trashed != true",
-                                'spaces' => 'drive'
+                                'spaces' => 'drive',
+                                'fields' => 'files(id, name, ownedByMe, sharingUser)'
                             ));
-                            //echo var_dump($files['files']);
-
+                            // echo var_dump($files['files']);
+                            $output = "</ul><h2>Shared Files</h2><ul id='sharedFiles'>";
                             foreach ($files['files'] as $key => $value) {
-                                echo '<li id="'.$value['id'].'"><a>' . $value['name'] . "</a></li>";
+                                if ($value['ownedByMe'] == true) {
+                                    $output = '<li id="'.$value['id'].'"><a>' . $value['name'] . "</a></li>" . $output;
+                                } else {
+                                    $output .= '<li id="'.$value['id'].'"><a>' . $value['name'] . "</a></li>";
+                                }
                             }
+                            echo $output;
 
                             ?>
-                        </ul>
                     </div>
                     <div class="Logout-Drive">
                         <a class="btn btn-default" href="logout.php">Log Out</a>

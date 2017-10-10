@@ -31,7 +31,7 @@ function initialise() {
     document.getElementById('chartName').form.reset();
 
     // Draw chart and fill text area
-    var chart = new Treant(chart_config);
+    drawChart();
     $('#text').val(chart_config.chart.doc.text);
 }
 
@@ -50,6 +50,7 @@ function countNodes(obj) {
 
 // Sets up a new chart with a text input
 function newChart(text, title) {
+    globalVars.driveId = null;
     chart_config = {
         chart: {
             doc: {

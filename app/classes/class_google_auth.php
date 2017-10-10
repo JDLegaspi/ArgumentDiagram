@@ -3,11 +3,11 @@ class GoogleAuth
 {
     protected $client;
     private $redirectUrl = "http://localhost:8888/ArgumentDiagram";
-    
+
     public function __construct(Google_Client $googleClient = null) {
-       
+
         $this->client = $googleClient;
-        
+
         if($this->client) {
             //$this->client->setAuthConfig(__FILE__ + '/vendor/client_secret.json');
             $this->client->setClientId('749676999260-4d0lgk2go0iu7ft54eo3clu6mingv6jd.apps.googleusercontent.com');
@@ -63,7 +63,10 @@ class GoogleAuth
     public function logout() {
         unset($_SESSION['access_token']);
     }
+
+    public function shareFile() {
+        
+    }
 }
 
 ?>
-

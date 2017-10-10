@@ -230,9 +230,8 @@
     <button class="btn btn-default" id="btnOpenChart">Open</button>
     <button class="btn btn-default" id="btnRenameChart">Rename</button>
     <button class="btn btn-default" id="btnDeleteChart">Delete</button>
-    <hr/>
     <button class="btn btn-default" id="btnShareChart">Share</button>
-    <button class="btn btn-default" id="btnExportChart">Export</button>
+    <button class="btn btn-default" id="btnRemoveChart">Remove</button>
   </div>
 </div>
 
