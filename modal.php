@@ -36,7 +36,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="submitNew" data-dismiss="modal">New Node</button>
+        <button type="button" class="btn btn-primary" id="submitNew" data-dismiss="modal">Submit</button>
         <button type="button" class="btn btn-secondary" id="cancelNew" data-dismiss="modal">Close</button>
       </div>
     </div>
@@ -87,7 +87,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" id="textEdit">Edit Selected Text</button>
-        <button type="button" class="btn btn-primary" id="submitEdit" data-dismiss="modal">Edit Node</button>
+        <button type="button" class="btn btn-primary" id="submitEdit" data-dismiss="modal">Submit</button>
         <button type="button" class="btn btn-secondary" id="cancelEdit" data-dismiss="modal">Close</button>
       </div>
     </div>
@@ -107,7 +107,7 @@
         <textarea id="editSelect" style="height:300px; width:100%" autofocus readonly></textarea>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="saveSelect" data-dismiss="modal">Save</button>
+        <button type="button" class="btn btn-primary" id="saveSelect" data-dismiss="modal">Submit</button>
         <button type="button" class="btn btn-secondary" id="cancelEdit" data-dismiss="modal">Close</button>
       </div>
     </div>
@@ -208,7 +208,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="submitAlgebra" data-dismiss="modal">Save</button>
+        <button type="button" class="btn btn-primary" id="submitAlgebra" data-dismiss="modal">Submit</button>
         <button type="button" class="btn btn-secondary" id="cancelAlgebra" data-dismiss="modal">Close</button>
       </div>
     </div>

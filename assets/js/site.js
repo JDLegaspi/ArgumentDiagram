@@ -19,8 +19,8 @@ function initialise() {
     // 1 = Pessimistic
     // 2 = Optimistic
     globalVars.support = {reliability: 1, accuracy: 1, relevancy: 1, uniqueness: 1, completeness: 1};
-    globalVars.accrual = {reliability: 1, accuracy: 1, relevancy: 1, uniqueness: 1, completeness: 1};
-    globalVars.conflict = {reliability: 1, accuracy: 1, relevancy: 1, uniqueness: 1, completeness: 1};
+    globalVars.accrual = {reliability: 2, accuracy: 1, relevancy: 2, uniqueness: 2, completeness: 2};
+    globalVars.conflict = {reliability: 2, accuracy: 1, relevancy: 1, uniqueness: 1, completeness: 1};
 
     // Show main app view and hide starting views
     $('.arg-container').show();
@@ -28,7 +28,7 @@ function initialise() {
     $('.starting-screen').hide();
 
     document.getElementById('textInput').form.reset();
-    document.getElementById('chartName').form.reset();
+    document.getElementById('chartName').value = '';
 
     // Draw chart and fill text area
     drawChart();
@@ -49,13 +49,13 @@ function countNodes(obj) {
 }
 
 // Sets up a new chart with a text input
-function newChart(text, title) {
+function newChart(textInput, titleInput) {
     globalVars.driveId = null;
     chart_config = {
         chart: {
             doc: {
-                title: title,
-                text: text
+                title: titleInput,
+                text: textInput
             },
             scrollbar: 'fancy',
             container: "#basic-example",

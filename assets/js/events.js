@@ -146,12 +146,21 @@ $('#diagramDiv').on('click', '#basic-example > div', function() {
                     object[0].children.push(globalVars.child);
                 }
             } else {
+                var index = object[0].children.length - 1;
                 // If connecting a reason node to a parent
                 if (globalVars.child.type == "reason") {
-                    object[0].children.push(globalVars.child);
+                    if (object[0].children[index].type == "conflict") {
+                        object[0].children.splice(index, 0, globalVars.child);
+                    } else {
+                        object[0].children.push(globalVars.child);
+                    }
                 // Else creates a reason node
                 } else {
-                    object[0].children.push(reasonNode(globalVars.child));
+                    if (object[0].children[index].type == "conflict") {
+                        object[0].children.splice(index, 0, reasonNode(globalVars.child));
+                    } else {
+                        object[0].children.push(reasonNode(globalVars.child));
+                    }
                 }
             }
             calculateChartAttributes(chart_config.nodeStructure);
@@ -333,14 +342,12 @@ $('#textInput').change(function () {
 
 // Used to name and initialise chart
 $('#start').click(function () {
-    console.log($('#chartName').val());
     if ($('#chartName').val() != '') {
         globalVars.driveId = null;
         var loadFile=function(url,callback){
                 JSZipUtils.getBinaryContent(url,callback);
             }
         var file = document.getElementById('textInput').files[0];
-        console.log(file.name);
         if (file) {
             var fileName = file.name;
             var txt = ".txt";
@@ -349,7 +356,7 @@ $('#start').click(function () {
             if (fileName.substr(fileName.length - txt.length, txt.length).toLowerCase() == txt.toLowerCase()) {
                 reader.readAsText(file);
                 reader.onload = function () {
-                    chartName = $('#chartName').val();
+                    var chartName = $('#chartName').val();
                     newChart(reader.result, chartName);
                     initialise();
                 };
@@ -360,7 +367,7 @@ $('#start').click(function () {
                         var zip = new JSZip(content);
                         var doc=new Docxtemplater().loadZip(zip);
                         text=doc.getFullText();
-                        chartName = $('#chartName').val();
+                        var chartName = $('#chartName').val();
                         newChart(text, chartName);
                         initialise();
                     });

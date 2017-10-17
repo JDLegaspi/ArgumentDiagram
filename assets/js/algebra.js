@@ -1,24 +1,26 @@
 // Calculate supporting algebra for a decision node
 function calculateAttributes(node) {
-    var children = node.children;
-    var count = 0;
-    for (var key in children[0].attributes) {
-        if (count < 5) {
-            var attributeArray = [];
-            for (var i = 0; i < children.length; i++) {
-                if (!isNaN(children[i].attributes[key])) {
-                    attributeArray.push(children[i].attributes[key]);
+    if (node.type == "reason") {
+        var children = node.children;
+        var count = 0;
+        for (var key in children[0].attributes) {
+            if (count < 5) {
+                var attributeArray = [];
+                for (var i = 0; i < children.length; i++) {
+                    if (!isNaN(children[i].attributes[key])) {
+                        attributeArray.push(children[i].attributes[key]);
+                    }
+                }
+                // Optimistic Algebra
+                if (globalVars.support[key] == 2) {
+                    node.attributes[key] = Math.max(...attributeArray);
+                // Pessimistic Algebra
+                } else {
+                    node.attributes[key] = Math.min(...attributeArray);
                 }
             }
-            // Optimistic Algebra
-            if (globalVars.support[key] == 2) {
-                node.attributes[key] = Math.max(...attributeArray);
-            // Pessimistic Algebra
-            } else {
-                node.attributes[key] = Math.min(...attributeArray);
-            }
+            count++;
         }
-        count++;
     }
 }
 
@@ -33,7 +35,7 @@ function parentAttributes(node) {
             } else {
                 var attributeArray = [];
                 for (var i = 0; i < children.length; i++) {
-                    if (!isNaN(children[i].attributes[key])) {
+                    if (!isNaN(children[i].attributes[key]) && children[i].type == "reason") {
                         attributeArray.push(children[i].attributes[key]);
                     }
                 }
