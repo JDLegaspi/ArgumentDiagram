@@ -88,7 +88,15 @@ function processRootWords(json) {
                     if (getLabel(tokens[i]) == "ATTR") {
                         loop5:
                         for (var j = sentenceIndex; j <tokens.length; j++) {
-                            if (isDependant(tokens[j], i) && getLabel(tokens[j]) == "AMOD") {
+                            if (isDependant(tokens[j], i) && getLabel(tokens[j]) == "AMOD" || isDependant(tokens[j], i) && getLabel(tokens[j]) == "NN") {
+                                string += " " + tokens[j]['text']['content'];
+                            }
+                        }
+                    }
+
+                    if (getLabel(tokens[i]) == "NSUBJ") {
+                        for (var j = sentenceIndex; j <tokens.length; j++) {
+                            if (isDependant(tokens[j], i) && getLabel(tokens[j]) == "POSS") {
                                 string += " " + tokens[j]['text']['content'];
                             }
                         }
@@ -128,4 +136,17 @@ function getLabel(token) {
 
 function getLemma(token) {
     return token['lemma'];
+}
+
+function highlightText() {
+    $('#text').highlightTextarea({
+        ranges: [{
+            color: '#ADF0FF',
+            start: 0,
+            length: 10
+        }, {
+            color: '#FFFF00',
+            ranges: [[40,45], [50,55]]
+        }]
+    });
 }

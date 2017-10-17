@@ -25,7 +25,7 @@
 
 <div class="container arg-container" style="display:none">
     <div class="col-md-4 text-center" style="height:100%">
-        <textarea class="well" id="text" autofocus readonly></textarea>
+        <textarea class="" id="text" cols="90" rows="30" autofocus readonly></textarea>
         <form>
             <input type="file" id="fileInput"/>
         </form>
@@ -70,6 +70,8 @@
 <script src="assets/lib/treant-js/vendor/raphael.js"></script>
 <script src="assets/lib/treant-js/Treant.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.7.0/intro.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha256-KM512VNnjElC30ehFwehXjx1YCHPiQkOPmqnrWtpccM=" crossorigin="anonymous"></script> -->
+<script src="assets/lib/jquery-highlighttextarea-master/jquery.highlighttextarea.min.js"></script>
 <script src="assets/js/html2canvas.js"></script>
 <script src="assets/js/site.js"></script>
 <script src="assets/js/google_nlp.js"></script>
@@ -81,15 +83,21 @@
 <script src="assets/lib/docx/jszip-utils.js"></script>
 <script src="assets/lib/docx/FileSaver.js"></script>
 <script>
-function getSelectionText() {
-    var textArea = document.getElementById("text");
-    var text = textArea.selectionStart.toString() + ", " + textArea.selectionEnd.toString();
-    return text;
-}
+    function getSelectionText() {
+        var textArea = document.getElementById("text");
+        var text = textArea.selectionStart.toString() + ", " + textArea.selectionEnd.toString();
+        return text;
+    }
 
-document.onmouseup = document.onkeyup = document.onselectionchange = function() {
-  document.getElementById("argText").value = getSelectionText();
-};
+    document.onmouseup = document.onkeyup = document.onselectionchange = function() {
+        document.getElementById("argText").value = getSelectionText();
+    };
+
+    $('#text').highlightTextarea({
+        ranges: [[0, 1], [10, 11], [21, 22], [24, 25]],
+        resizable: true
+    });
+
 </script>
 
 <?php include 'footer.php'; ?>

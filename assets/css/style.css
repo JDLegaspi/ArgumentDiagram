@@ -11,19 +11,19 @@
 }
 
 #text {
-    position: fixed;
+    /* position: fixed;
     left: 1%;
-    top: 10%;
-    width: 33%;
-    z-index: 3;
-    height: 80%;
-    line-height: 20px;
+    top: 10%; */
+    width: 660px;
+    /* z-index: 3; */
+    height: 680px;
+    /* line-height: 20px;
     border: none;
     resize: none;
     padding: 30px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
-    box-sizing: border-box;
+    box-sizing: border-box; */
 }
 
 div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td {
@@ -178,8 +178,6 @@ abbr, acronym {
     width: 100%;
     text-align: center;
 }
-
-
 
 #myChartsFunctions {
     text-align: left;
