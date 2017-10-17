@@ -134,12 +134,12 @@
             Acrrual:
             <select id="accrualReli">
               <option value=1>a + b - ab</option>
-              <option value=2>Min(a + b, 1)</option>
+              <option value=2 selected="selected">Min(a + b, 1)</option>
             </select><br>
             Conflict:
             <select id="conflictReli">
               <option value=1>(a - b) / (1 - b)</option>
-              <option value=2>a - b</option>
+              <option value=2 selected="selected">a - b</option>
             </select><br>
             Accuracy<br>
             Supporting:
@@ -166,7 +166,7 @@
             Acrrual:
             <select id="accrualRele">
               <option value=1>a + b - ab</option>
-              <option value=2>Min(a + b, 1)</option>
+              <option value=2 selected="selected">Min(a + b, 1)</option>
             </select><br>
             Conflict:
             <select id="conflictRele">
@@ -182,7 +182,7 @@
             Acrrual:
             <select id="accrualUniq">
               <option value=1>a + b - ab</option>
-              <option value=2>Min(a + b, 1)</option>
+              <option value=2 selected="selected">Min(a + b, 1)</option>
             </select><br>
             Conflict:
             <select id="conflictUniq">
@@ -198,7 +198,7 @@
             Acrrual:
             <select id="accrualComp">
               <option value=1>a + b - ab</option>
-              <option value=2>Min(a + b, 1)</option>
+              <option value=2 selected="selected">Min(a + b, 1)</option>
             </select><br>
             Conflict:
             <select id="conflictComp">
