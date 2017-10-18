@@ -35,6 +35,7 @@
         <div class="row btn-new-node-wrapper">
             <button class="btn btn-default" id="btnNewNode">New Node</button>
             <button class="btn btn-default pull-right" id="btnToggleAttributes">Toggle Attributes</button>
+            <button class="btn btn-default pull-right" id="btnUndo">Undo</button>
             <button class="btn btn-default pull-right" id="btnZoomOut">-</button>
             <button class="btn btn-default pull-right" id="btnZoomIn">+</button>
         </div>

@@ -758,13 +758,11 @@ $('#btnExport').click(function () {
 	$('html').css("overflow", 'visible');
     html2canvas($('.chart'), {
         allowTaint: true,
-		useOverflow: true,
+		    useOverflow: true,
         background: '#fff'
     }).then(function(canvas) {
-		console.log("Hello?");
 		var a = document.createElement('a');
 		a.href = canvas.toDataURL();
-		console.log(chart_config.chart.doc.title);
 		a.download = chart_config.chart.doc.title;
 		document.body.appendChild(a);
 		a.click();
