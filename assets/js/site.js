@@ -60,6 +60,7 @@ function newChart(textInput, titleInput) {
             scrollbar: 'fancy',
             container: "#basic-example",
             hideRootNode: true,
+            siblingSeparation: 10,
             connectors: {
                 type: 'curve',
                 style: {
@@ -305,7 +306,7 @@ function conflictNode(child) {
                 type: 'curve',
                 style: {
                     'arrow-start': 'block-wide-long',
-                    'arrow-end': 'block-wide-long'
+                    'stroke-dasharray': '--'
                 },
             },
             children: []
@@ -376,4 +377,23 @@ function toggleAttributes(obj) {
             toggleAttributes(obj.children[i]);
         }
     }
+}
+
+$(".attribute").on('input', function () {
+    if ($(this).val() > 1) {
+        $(this).val(1);
+    }
+    if ($(this).context.previousElementSibling.nodeName == "INPUT") {
+        var sibling = $(this).context.previousElementSibling;
+    } else {
+        var sibling = $(this).context.nextElementSibling;
+    }
+    console.log($(this).context.previousElementSibling.nodeName);
+    sibling.value = $(this).val();
+});
+
+function updateValue(e) {
+    console.log(e);
+    var sibling = e.target.previousElementSibling || e.target.nextElementSibling;
+    sibling.value = e.target.value;
 }

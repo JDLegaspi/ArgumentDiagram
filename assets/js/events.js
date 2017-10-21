@@ -62,6 +62,7 @@ $("#text").mouseup(function() {
 // Show popup dialog on node click
 $('#diagramDiv').on('click', '#basic-example > div', function() {
     globalVars.this = $(this)[0].id;
+    console.log(findNode(globalVars.this, chart_config.nodeStructure));
     $("#parentId").val(globalVars.this);
 
     // Following code is all for popup dialog
@@ -146,18 +147,28 @@ $('#diagramDiv').on('click', '#basic-example > div', function() {
                     object[0].children.push(globalVars.child);
                 }
             } else {
-                var index = object[0].children.length - 1;
-                // If connecting a reason node to a parent
-                if (globalVars.child.type == "reason") {
-                    if (object[0].children[index].type == "conflict") {
-                        object[0].children.splice(index, 0, globalVars.child);
+                if (object[0].children.length > 0) {
+                    var index = object[0].children.length - 1;
+                    // If connecting a reason node to a parent
+                    if (globalVars.child.type == "reason") {
+                        if (object[0].children[index].type == "conflict") {
+                            object[0].children.splice(index, 0, globalVars.child);
+                        } else {
+                            object[0].children.push(globalVars.child);
+                        }
+                    // Else creates a reason node
                     } else {
-                        object[0].children.push(globalVars.child);
+                        if (object[0].children[index].type == "conflict") {
+                            object[0].children.splice(index, 0, reasonNode(globalVars.child));
+                        } else {
+                            object[0].children.push(reasonNode(globalVars.child));
+                        }
                     }
-                // Else creates a reason node
                 } else {
-                    if (object[0].children[index].type == "conflict") {
-                        object[0].children.splice(index, 0, reasonNode(globalVars.child));
+                    // If connecting a reason node to a parent
+                    if (globalVars.child.type == "reason") {
+                        object[0].children.push(globalVars.child);
+                    // Else creates a reason node
                     } else {
                         object[0].children.push(reasonNode(globalVars.child));
                     }
@@ -542,6 +553,26 @@ $('#btnZoomOut').click(function () {
     currentZoom = currentZoom-0.05;
     var scaleString = "scale("+currentZoom+")";
     $("#basic-example").css("transform", scaleString);
+});
+
+$('#btnFitZoom').click(function () {
+    var divWidth = $('#chart').width();
+    var svg = document.getElementsByTagName("svg")[0];
+    var svgWidth = svg.getBoundingClientRect().width;
+    if (svgWidth < divWidth) {
+        while (svgWidth < divWidth) {
+            currentZoom = currentZoom+0.05;
+            var scaleString = "scale("+currentZoom+")";
+            $("#basic-example").css("transform", scaleString);
+            svgWidth = svg.getBoundingClientRect().width;
+        }
+    }
+    while (svgWidth > divWidth) {
+        currentZoom = currentZoom-0.05;
+        var scaleString = "scale("+currentZoom+")";
+        $("#basic-example").css("transform", scaleString);
+        svgWidth = svg.getBoundingClientRect().width;
+    }
 });
 
 $("#btnToggleAttributes").click(function () {
