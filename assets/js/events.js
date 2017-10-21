@@ -578,8 +578,10 @@ $('#btnFitZoom').click(function () {
 $("#btnToggleAttributes").click(function () {
     if (globalVars.hideAttributes) {
         globalVars.hideAttributes = false;
+        $('.chart-key').show();
     } else {
         globalVars.hideAttributes = true;
+        $('.chart-key').hide();
     }
     toggleAttributes(chart_config.nodeStructure);
     drawChart();
@@ -801,4 +803,18 @@ $('#btnExport').click(function () {
 		$('#chart').css("height", '90%');
 		$('html').css("overflow", 'hidden');
 	});
+});
+
+// Keeps number slider in sync with number input
+$(".attribute").on('input', function () {
+    if ($(this).val() > 1) {
+        $(this).val(1);
+    }
+    if ($(this).context.previousElementSibling.nodeName == "INPUT") {
+        var sibling = $(this).context.previousElementSibling;
+    } else {
+        var sibling = $(this).context.nextElementSibling;
+    }
+    console.log($(this).context.previousElementSibling.nodeName);
+    sibling.value = $(this).val();
 });

@@ -378,22 +378,3 @@ function toggleAttributes(obj) {
         }
     }
 }
-
-$(".attribute").on('input', function () {
-    if ($(this).val() > 1) {
-        $(this).val(1);
-    }
-    if ($(this).context.previousElementSibling.nodeName == "INPUT") {
-        var sibling = $(this).context.previousElementSibling;
-    } else {
-        var sibling = $(this).context.nextElementSibling;
-    }
-    console.log($(this).context.previousElementSibling.nodeName);
-    sibling.value = $(this).val();
-});
-
-function updateValue(e) {
-    console.log(e);
-    var sibling = e.target.previousElementSibling || e.target.nextElementSibling;
-    sibling.value = e.target.value;
-}
