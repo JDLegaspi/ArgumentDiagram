@@ -788,11 +788,14 @@ $('#saveFunctionsWrapper').on('click', '#btnDownload', function() {
 });
 
 $('#btnExport').click(function () {
-	$('#chart').css("height", '');
-	$('html').css("overflow", 'visible');
-    html2canvas($('.chart'), {
+    var div = document.createElement('div');
+    div.innerHTML = document.getElementById('chart').innerHTML;
+    div.style.width = 'fit-content';
+    div.children[1].style.transform = 'scale(1)';
+    document.body.appendChild(div);
+    html2canvas(div, {
         allowTaint: true,
-		    useOverflow: true,
+		useOverflow: true,
         background: '#fff'
     }).then(function(canvas) {
 		var a = document.createElement('a');
@@ -801,8 +804,7 @@ $('#btnExport').click(function () {
 		document.body.appendChild(a);
 		a.click();
 		document.body.removeChild(a);
-		$('#chart').css("height", '90%');
-		$('html').css("overflow", 'hidden');
+        document.body.removeChild(div);
 	});
 });
 

@@ -8,7 +8,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form class="node-form">
+        <form class="node-form center-block">
           <div class="form-group">
             <label for="nodename">Node Name:</label>
             <input type="text" id="nodename" name="nodename"><br>
@@ -58,7 +58,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
+        <form class="node-form center-block">
           <div class="form-group">
             <label for="editName">Node Name:</label>
             <input type="text" id="editName" name="nodename">
