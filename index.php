@@ -35,8 +35,8 @@
         <div class="row btn-new-node-wrapper">
             <button class="btn btn-default" id="btnNewNode">New Node</button>
             <button class="btn btn-default pull-right" id="btnToggleAttributes">Toggle Attributes</button>
-            <button class="btn btn-default pull-right" id="btnFitZoom">Fit Zoom</button>
             <button class="btn btn-default pull-right" id="btnUndo">Undo</button>
+            <button class="btn btn-default pull-right" id="btnFitZoom">Fit Zoom</button>
             <button class="btn btn-default pull-right" id="btnZoomOut">-</button>
             <button class="btn btn-default pull-right" id="btnZoomIn">+</button>
         </div>
@@ -68,7 +68,7 @@
             </table>
             <div class="row chart" id="basic-example" style="overflow-x: visible; overflow-y: visible"></div>
         </div>
-        <div class="container" id="debug">
+        <div class="container" id="debug" style="display: none">
             <form class="form-inline" id="argumentForm">
                 <p>DEBUG TOOLS</p>
                 <div class="form-group">
