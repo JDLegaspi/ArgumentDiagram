@@ -766,3 +766,11 @@ $('#btnExport').click(function () {
 		$('html').css("overflow", 'hidden');
 	});
 });
+
+document.onmouseup = document.onkeyup = document.onselectionchange = function() {
+    document.getElementById("argText").value = getSelectionText();
+};
+
+$('#text').on('input', function() {
+    $('#text').highlightWithinTextarea('update');
+});

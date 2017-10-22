@@ -22,9 +22,13 @@ function analyseSyntax(string) {
             var sentences = processRootWords(data);
 
             console.log(sentences);
+            
+            $('#text').highlightWithinTextarea({
+                highlight: sentences
+            });
 
             return sentences;
-            //return data;
+            
         },
         error: function(data) {
             console.log('Something went wrong:');
@@ -41,6 +45,7 @@ function processRootWords(json) {
     var root;
     var rootTokenIndex;
     var sentences = [];
+    var output  = [];
     
     loop1:
     for (var x = 0; x < json['sentences'].length; x++) {
@@ -57,6 +62,7 @@ function processRootWords(json) {
             }
         }
 
+        //find token
         loop2:
         for (var i = sentenceIndex; i < tokens.length; i++) {
             if (getLabel(tokens[i]) == 'ROOT') {
@@ -73,16 +79,20 @@ function processRootWords(json) {
                     break loop3;
                 }
                 if (getLabel(tokens[i]) == "CC" && i > rootTokenIndex) break loop3;
+                
                 if (getLabel(tokens[i]) == "AUX" || getLabel(tokens[i]) == "NSUBJ" || getLabel(tokens[i]) == "TMOD" || getLabel(tokens[i]) == "DOBJ" || getLabel(tokens[i]) == "NEG" || getLabel(tokens[i]) == "ROOT" || getLabel(tokens[i]) == "XCOMP" || getLabel(tokens[i]) == "ACOMP" || getLabel(tokens[i]) == "AUXPASS" || getLabel(tokens[i]) == "NSUBJPASS" || getLabel(tokens[i]) == "ATTR") {
+                    
                     if (getLabel(tokens[i]) == "DOBJ" || getLabel(tokens[i]) == "TMOD") {
                         
                         loop4:
                         for (var j = sentenceIndex; j < tokens.length; j++) {
                             if (isDependant(tokens[j], i) && getLabel(tokens[j]) == "POSS") {
                                 string += " " + tokens[j]['text']['content'] + "'s";
+                                output.push(outputStartAndEnd(tokens[j]['text']['beginOffset'], tokens[j]['text']['content']));
                                 break loop4;
                             }
-                        }   
+                        }
+
                     } 
 
                     if (getLabel(tokens[i]) == "ATTR") {
@@ -90,6 +100,7 @@ function processRootWords(json) {
                         for (var j = sentenceIndex; j <tokens.length; j++) {
                             if (isDependant(tokens[j], i) && getLabel(tokens[j]) == "AMOD" || isDependant(tokens[j], i) && getLabel(tokens[j]) == "NN") {
                                 string += " " + tokens[j]['text']['content'];
+                                output.push(outputStartAndEnd(tokens[j]['text']['beginOffset'], tokens[j]['text']['content']));
                             }
                         }
                     }
@@ -98,6 +109,7 @@ function processRootWords(json) {
                         for (var j = sentenceIndex; j <tokens.length; j++) {
                             if (isDependant(tokens[j], i) && getLabel(tokens[j]) == "POSS") {
                                 string += " " + tokens[j]['text']['content'];
+                                output.push(outputStartAndEnd(tokens[j]['text']['beginOffset'], tokens[j]['text']['content']));
                             }
                         }
                     }
@@ -105,13 +117,16 @@ function processRootWords(json) {
                     if (!(tokens[i]['text']['content'] == "n't" || tokens[i]['text']['content'] == "'s'" || tokens[i]['text']['beginOffset'] == 0)) {
                         string += " ";
                     }        
+                    
                     string += tokens[i]['text']['content'];
+                    output.push(outputStartAndEnd(tokens[i]['text']['beginOffset'], tokens[i]['text']['content']));
 
                     if (getLabel(tokens[i]) == "XCOMP") {
                         loop5:
                         for (var j = sentenceIndex; j <tokens.length; j++) {
                             if (isDependant(tokens[j], i) && getLabel(tokens[j]) == "DOBJ") {
                                 string += " " + tokens[j]['text']['content'];
+                                output.push(outputStartAndEnd(tokens[j]['text']['beginOffset'], tokens[j]['text']['content']));
                             }
                         }
                     }
@@ -122,8 +137,8 @@ function processRootWords(json) {
 
 
     }
-    return sentences;
-    //return string;
+    console.log(sentences);
+    return output;
 }
 
 function isDependant(token, headTokenIndex) {
@@ -138,15 +153,6 @@ function getLemma(token) {
     return token['lemma'];
 }
 
-function highlightText() {
-    $('#text').highlightTextarea({
-        ranges: [{
-            color: '#ADF0FF',
-            start: 0,
-            length: 10
-        }, {
-            color: '#FFFF00',
-            ranges: [[40,45], [50,55]]
-        }]
-    });
+function outputStartAndEnd(beginOffset, token) {
+    return [beginOffset, beginOffset + token.length];
 }

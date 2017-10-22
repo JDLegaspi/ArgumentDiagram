@@ -33,6 +33,9 @@ function initialise() {
     // Draw chart and fill text area
     drawChart();
     $('#text').val(chart_config.chart.doc.text);
+
+    var highlight = analyseSyntax($('#text').val());
+    console.log(highlight);
 }
 
 // Iterates through the chart to get a count of all nodes
@@ -376,4 +379,10 @@ function toggleAttributes(obj) {
             toggleAttributes(obj.children[i]);
         }
     }
+}
+
+function getSelectionText() {
+    var textArea = document.getElementById("text");
+    var text = textArea.selectionStart.toString() + ", " + textArea.selectionEnd.toString();
+    return text;
 }
