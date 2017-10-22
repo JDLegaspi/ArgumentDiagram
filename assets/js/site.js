@@ -101,18 +101,30 @@ function nodeConstructor(node) {
     } else {
         text += "<table class='nodeAttributes' style='margin: auto'>";
     }
-    if (isNaN(node.attributes.reliWeak) && isNaN(node.attributes.accuWeak) && isNaN(node.attributes.releWeak) && isNaN(node.attributes.uniqWeak)) {
-        text += "<tr><td>" + node.attributes.reliability.toFixed(2) + "</td>" + "<td>" + node.attributes.reliability.toFixed(2) + "</td></tr>";
-        text += "<tr><td>" + node.attributes.accuracy.toFixed(2) + "</td>" + "<td>" + node.attributes.accuracy.toFixed(2) + "</td></tr>";
-        text += "<tr><td>" + node.attributes.relevancy.toFixed(2) + "</td>" + "<td>" + node.attributes.relevancy.toFixed(2) + "</td></tr>";
-        text += "<tr><td>" + node.attributes.uniqueness.toFixed(2) + "</td>" + "<td>" + node.attributes.uniqueness.toFixed(2) + "</td></tr>";
-        text += "<tr><td>" + node.attributes.completeness.toFixed(2) + "</td>" + "<td>" + node.attributes.completeness.toFixed(2) + "</td></tr>";
+    if (isNaN(node.attributes.reliability[1])) {
+        text += "<tr><td>" + node.attributes.reliability[0].toFixed(2) + "</td>" + "<td>" + node.attributes.reliability[0].toFixed(2) + "</td></tr>";
     } else {
-        text += "<tr><td>" + node.attributes.reliability.toFixed(2) + "</td>" + "<td>" + node.attributes.reliWeak.toFixed(2) + "</td></tr>";
-        text += "<tr><td>" + node.attributes.accuracy.toFixed(2) + "</td>" + "<td>" + node.attributes.accuWeak.toFixed(2) + "</td></tr>";
-        text += "<tr><td>" + node.attributes.relevancy.toFixed(2) + "</td>" + "<td>" + node.attributes.releWeak.toFixed(2) + "</td></tr>";
-        text += "<tr><td>" + node.attributes.uniqueness.toFixed(2) + "</td>" + "<td>" + node.attributes.uniqWeak.toFixed(2) + "</td></tr>";
-        text += "<tr><td>" + node.attributes.completeness.toFixed(2) + "</td>" + "<td>" + node.attributes.compWeak.toFixed(2) + "</td></tr>";
+        text += "<tr><td>" + node.attributes.reliability[0].toFixed(2) + "</td>" + "<td>" + node.attributes.reliability[1].toFixed(2) + "</td></tr>";
+    }
+    if (isNaN(node.attributes.accuracy[1])) {
+        text += "<tr><td>" + node.attributes.accuracy[0].toFixed(2) + "</td>" + "<td>" + node.attributes.accuracy[0].toFixed(2) + "</td></tr>";
+    } else {
+        text += "<tr><td>" + node.attributes.accuracy[0].toFixed(2) + "</td>" + "<td>" + node.attributes.accuracy[1].toFixed(2) + "</td></tr>";
+    }
+    if (isNaN(node.attributes.relevancy[1])) {
+        text += "<tr><td>" + node.attributes.relevancy[0].toFixed(2) + "</td>" + "<td>" + node.attributes.relevancy[0].toFixed(2) + "</td></tr>";
+    } else {
+        text += "<tr><td>" + node.attributes.relevancy[0].toFixed(2) + "</td>" + "<td>" + node.attributes.relevancy[1].toFixed(2) + "</td></tr>";
+    }
+    if (isNaN(node.attributes.uniqueness[1])) {
+        text += "<tr><td>" + node.attributes.uniqueness[0].toFixed(2) + "</td>" + "<td>" + node.attributes.uniqueness[0].toFixed(2) + "</td></tr>";
+    } else {
+        text += "<tr><td>" + node.attributes.uniqueness[0].toFixed(2) + "</td>" + "<td>" + node.attributes.uniqueness[1].toFixed(2) + "</td></tr>";
+    }
+    if (isNaN(node.attributes.reliability[1])) {
+        text += "<tr><td>" + node.attributes.completeness[0].toFixed(2) + "</td>" + "<td>" + node.attributes.completeness[0].toFixed(2) + "</td></tr>";
+    } else {
+        text += "<tr><td>" + node.attributes.completeness[0].toFixed(2) + "</td>" + "<td>" + node.attributes.completeness[1].toFixed(2) + "</td></tr>";
     }
     text += "</table>";
     return text;
@@ -126,16 +138,11 @@ function newNode(id, type, name, relia, accur, relev, unique, comple, startSel, 
         type: type,
         name: name,
         attributes: {
-          reliability: relia,
-          accuracy: accur,
-          relevancy: relev,
-          uniqueness: unique,
-          completeness: comple,
-          reliWeak: NaN,
-          accuWeak: NaN,
-          releWeak: NaN,
-          uniqWeak: NaN,
-          compWeak: NaN
+          reliability: [relia, NaN],
+          accuracy: [accur, NaN],
+          relevancy: [relev, NaN],
+          uniqueness: [unique, NaN],
+          completeness: [comple, NaN]
         },
         linktext: {
           start: startSel,
@@ -222,11 +229,11 @@ function deleteNode(id, obj) {
 function editNode(obj, id, text, reli, accu, rele, uniq, comp) {
     if (obj.id == id) {
         obj.name = text;
-        obj.attributes.reliability = reli;
-        obj.attributes.accuracy = accu;
-        obj.attributes.relevancy = rele;
-        obj.attributes.uniqueness = uniq;
-        obj.attributes.completeness = comp;
+        obj.attributes.reliability[0] = reli;
+        obj.attributes.accuracy[0] = accu;
+        obj.attributes.relevancy[0] = rele;
+        obj.attributes.uniqueness[0] = uniq;
+        obj.attributes.completeness[0] = comp;
         obj.innerHTML = nodeConstructor(obj);
     } else if (obj.hasOwnProperty('children')) {
         for (var i = 0; i < obj.children.length; i++) {
@@ -266,11 +273,11 @@ function reasonNode(child) {
             },
             innerHTML: name,
             attributes: {
-              reliability: NaN,
-              accuracy: NaN,
-              relevancy: NaN,
-              uniqueness: NaN,
-              completeness: NaN
+              reliability: [NaN, NaN],
+              accuracy: [NaN, NaN],
+              relevancy: [NaN, NaN],
+              uniqueness: [NaN, NaN],
+              completeness: [NaN, NaN]
             },
             children: []
         };
@@ -296,11 +303,11 @@ function conflictNode(child) {
             },
             innerHTML: name,
             attributes: {
-              reliability: NaN,
-              accuracy: NaN,
-              relevancy: NaN,
-              uniqueness: NaN,
-              completeness: NaN
+              reliability: [NaN, NaN],
+              accuracy: [NaN, NaN],
+              relevancy: [NaN, NaN],
+              uniqueness: [NaN, NaN],
+              completeness: [NaN, NaN]
             },
             connectors: {
                 type: 'curve',
@@ -354,14 +361,18 @@ function parseNaN(obj) {
             parseNaN(obj.children[i]);
         }
         for (var key in obj.attributes) {
-            if (obj.attributes[key] == null) {
-                obj.attributes[key] = NaN;
+            for (var i = 0; i <= 1; i++) {
+                if (obj.attributes[key][i] == null) {
+                    obj.attributes[key][i] = NaN;
+                }
             }
         }
     } else if (obj.id != 1) {
         for (var key in obj.attributes) {
-            if (obj.attributes[key] == null) {
-                obj.attributes[key] = NaN;
+            for (var i = 0; i <= 1; i++) {
+                if (obj.attributes[key][i] == null) {
+                    obj.attributes[key][i] = NaN;
+                }
             }
         }
     }

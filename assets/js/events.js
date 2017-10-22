@@ -625,10 +625,11 @@ $('#nodeFunctionsWrapper').on('click', '#btnEdit', function () {
             var selectedText = $('#text').val().slice(thisNode.linktext.start, thisNode.linktext.end);
             $('#editNodeModal').modal('show');
             $("#editName").val(thisNode.name);
-            $("#editReli").val(thisNode.attributes.reliability);
-            $("#editAccu").val(thisNode.attributes.accuracy);
-            $("#editRele").val(thisNode.attributes.relevancy);
-            $("#editUniq").val(thisNode.attributes.uniqueness);
+            $("#editReli").val(thisNode.attributes.reliability[0]);
+            $("#editAccu").val(thisNode.attributes.accuracy[0]);
+            $("#editRele").val(thisNode.attributes.relevancy[0]);
+            $("#editUniq").val(thisNode.attributes.uniqueness[0]);
+            $("#editComp").val(thisNode.attributes.completeness[0]);
             $("#selectedText").val(selectedText);
             $("#editSelect").val($('#text').val());
             if (thisNode.type == "reasonAttr") {

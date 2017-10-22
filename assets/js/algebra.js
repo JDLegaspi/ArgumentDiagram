@@ -2,24 +2,22 @@
 function calculateAttributes(node) {
     if (node.type == "reason") {
         var children = node.children;
-        var count = 0;        
         for (var key in node.attributes) {
-            if (count < 5) {
-                var attributeArray = [];
-                for (var i = 0; i < children.length; i++) {
-                    if (!isNaN(children[i].attributes[key])) {
-                        attributeArray.push(children[i].attributes[key]);
-                    }
-                }
-                // Optimistic Algebra
-                if (globalVars.support[key] == 2) {
-                    node.attributes[key] = +Math.max(...attributeArray).toFixed(2);
-                // Pessimistic Algebra
-                } else {
-                    node.attributes[key] = +Math.min(...attributeArray).toFixed(2);
+            var attributeArray = [];
+            for (var i = 0; i < children.length; i++) {
+                if (!isNaN(children[i].attributes[key][1])) {
+                    attributeArray.push(children[i].attributes[key][1]);
+                } else if (!isNaN(children[i].attributes[key][0])) {
+                    attributeArray.push(children[i].attributes[key][0]);
                 }
             }
-            count++;
+            // Optimistic Algebra
+            if (globalVars.support[key] == 2) {
+                node.attributes[key][0] = +Math.max(...attributeArray).toFixed(2);
+            // Pessimistic Algebra
+            } else {
+                node.attributes[key][0] = +Math.min(...attributeArray).toFixed(2);
+            }
         }
     }
 }
@@ -27,31 +25,33 @@ function calculateAttributes(node) {
 // Calculate accrual algebra for a fact node with children
 function parentAttributes(node) {
     var children = node.children;
-    var count = 0;
     for (var key in node.attributes) {
-        if (count < 5) {
-            if (children.length == 1) {
-                node.attributes[key] = children[0].attributes[key];
+        if (children.length == 1) {
+            if (isNaN(children[0].attributes[key][1])) {
+                node.attributes[key][0] = children[0].attributes[key][0];
             } else {
-                var attributeArray = [];
-                for (var i = 0; i < children.length; i++) {
-                    if (!isNaN(children[i].attributes[key]) && children[i].type == "reason") {
-                        attributeArray.push(children[i].attributes[key]);
-                    }
-                }
-                // Optimistic Algebra
-                if (globalVars.accrual[key] == 2) {
-                    for (var i = 0; i < attributeArray.length - 1; i++) {
-                        attributeArray[i + 1] = attributeArray[i] + attributeArray[i + 1] - (attributeArray[i] * attributeArray[i + 1]);
-                        node.attributes[key] = +attributeArray[i + 1].toFixed(2);
-                    }
-                // Pessimistic Algebra
-                } else {
-                    node.attributes[key] = +Math.min(attributeArray.reduce((a, b) => a + b, 0), 1).toFixed(2);
+                node.attributes[key][0] = children[0].attributes[key][1];
+            }
+        } else {
+            var attributeArray = [];
+            for (var i = 0; i < children.length; i++) {
+                if (!isNaN(children[i].attributes[key][1]) && children[i].type == "reason") {
+                    attributeArray.push(children[i].attributes[key][1]);
+                } else if (!isNaN(children[i].attributes[key][0]) && children[i].type == "reason") {
+                    attributeArray.push(children[i].attributes[key][0]);
                 }
             }
+            // Optimistic Algebra
+            if (globalVars.accrual[key] == 2) {
+                for (var i = 0; i < attributeArray.length - 1; i++) {
+                    attributeArray[i + 1] = attributeArray[i] + attributeArray[i + 1] - (attributeArray[i] * attributeArray[i + 1]);
+                    node.attributes[key][0] = +attributeArray[i + 1].toFixed(2);
+                }
+            // Pessimistic Algebra
+            } else {
+                node.attributes[key][0] = +Math.min(attributeArray.reduce((a, b) => a + b, 0), 1).toFixed(2);
+            }
         }
-        count++;
     }
     node.innerHTML = nodeConstructor(node);
 }
@@ -67,60 +67,20 @@ function conflictAttributes(node) {
 function conflictCalculate(node1, node2) {
     var a = node1.attributes;
     var b = node2.attributes;
-    if (isNaN(b.reliWeak)) {
-        var reliability = b.reliability;
-    } else {
-        var reliability = b.reliWeak;
-    }
-    if (isNaN(b.accuWeak)) {
-        var accuracy = b.accuracy;
-    } else {
-        var accuracy = b.accuWeak;
-    }
-    if (isNaN(b.releWeak)) {
-        var relevancy = b.relevancy;
-    } else {
-        var relevancy = b.releWeak;
-    }
-    if (isNaN(b.uniqWeak)) {
-        var uniqueness = b.uniqueness;
-    } else {
-        var uniqueness = b.uniqWeak;
-    }
-    if (isNaN(b.compWeak)) {
-        var completeness = b.completeness;
-    } else {
-        var completeness = b.compWeak;
-    }
-
-    if (globalVars.conflict.reliability == 2) {
-        a.reliWeak = conflictOptimistic(a.reliability, reliability);
-    } else {
-        a.reliWeak = conflictPessimistic(a.reliability, reliability);
-    }
-
-    if (globalVars.conflict.accuracy == 2) {
-        a.accuWeak = conflictOptimistic(a.accuracy, accuracy);
-    } else {
-        a.accuWeak = conflictPessimistic(a.accuracy, accuracy);
-    }
-
-    if (globalVars.conflict.relevancy == 2) {
-        a.releWeak = conflictOptimistic(a.relevancy, relevancy);
-    } else {
-        a.releWeak = conflictPessimistic(a.relevancy, relevancy);
-    }
-
-    if (globalVars.conflict.uniqueness == 2) {
-        a.uniqWeak = conflictOptimistic(a.uniqueness, uniqueness);
-    } else {
-        a.uniqWeak = conflictPessimistic(a.uniqueness, uniqueness);
-    }
-
-    if (globalVars.conflict.completeness == 2) {
-        a.compWeak = conflictOptimistic(a.completeness, completeness);
-    } else {
-        a.compWeak = conflictPessimistic(a.completeness, completeness);
+    for (var key in a) {
+        if (isNaN(b[key][1])) {
+            if (globalVars.conflict[key] == 2) {
+                a[key][1] = conflictOptimistic(a[key][0], b[key][0]);
+            } else {
+                a[key][1] = conflictPessimistic(a[key][0], b[key][0]);
+            }
+        } else {
+            if (globalVars.conflict[key] == 2) {
+                a[key][1] = conflictOptimistic(a[key][0], b[key][1]);
+            } else {
+                a[key][1] = conflictPessimistic(a[key][0], b[key][1]);
+            }
+        }
     }
     node1.innerHTML = nodeConstructor(node1);
 }
