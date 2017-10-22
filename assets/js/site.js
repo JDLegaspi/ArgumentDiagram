@@ -201,23 +201,22 @@ function getObjects(id, obj) {
     return objects;
 }
 
-// Deletes node witd 'id' from the chart, including any of its children
+// Deletes node with 'id' from the chart, including any of its children
 function deleteNode(id, obj) {
     if (obj.hasOwnProperty('children')) {
         for (var i = 0; i < obj.children.length; i++) {
             if (obj.children[i].id == id) {
-                obj.children.splice(i, 1);
-                // Removing conflict node if only one argument
-                if (obj.type == "conflict") {
-                    $("#btnConflict").prop('disabled', false);
-                    chart_config.nodeStructure.children[0] = obj.children[0];
+                var parent = findParent(id, chart_config.nodeStructure);
+                if (parent.type == "conflict") {
+                    deleteNode(parent.id, chart_config.nodeStructure);
+                } else if (parent.type == "reason" && parent.children.length == 2) {
+                    deleteNode(parent.id, chart_config.nodeStructure);
+                } else {
+                    obj.children.splice(i, 1);
                 }
                 return;
             } else {
                 deleteNode(id, obj.children[i]);
-                if (obj.children[i].type == "reason" && obj.children[i].children.length < 1) {
-                    obj.children.splice(i, 1);
-                }
             }
         }
     } else {
