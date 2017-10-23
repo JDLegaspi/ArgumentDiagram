@@ -23,7 +23,7 @@
 
 <div class="container arg-container" style="display:none">
     <div class="col-md-4 text-center" style="height:100%">
-        <textarea class="" id="text" autofocus readonly></textarea>
+        <textarea class="well" id="text" autofocus readonly></textarea>
         <form>
             <input type="file" accept=".argu" id="fileInput"/>
         </form>
