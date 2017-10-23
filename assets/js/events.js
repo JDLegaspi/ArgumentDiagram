@@ -69,20 +69,30 @@ $('#diagramDiv').on('click', '#basic-example > div', function() {
     if (!globalVars.selectParent && !globalVars.selectConflict1 && !globalVars.selectConflict2 && !$(this).hasClass("conflict")) {
         $("#nodeFunctionsWrapper").fadeIn(200);
         var thisNode = findNode(globalVars.this, chart_config.nodeStructure);
+        console.log(thisNode.type);
         if (thisNode.type == "reasonAttr") {
             $('#btnConnect').hide();
-            $('#btnCollapse').hide();
-            $('#btnDelete').hide();
-        } else {
-            $('#btnConnect').show();
-            $('#btnCollapse').show();
-            $('#btnDelete').show();
-        }
-        if (thisNode.type == "reason") {
-            $('#btnEdit').hide();
-            $('#btnCollapse').hide();
-        } else {
             $('#btnEdit').show();
+            $('#btnDelete').hide();
+            $('#btnConflict').hide();
+            $('#btnCollapse').hide();
+        } else if (thisNode.type == "reason") {
+            $('#btnConnect').show();
+            $('#btnEdit').hide();
+            $('#btnDelete').show();
+            $('#btnConflict').hide();
+            $('#btnCollapse').show();
+        } else if (thisNode.type == "conflict") {
+            $('#btnConnect').hide();
+            $('#btnEdit').hide();
+            $('#btnDelete').show();
+            $('#btnConflict').hide();
+            $('#btnCollapse').show();
+        } else if (thisNode.type == "fact") {
+            $('#btnConnect').show();
+            $('#btnEdit').show();
+            $('#btnDelete').show();
+            $('#btnConflict').show();
             $('#btnCollapse').show();
         }
     }
