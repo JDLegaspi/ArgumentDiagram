@@ -135,9 +135,10 @@ function processRootWords(json) {
 
                     if (getLabel(tokens[i]) == "ADVCL") {
                         for (var j = sentenceIndex; j <tokens.length; j++) {
-                            if (isDependant(tokens[j], i) && getLabel(tokens[j]) == "NSUBJ" || isDependant(tokens[j], i) && getLabel(tokens[j]) == "MARK") {
+                            if (isDependant(tokens[j], i) && getLabel(tokens[j]) == "NSUBJ" || isDependant(tokens[j], i) && getLabel(tokens[j]) == "MARK" || isDependant(tokens[j], i) && getLabel(tokens[j]) == "XCOMP") {
                                 string += " " + tokens[j]['text']['content'];
                                 output.push(outputStartAndEnd(tokens[j]['text']['beginOffset'], tokens[j]['text']['content']));
+                                
                                 if (getLabel(tokens[j]) == "NSUBJ") {
                                     for (var k = 0; k < tokens.length; k++) {
                                         if (isDependant(tokens[k], j) && getLabel(tokens[k]) == "POSS") {
@@ -145,6 +146,15 @@ function processRootWords(json) {
                                         }
                                     }
                                 }
+
+                                if (getLabel(tokens[j]) == "XCOMP") {
+                                    for (var k = 0; k < tokens.length; k++) {
+                                        if (isDependant(tokens[k], j) && getLabel(tokens[k]) == "AMOD") {
+                                            output.push(outputStartAndEnd(tokens[k]['text']['beginOffset'], tokens[k]['text']['content']));
+                                        }
+                                    }
+                                }
+
                             }
                         }
                     }
