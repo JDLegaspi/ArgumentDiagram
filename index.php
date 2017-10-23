@@ -23,7 +23,7 @@
 
 <div class="container arg-container" style="display:none">
     <div class="col-md-4 text-center" style="height:100%">
-        <textarea class="" id="text" cols="90" rows="30" autofocus readonly></textarea>
+        <textarea class="" id="text" autofocus readonly></textarea>
         <form>
             <input type="file" accept=".argu" id="fileInput"/>
         </form>
@@ -93,7 +93,9 @@
 
 <script src="assets/js/jquery-3.2.1.js"></script>
 
-<script src="assets/lib/highlight-within-textarea/jquery.highlight-within-textarea.js" type="text/javascript"></script>
+<!-- <script src="assets/lib/highlight-within-textarea/jquery.highlight-within-textarea.js" type="text/javascript"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="assets/lib/jquery-highlighttextarea-master/jquery.highlighttextarea.min.js" type="text/javascript"></script>
 <script src="assets/lib/treant-js/vendor/raphael.js"></script>
 <script src="assets/lib/treant-js/Treant.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.7.0/intro.min.js"></script>

@@ -35,6 +35,8 @@ function initialise() {
     $('#text').val(chart_config.chart.doc.text);
 
     var highlight = analyseSyntax($('#text').val());
+    // var textInput = chart_config.chart.doc.text.replace(/\n/g, " ");
+    // var highlight = analyseSyntax(textInput);
     console.log(highlight);
 }
 
@@ -53,6 +55,9 @@ function countNodes(obj) {
 
 // Sets up a new chart with a text input
 function newChart(textInput, titleInput) {
+    textInput = textInput.replace(/‘|’/g, "'");
+    textInput = textInput.replace(/“|”/g, '"');
+    
     globalVars.driveId = null;
     chart_config = {
         chart: {

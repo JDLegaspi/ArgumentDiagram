@@ -48,7 +48,12 @@ label {
     box-sizing: border-box; */
 }
 
-.hwt-content mark {
+.highlightTextarea, .highlightTextarea-container, #text {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.hwt-content mark, .highlightTextarea mark {
     background-color: #e8bf7d;
     border-radius: 2px;
 }

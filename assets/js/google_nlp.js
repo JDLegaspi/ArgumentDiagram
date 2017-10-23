@@ -21,10 +21,16 @@ function analyseSyntax(string) {
 
             var sentences = processRootWords(data);
 
+            console.log(string);
+            console.log($('#text').val());
             console.log(sentences);
             
-            $('#text').highlightWithinTextarea({
-                highlight: sentences
+            $('#text').highlightTextarea({
+                ranges: [{
+                    ranges: sentences,
+                    color: '#e8bf7d',
+                    resizable: true
+                }]
             });
 
             return sentences;

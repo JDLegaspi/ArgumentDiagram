@@ -308,6 +308,10 @@ $('#btnSaveDrive').on('click', function () {
         });
     });
 
+    $('#saveFunctionsWrapper').on('click', '#btnDownload', function() {
+        saveText(JSON.stringify(chart_config), (chart_config.chart.doc.title + ".argu"));
+    });
+
 });
 
 // Loads existing chart file
@@ -781,10 +785,6 @@ $('#saveSelect').click(function() {
     $("#selectedText").val(selectedText);
     $('#editNodeModal').modal('show');
     $('#editSelectModal').find('form').trigger('reset');
-});
-
-$('#saveFunctionsWrapper').on('click', '#btnDownload', function() {
-    saveText(JSON.stringify(chart_config), (chart_config.chart.doc.title + ".argu"));
 });
 
 $('#btnExport').click(function () {
