@@ -10,6 +10,28 @@
   align-items: center;
 }
 
+label {
+    display:inline-block;
+    width: 110px;
+}
+
+.node-form {
+    width: 66%;
+}
+
+.modal-body input {
+    width: 100%;
+}
+
+.modal-body input[type=range] {
+    margin-top: 5px;
+}
+
+.chart-key {
+    font-size: 10px;
+    position: absolute;
+}
+
 #text {
     /* position: fixed;
     left: 1%;

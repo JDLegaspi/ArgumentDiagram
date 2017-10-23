@@ -19,8 +19,8 @@ function initialise() {
     // 1 = Pessimistic
     // 2 = Optimistic
     globalVars.support = {reliability: 1, accuracy: 1, relevancy: 1, uniqueness: 1, completeness: 1};
-    globalVars.accrual = {reliability: 1, accuracy: 1, relevancy: 1, uniqueness: 1, completeness: 1};
-    globalVars.conflict = {reliability: 1, accuracy: 1, relevancy: 1, uniqueness: 1, completeness: 1};
+    globalVars.accrual = {reliability: 2, accuracy: 1, relevancy: 2, uniqueness: 2, completeness: 2};
+    globalVars.conflict = {reliability: 2, accuracy: 1, relevancy: 1, uniqueness: 1, completeness: 1};
 
     // Show main app view and hide starting views
     $('.arg-container').show();
@@ -28,7 +28,7 @@ function initialise() {
     $('.starting-screen').hide();
 
     document.getElementById('textInput').form.reset();
-    document.getElementById('chartName').form.reset();
+    document.getElementById('chartName').value = '';
 
     // Draw chart and fill text area
     drawChart();
@@ -52,17 +52,18 @@ function countNodes(obj) {
 }
 
 // Sets up a new chart with a text input
-function newChart(text, title) {
+function newChart(textInput, titleInput) {
     globalVars.driveId = null;
     chart_config = {
         chart: {
             doc: {
-                title: title,
-                text: text
+                title: titleInput,
+                text: textInput
             },
             scrollbar: 'fancy',
             container: "#basic-example",
             hideRootNode: true,
+            siblingSeparation: 10,
             connectors: {
                 type: 'curve',
                 style: {
@@ -103,18 +104,30 @@ function nodeConstructor(node) {
     } else {
         text += "<table class='nodeAttributes' style='margin: auto'>";
     }
-    if (isNaN(node.attributes.reliWeak) && isNaN(node.attributes.accuWeak) && isNaN(node.attributes.releWeak) && isNaN(node.attributes.uniqWeak)) {
-        text += "<tr><td>" + node.attributes.reliability.toFixed(2) + "</td>" + "<td>" + node.attributes.reliability.toFixed(2) + "</td></tr>";
-        text += "<tr><td>" + node.attributes.accuracy.toFixed(2) + "</td>" + "<td>" + node.attributes.accuracy.toFixed(2) + "</td></tr>";
-        text += "<tr><td>" + node.attributes.relevancy.toFixed(2) + "</td>" + "<td>" + node.attributes.relevancy.toFixed(2) + "</td></tr>";
-        text += "<tr><td>" + node.attributes.uniqueness.toFixed(2) + "</td>" + "<td>" + node.attributes.uniqueness.toFixed(2) + "</td></tr>";
-        text += "<tr><td>" + node.attributes.completeness.toFixed(2) + "</td>" + "<td>" + node.attributes.completeness.toFixed(2) + "</td></tr>";
+    if (isNaN(node.attributes.reliability[1])) {
+        text += "<tr><td>" + node.attributes.reliability[0].toFixed(2) + "</td>" + "<td>" + node.attributes.reliability[0].toFixed(2) + "</td></tr>";
     } else {
-        text += "<tr><td>" + node.attributes.reliability.toFixed(2) + "</td>" + "<td>" + node.attributes.reliWeak.toFixed(2) + "</td></tr>";
-        text += "<tr><td>" + node.attributes.accuracy.toFixed(2) + "</td>" + "<td>" + node.attributes.accuWeak.toFixed(2) + "</td></tr>";
-        text += "<tr><td>" + node.attributes.relevancy.toFixed(2) + "</td>" + "<td>" + node.attributes.releWeak.toFixed(2) + "</td></tr>";
-        text += "<tr><td>" + node.attributes.uniqueness.toFixed(2) + "</td>" + "<td>" + node.attributes.uniqWeak.toFixed(2) + "</td></tr>";
-        text += "<tr><td>" + node.attributes.completeness.toFixed(2) + "</td>" + "<td>" + node.attributes.compWeak.toFixed(2) + "</td></tr>";
+        text += "<tr><td>" + node.attributes.reliability[0].toFixed(2) + "</td>" + "<td>" + node.attributes.reliability[1].toFixed(2) + "</td></tr>";
+    }
+    if (isNaN(node.attributes.accuracy[1])) {
+        text += "<tr><td>" + node.attributes.accuracy[0].toFixed(2) + "</td>" + "<td>" + node.attributes.accuracy[0].toFixed(2) + "</td></tr>";
+    } else {
+        text += "<tr><td>" + node.attributes.accuracy[0].toFixed(2) + "</td>" + "<td>" + node.attributes.accuracy[1].toFixed(2) + "</td></tr>";
+    }
+    if (isNaN(node.attributes.relevancy[1])) {
+        text += "<tr><td>" + node.attributes.relevancy[0].toFixed(2) + "</td>" + "<td>" + node.attributes.relevancy[0].toFixed(2) + "</td></tr>";
+    } else {
+        text += "<tr><td>" + node.attributes.relevancy[0].toFixed(2) + "</td>" + "<td>" + node.attributes.relevancy[1].toFixed(2) + "</td></tr>";
+    }
+    if (isNaN(node.attributes.uniqueness[1])) {
+        text += "<tr><td>" + node.attributes.uniqueness[0].toFixed(2) + "</td>" + "<td>" + node.attributes.uniqueness[0].toFixed(2) + "</td></tr>";
+    } else {
+        text += "<tr><td>" + node.attributes.uniqueness[0].toFixed(2) + "</td>" + "<td>" + node.attributes.uniqueness[1].toFixed(2) + "</td></tr>";
+    }
+    if (isNaN(node.attributes.reliability[1])) {
+        text += "<tr><td>" + node.attributes.completeness[0].toFixed(2) + "</td>" + "<td>" + node.attributes.completeness[0].toFixed(2) + "</td></tr>";
+    } else {
+        text += "<tr><td>" + node.attributes.completeness[0].toFixed(2) + "</td>" + "<td>" + node.attributes.completeness[1].toFixed(2) + "</td></tr>";
     }
     text += "</table>";
     return text;
@@ -128,16 +141,11 @@ function newNode(id, type, name, relia, accur, relev, unique, comple, startSel, 
         type: type,
         name: name,
         attributes: {
-          reliability: relia,
-          accuracy: accur,
-          relevancy: relev,
-          uniqueness: unique,
-          completeness: comple,
-          reliWeak: NaN,
-          accuWeak: NaN,
-          releWeak: NaN,
-          uniqWeak: NaN,
-          compWeak: NaN
+          reliability: [relia, NaN],
+          accuracy: [accur, NaN],
+          relevancy: [relev, NaN],
+          uniqueness: [unique, NaN],
+          completeness: [comple, NaN]
         },
         linktext: {
           start: startSel,
@@ -196,23 +204,22 @@ function getObjects(id, obj) {
     return objects;
 }
 
-// Deletes node witd 'id' from the chart, including any of its children
+// Deletes node with 'id' from the chart, including any of its children
 function deleteNode(id, obj) {
     if (obj.hasOwnProperty('children')) {
         for (var i = 0; i < obj.children.length; i++) {
             if (obj.children[i].id == id) {
-                obj.children.splice(i, 1);
-                // Removing conflict node if only one argument
-                if (obj.type == "conflict") {
-                    $("#btnConflict").prop('disabled', false);
-                    chart_config.nodeStructure.children[0] = obj.children[0];
+                var parent = findParent(id, chart_config.nodeStructure);
+                if (parent.type == "conflict") {
+                    deleteNode(parent.id, chart_config.nodeStructure);
+                } else if (parent.type == "reason" && parent.children.length == 2) {
+                    deleteNode(parent.id, chart_config.nodeStructure);
+                } else {
+                    obj.children.splice(i, 1);
                 }
                 return;
             } else {
                 deleteNode(id, obj.children[i]);
-                if (obj.children[i].type == "reason" && obj.children[i].children.length < 1) {
-                    obj.children.splice(i, 1);
-                }
             }
         }
     } else {
@@ -224,11 +231,11 @@ function deleteNode(id, obj) {
 function editNode(obj, id, text, reli, accu, rele, uniq, comp) {
     if (obj.id == id) {
         obj.name = text;
-        obj.attributes.reliability = reli;
-        obj.attributes.accuracy = accu;
-        obj.attributes.relevancy = rele;
-        obj.attributes.uniqueness = uniq;
-        obj.attributes.completeness = comp;
+        obj.attributes.reliability[0] = reli;
+        obj.attributes.accuracy[0] = accu;
+        obj.attributes.relevancy[0] = rele;
+        obj.attributes.uniqueness[0] = uniq;
+        obj.attributes.completeness[0] = comp;
         obj.innerHTML = nodeConstructor(obj);
     } else if (obj.hasOwnProperty('children')) {
         for (var i = 0; i < obj.children.length; i++) {
@@ -268,11 +275,11 @@ function reasonNode(child) {
             },
             innerHTML: name,
             attributes: {
-              reliability: NaN,
-              accuracy: NaN,
-              relevancy: NaN,
-              uniqueness: NaN,
-              completeness: NaN
+              reliability: [NaN, NaN],
+              accuracy: [NaN, NaN],
+              relevancy: [NaN, NaN],
+              uniqueness: [NaN, NaN],
+              completeness: [NaN, NaN]
             },
             children: []
         };
@@ -298,17 +305,17 @@ function conflictNode(child) {
             },
             innerHTML: name,
             attributes: {
-              reliability: NaN,
-              accuracy: NaN,
-              relevancy: NaN,
-              uniqueness: NaN,
-              completeness: NaN
+              reliability: [NaN, NaN],
+              accuracy: [NaN, NaN],
+              relevancy: [NaN, NaN],
+              uniqueness: [NaN, NaN],
+              completeness: [NaN, NaN]
             },
             connectors: {
                 type: 'curve',
                 style: {
                     'arrow-start': 'block-wide-long',
-                    'arrow-end': 'block-wide-long'
+                    'stroke-dasharray': '--'
                 },
             },
             children: []
@@ -356,14 +363,18 @@ function parseNaN(obj) {
             parseNaN(obj.children[i]);
         }
         for (var key in obj.attributes) {
-            if (obj.attributes[key] == null) {
-                obj.attributes[key] = NaN;
+            for (var i = 0; i <= 1; i++) {
+                if (obj.attributes[key][i] == null) {
+                    obj.attributes[key][i] = NaN;
+                }
             }
         }
     } else if (obj.id != 1) {
         for (var key in obj.attributes) {
-            if (obj.attributes[key] == null) {
-                obj.attributes[key] = NaN;
+            for (var i = 0; i <= 1; i++) {
+                if (obj.attributes[key][i] == null) {
+                    obj.attributes[key][i] = NaN;
+                }
             }
         }
     }

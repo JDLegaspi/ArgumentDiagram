@@ -14,20 +14,18 @@
 </div>
 
 <div class="jumbotron name-chart container text-center" style="display:none">
-    <form>
-        <div class="form-group">
-            <label for="chartName">Name Your Chart</label>
-            <input type="text" id="chartName"/>
-        </div>
-    </form>
-    <button type="button" class="btn btn-primary" id="start">Start</button>
+      <div class="form-group">
+          <label for="chartName">Name Your Chart</label>
+          <input type="text" id="chartName"/>
+      </div>
+      <button type="button" class="btn btn-primary" id="start">Start</button>
 </div>
 
 <div class="container arg-container" style="display:none">
     <div class="col-md-4 text-center" style="height:100%">
         <textarea class="" id="text" cols="90" rows="30" autofocus readonly></textarea>
         <form>
-            <input type="file" id="fileInput"/>
+            <input type="file" accept=".argu" id="fileInput"/>
         </form>
         <form>
             <input type="file" accept=".txt, .docx" id="textInput"/>
@@ -37,13 +35,40 @@
         <div class="row btn-new-node-wrapper">
             <button class="btn btn-default" id="btnNewNode">New Node</button>
             <button class="btn btn-default pull-right" id="btnToggleAttributes">Toggle Attributes</button>
+            <button class="btn btn-default pull-right" id="btnUndo">Undo</button>
+            <button class="btn btn-default pull-right" id="btnFitZoom">Fit Zoom</button>
             <button class="btn btn-default pull-right" id="btnZoomOut">-</button>
             <button class="btn btn-default pull-right" id="btnZoomIn">+</button>
         </div>
         <div id="chart" style="height:90%">
+            <table class="chart-key pull-left">
+                <tr>
+                    <td>Reliability</td>
+                    <td>Reliability*</td>
+                </tr>
+                <tr>
+                    <td>Accuracy</td>
+                    <td>Accuracy*</td>
+                </tr>
+                <tr>
+                    <td>Relevancy</td>
+                    <td>Relevancy*</td>
+                </tr>
+                <tr>
+                    <td>Uniqueness</td>
+                    <td>Uniqueness*</td>
+                </tr>
+                <tr>
+                    <td>Completeness</td>
+                    <td>Completeness*</td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center; border: 0">*Weakened by conflict</td>
+                </tr>
+            </table>
             <div class="row chart" id="basic-example" style="overflow-x: visible; overflow-y: visible"></div>
         </div>
-        <div class="container" id="debug">
+        <div class="container" id="debug" style="display: none">
             <form class="form-inline" id="argumentForm">
                 <p>DEBUG TOOLS</p>
                 <div class="form-group">

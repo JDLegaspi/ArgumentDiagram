@@ -62,6 +62,7 @@ $("#text").mouseup(function() {
 // Show popup dialog on node click
 $('#diagramDiv').on('click', '#basic-example > div', function() {
     globalVars.this = $(this)[0].id;
+    console.log(findNode(globalVars.this, chart_config.nodeStructure));
     $("#parentId").val(globalVars.this);
 
     // Following code is all for popup dialog
@@ -146,12 +147,31 @@ $('#diagramDiv').on('click', '#basic-example > div', function() {
                     object[0].children.push(globalVars.child);
                 }
             } else {
-                // If connecting a reason node to a parent
-                if (globalVars.child.type == "reason") {
-                    object[0].children.push(globalVars.child);
-                // Else creates a reason node
+                if (object[0].children.length > 0) {
+                    var index = object[0].children.length - 1;
+                    // If connecting a reason node to a parent
+                    if (globalVars.child.type == "reason") {
+                        if (object[0].children[index].type == "conflict") {
+                            object[0].children.splice(index, 0, globalVars.child);
+                        } else {
+                            object[0].children.push(globalVars.child);
+                        }
+                    // Else creates a reason node
+                    } else {
+                        if (object[0].children[index].type == "conflict") {
+                            object[0].children.splice(index, 0, reasonNode(globalVars.child));
+                        } else {
+                            object[0].children.push(reasonNode(globalVars.child));
+                        }
+                    }
                 } else {
-                    object[0].children.push(reasonNode(globalVars.child));
+                    // If connecting a reason node to a parent
+                    if (globalVars.child.type == "reason") {
+                        object[0].children.push(globalVars.child);
+                    // Else creates a reason node
+                    } else {
+                        object[0].children.push(reasonNode(globalVars.child));
+                    }
                 }
             }
             calculateChartAttributes(chart_config.nodeStructure);
@@ -333,14 +353,12 @@ $('#textInput').change(function () {
 
 // Used to name and initialise chart
 $('#start').click(function () {
-    console.log($('#chartName').val());
     if ($('#chartName').val() != '') {
         globalVars.driveId = null;
         var loadFile=function(url,callback){
                 JSZipUtils.getBinaryContent(url,callback);
             }
         var file = document.getElementById('textInput').files[0];
-        console.log(file.name);
         if (file) {
             var fileName = file.name;
             var txt = ".txt";
@@ -349,7 +367,7 @@ $('#start').click(function () {
             if (fileName.substr(fileName.length - txt.length, txt.length).toLowerCase() == txt.toLowerCase()) {
                 reader.readAsText(file);
                 reader.onload = function () {
-                    chartName = $('#chartName').val();
+                    var chartName = $('#chartName').val();
                     newChart(reader.result, chartName);
                     initialise();
                 };
@@ -360,7 +378,7 @@ $('#start').click(function () {
                         var zip = new JSZip(content);
                         var doc=new Docxtemplater().loadZip(zip);
                         text=doc.getFullText();
-                        chartName = $('#chartName').val();
+                        var chartName = $('#chartName').val();
                         newChart(text, chartName);
                         initialise();
                     });
@@ -537,11 +555,33 @@ $('#btnZoomOut').click(function () {
     $("#basic-example").css("transform", scaleString);
 });
 
+$('#btnFitZoom').click(function () {
+    var divWidth = $('#chart').width();
+    var svg = document.getElementsByTagName("svg")[0];
+    var svgWidth = svg.getBoundingClientRect().width;
+    if (svgWidth < divWidth) {
+        while (svgWidth < divWidth) {
+            currentZoom = currentZoom+0.05;
+            var scaleString = "scale("+currentZoom+")";
+            $("#basic-example").css("transform", scaleString);
+            svgWidth = svg.getBoundingClientRect().width;
+        }
+    }
+    while (svgWidth > divWidth) {
+        currentZoom = currentZoom-0.05;
+        var scaleString = "scale("+currentZoom+")";
+        $("#basic-example").css("transform", scaleString);
+        svgWidth = svg.getBoundingClientRect().width;
+    }
+});
+
 $("#btnToggleAttributes").click(function () {
     if (globalVars.hideAttributes) {
         globalVars.hideAttributes = false;
+        $('.chart-key').show();
     } else {
         globalVars.hideAttributes = true;
+        $('.chart-key').hide();
     }
     toggleAttributes(chart_config.nodeStructure);
     drawChart();
@@ -585,10 +625,11 @@ $('#nodeFunctionsWrapper').on('click', '#btnEdit', function () {
             var selectedText = $('#text').val().slice(thisNode.linktext.start, thisNode.linktext.end);
             $('#editNodeModal').modal('show');
             $("#editName").val(thisNode.name);
-            $("#editReli").val(thisNode.attributes.reliability);
-            $("#editAccu").val(thisNode.attributes.accuracy);
-            $("#editRele").val(thisNode.attributes.relevancy);
-            $("#editUniq").val(thisNode.attributes.uniqueness);
+            $("#editReli").val(thisNode.attributes.reliability[0]);
+            $("#editAccu").val(thisNode.attributes.accuracy[0]);
+            $("#editRele").val(thisNode.attributes.relevancy[0]);
+            $("#editUniq").val(thisNode.attributes.uniqueness[0]);
+            $("#editComp").val(thisNode.attributes.completeness[0]);
             $("#selectedText").val(selectedText);
             $("#editSelect").val($('#text').val());
             if (thisNode.type == "reasonAttr") {
@@ -747,23 +788,23 @@ $('#saveFunctionsWrapper').on('click', '#btnDownload', function() {
 });
 
 $('#btnExport').click(function () {
-	$('#chart').css("height", '');
-	$('html').css("overflow", 'visible');
-    html2canvas($('.chart'), {
+    var div = document.createElement('div');
+    div.innerHTML = document.getElementById('chart').innerHTML;
+    div.style.width = 'fit-content';
+    div.children[1].style.transform = 'scale(1)';
+    document.body.appendChild(div);
+    html2canvas(div, {
         allowTaint: true,
 		useOverflow: true,
         background: '#fff'
     }).then(function(canvas) {
-		console.log("Hello?");
 		var a = document.createElement('a');
 		a.href = canvas.toDataURL();
-		console.log(chart_config.chart.doc.title);
 		a.download = chart_config.chart.doc.title;
 		document.body.appendChild(a);
 		a.click();
 		document.body.removeChild(a);
-		$('#chart').css("height", '90%');
-		$('html').css("overflow", 'hidden');
+        document.body.removeChild(div);
 	});
 });
 
@@ -773,4 +814,17 @@ document.onmouseup = document.onkeyup = document.onselectionchange = function() 
 
 $('#text').on('input', function() {
     $('#text').highlightWithinTextarea('update');
+});
+// Keeps number slider in sync with number input
+$(".attribute").on('input', function () {
+    if ($(this).val() > 1) {
+        $(this).val(1);
+    }
+    if ($(this).context.previousElementSibling.nodeName == "INPUT") {
+        var sibling = $(this).context.previousElementSibling;
+    } else {
+        var sibling = $(this).context.nextElementSibling;
+    }
+    console.log($(this).context.previousElementSibling.nodeName);
+    sibling.value = $(this).val();
 });
