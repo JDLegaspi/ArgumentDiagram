@@ -226,7 +226,7 @@ $("#diagramDiv").on("mouseover", "#basic-example > div", function () {
         var numberOfLines = Math.floor(Height/LineHeight);
         var charsPerRow = textArea.value.length/numberOfLines;
         var selectionRow = (selectionStart - (selectionStart % charsPerRow)) / charsPerRow;
-        textArea.scrollTop = 20 * (selectionRow - 1);
+        textArea.scrollTop = 20 * (selectionRow-2);
     }
 });
 

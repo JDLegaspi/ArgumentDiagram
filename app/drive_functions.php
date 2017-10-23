@@ -38,6 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $client->getAccessToken() && isset($
                     'fields' => 'id'
                 )
             );
+            echo $result['id'];
         } catch (Exception $e) {
             echo "An error occurred: " . $e->getMessage();
         }

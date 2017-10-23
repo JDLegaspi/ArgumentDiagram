@@ -51,6 +51,7 @@ label {
 .highlightTextarea, .highlightTextarea-container, #text {
     width: 100% !important;
     height: 100% !important;
+    line-height: 20px;
 }
 
 .hwt-content mark, .highlightTextarea mark {
