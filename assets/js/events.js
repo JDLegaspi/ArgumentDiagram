@@ -815,16 +815,16 @@ document.onmouseup = document.onkeyup = document.onselectionchange = function() 
 $('#text').on('input', function() {
     $('#text').highlightWithinTextarea('update');
 });
+
 // Keeps number slider in sync with number input
 $(".attribute").on('input', function () {
     if ($(this).val() > 1) {
         $(this).val(1);
     }
-    if ($(this).context.previousElementSibling.nodeName == "INPUT") {
-        var sibling = $(this).context.previousElementSibling;
+    if ($(this)[0].previousElementSibling.nodeName == "INPUT") {
+        var sibling = $(this)[0].previousElementSibling;
     } else {
-        var sibling = $(this).context.nextElementSibling;
+        var sibling = $(this)[0].nextElementSibling;
     }
-    console.log($(this).context.previousElementSibling.nodeName);
     sibling.value = $(this).val();
 });
